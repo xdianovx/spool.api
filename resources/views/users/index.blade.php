@@ -28,7 +28,7 @@
           </div>
             <hr class="m-0">
             <div class="card-body">
-            <div class="table-responsive text-nowrap">
+            <div class="text-nowrap">
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,7 +36,7 @@
                             <th>Имя</th>
                             <th>Email</th>
                             <th>Роль</th>
-                            <th>Редактировать</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">

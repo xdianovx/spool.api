@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'v1'
@@ -23,7 +27,7 @@ Route::group([
     Route::post('account/register', [AuthController::class, 'register']);
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
-    Route::get('account/client-profile', [AuthController::class, 'clientProfile']);    
+    Route::get('account/user-profile', [AuthController::class, 'userProfile']);    
 });
 
 Route::get('/v1/ping', function () {

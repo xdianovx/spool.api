@@ -58,7 +58,6 @@
                             <div class="mb-3 col-md-6">
                                 <label class="form-label" for="phoneNumber">Phone Number*</label>
                                 <div class="input-group input-group-merge">
-                                    <span class="input-group-text">Ru (+7)</span>
                                     <input type="text" id="phoneNumber" name="phone_number" class="form-control"
                                         placeholder="John" value="{{ old('phone_number') }}" required>
                                     @error('phone_number')

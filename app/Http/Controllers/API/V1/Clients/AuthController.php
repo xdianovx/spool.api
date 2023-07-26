@@ -5,11 +5,13 @@ namespace App\Http\Controllers\API\V1\Clients;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Validator;
 
 class AuthController extends Controller
 {
-     /**
+    /**
      * Create a new AuthController instance.
      *
      * @return void
@@ -48,25 +50,25 @@ class AuthController extends Controller
         ]);
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
-        } 
+        }
         $client = Client::create(array_merge(
                     $validator->validated(),
                     ['password' => bcrypt($request->password)]
                 ));
         return response()->json([
-            'message' => 'Client successfully registered',
+            'message' => 'client successfully registered',
             'client' => $client
         ], 201);
     }
 
     /**
-     * Log the client out (Invalidate the token).
+     * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout() {
         auth()->logout();
-        return response()->json(['message' => 'Client successfully signed out']);
+        return response()->json(['message' => 'client successfully signed out']);
     }
     /**
      * Refresh a token.
@@ -77,11 +79,11 @@ class AuthController extends Controller
         return $this->createNewToken(auth()->refresh());
     }
     /**
-     * Get the authenticated client .
+     * Get the authenticated client.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clientProfile() {
+    public function userProfile() {
         return response()->json(auth()->user());
     }
     /**
@@ -99,5 +101,4 @@ class AuthController extends Controller
             'client' => auth()->user()
         ]);
     }
-
 }

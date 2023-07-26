@@ -58,7 +58,6 @@
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label" for="phoneNumber">Номер телефона</label>
                                     <div class="input-group input-group-merge">
-                                        <span class="input-group-text">Ru (+7)</span>
                                         <input type="text" id="phoneNumber" name="phone_number" class="form-control"
                                             value="{{ $user->phone_number }}" autofocus autocomplete="phone_number">
                                         @error('phone_number')

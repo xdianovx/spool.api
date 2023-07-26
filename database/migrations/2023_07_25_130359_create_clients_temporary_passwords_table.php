@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tag_video', function (Blueprint $table) {
+        Schema::create('clients_temporary_passwords', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tag_id')->constrained();
-            $table->foreignId('video_id')->constrained();
+            $table->string('password');
+            $table->foreignId('clients_temporary_password_id')->constrained();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tag_video');
+        Schema::dropIfExists('clients_temporary_passwords');
     }
 };
