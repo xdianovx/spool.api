@@ -75,4 +75,5 @@ class Client extends Authenticatable implements JWTSubject
         return $this->hasOne(ClientTemporaryPass::class);
         
     }
+    
 }

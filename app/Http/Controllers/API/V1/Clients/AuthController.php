@@ -16,32 +16,44 @@ class AuthController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
+
+
     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request){
-    	$validator = Validator::make($request->all(), [
+    public function login(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
         $client = Client::create(array_merge(
             $validator->validated()
         ));
+        $comb = "abcdefghijklmnopqrstuvwxyz";
+        $shfl = str_shuffle($comb);
+        $password = substr($shfl,0,15);
+        $password =  mb_substr($password, 0, 5) . '-' . mb_substr($password,5, 5) . '-' . mb_substr($password, 10);
         return response()->json([
-        'message' => 'success',
+            'message' => 'success',
+            'password' => $password,
+            'email' => $client->email
             // 'message' => 'We have sent the password to your email '.$client->email.'',
             // 'client' => $client
         ], 200);
     }
 
-    public function login_confirm(Request $request){
+    public function login_confirm(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -49,7 +61,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        if (! $token = auth('api')->attempt($validator->validated())) {
+        if (!$token = auth('api')->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->createNewToken($token);
@@ -62,7 +74,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout() {
+    public function logout()
+    {
         auth()->logout();
         return response()->json(['message' => 'client successfully signed out']);
     }
@@ -71,7 +84,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh() {
+    public function refresh()
+    {
         return $this->createNewToken(auth()->refresh());
     }
     /**
@@ -79,7 +93,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function userProfile() {
+    public function userProfile()
+    {
         return response()->json(auth()->user('api'));
     }
     /**
@@ -89,7 +104,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function createNewToken($token){
+    protected function createNewToken($token)
+    {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
