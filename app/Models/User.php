@@ -25,7 +25,8 @@ class User extends Authenticatable implements JWTSubject
         'phone_number',
         'role',
         'last_login_date',
-        'password'
+        'password',
+        'partner_company_id'
     ];
 
     /**
@@ -70,6 +71,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function partner_company()
     {
-        return $this->morphMany(Partner_company::class, 'partner_companyable');
+        return $this->belongsTo(Partner_company::class);
     }
 }

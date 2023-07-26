@@ -13,8 +13,14 @@ class Ticket extends Model
         'price',
         'discounted_price'
     ];
-    public function videos()
+
+    public function video()
     {
-        return $this->morphedByMany(Video::class, 'ticketable');
+        return $this->belongsTo(Video::class);
+    }
+    public function tickets_store()
+    {
+        return $this->hasOne(ClientTicket::class);
+        
     }
 }

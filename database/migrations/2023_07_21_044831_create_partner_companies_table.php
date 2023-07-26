@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('partner_companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('partner_companyable_id');
-            $table->string('partner_companyable_type');
             $table->timestamps();
         });
     }

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ticketables', function (Blueprint $table) {
+        Schema::create('client_temporary_passes', function (Blueprint $table) {
             $table->id();
-            $table->integer('ticket_id');
-            $table->integer('ticketable_id');
-            $table->string('ticketable_type');
+            $table->string('password');
+            $table->foreignId('client_temporary_pass_id')->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ticketables');
+        Schema::dropIfExists('client_temporary_passes');
     }
 };

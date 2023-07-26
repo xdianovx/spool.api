@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('smscods', function (Blueprint $table) {
+        Schema::create('client_tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->integer('smscodable_id');
-            $table->string('smscodable_type');
+            $table->string('price');
+            $table->foreignId('client_id')->constrained();
+            $table->foreignId('ticket_id')->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('smscods');
+        Schema::dropIfExists('client_tickets');
     }
 };

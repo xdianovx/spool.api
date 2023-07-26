@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class UserCrateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,11 @@ class UserCrateRequest extends FormRequest
         return [
             'name' => 'required|string',
             'surname' => 'required|string',
+            'role' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string',
+            'password' => 'required|min:8',
             'phone_number' => 'required|string',
+            'partner_company_id' =>'nullable|string'
         ];
     }
 }

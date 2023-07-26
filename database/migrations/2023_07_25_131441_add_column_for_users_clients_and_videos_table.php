@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categoryables', function (Blueprint $table) {
-            $table->id();
-            $table->integer('category_id');
-            $table->integer('categoryable_id');
-            $table->string('categoryable_type');
-            $table->timestamps();
+        Schema::table('videos', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categoryables');
+        Schema::table('videos', function (Blueprint $table) {
+            $table->dropColumn('category_id');
+        });
     }
 };

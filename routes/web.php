@@ -27,22 +27,23 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::group(['namespace' => 'Admin\Users', 'prefix' => 'users'], function () {
+    Route::prefix('users')->group(function () {
         Route::get('/all',  [UserController::class, 'index'])->name('users.index');
         Route::get('/create',  [UserController::class, 'create'])->name('user.create');
-        Route::get('/',  [UserController::class, 'store'])->name('user.store');
-        Route::get('/{user}',  [UserController::class, 'show'])->name('user.show');
-        Route::patch('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
-        Route::delete('/{user}',  [UserController::class, 'destroy'])->name('user.destroy');
+        Route::post('/',  [UserController::class, 'store'])->name('user.store');
+        Route::get('/{user}/show',  [UserController::class, 'show'])->name('user.show');
+        Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
+        Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
+        Route::delete('/{user}/destroy',  [UserController::class, 'destroy'])->name('user.destroy');
     });
 
-    Route::group(['namespace' => 'Admin\Countries', 'prefix' => 'countries'], function () {
+    Route::prefix('countries')->group(function () {
         Route::get('/all',  [CountryController::class, 'index'])->name('countries.index');
-        Route::get('/create',  [CountryController::class, 'create'])->name('user.create');
-        Route::get('/',  [CountryController::class, 'store'])->name('user.store');
-        Route::get('/{country}',  [CountryController::class, 'show'])->name('country.show');
-        Route::get('/{country}/edit',  [CountryController::class, 'edit'])->name('country.edit');
-        Route::get('/{country}',  [CountryController::class, 'destroy'])->name('country.destroy');
+        // Route::get('/create',  [CountryController::class, 'create'])->name('user.create');
+        // Route::get('/',  [CountryController::class, 'store'])->name('user.store');
+        // Route::get('/{country}',  [CountryController::class, 'show'])->name('country.show');
+        // Route::get('/{country}/edit',  [CountryController::class, 'edit'])->name('country.edit');
+        // Route::get('/{country}',  [CountryController::class, 'destroy'])->name('country.destroy');
     });
 });
 

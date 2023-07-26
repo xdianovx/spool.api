@@ -1,12 +1,15 @@
 @extends('template.main')
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Пользователь {{$user->name}} /</span> Информация о профиле</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
+      <a href="{{ route('users.index') }}"> Администраторы</a> / Пользователь {{$user->name}} /</span> Информация о профиле</h4>
 <div class="row">
     <!-- Inline text elements -->
     <div class="col">
       <div class="card mb-4">
+        <h5 class="card-header">Информация о профиле</h5>
         <div class="card-body">
+
           <table class="table table-borderless">
             <tbody>
               <tr>
@@ -30,7 +33,7 @@
               <tr>
                 <td><small class="text-light fw-semibold">Email:</small></td>
                 <td class="py-3">
-                  <p class="mb-0">{{$user->name}}</p>
+                  <p class="mb-0">{{$user->email}}</p>
                 </td>
               </tr>
               <tr>
@@ -60,11 +63,24 @@
               <tr>
                 <td><small class="text-light fw-semibold">Партнерская компания:</small></td>
                 <td>
-                  <p class="mb-0">???</p>
+                  <p class="mb-0">
+                    {{$user->partner_company->name ?? 'Без партнерской компании'}}</p>
                 </td>
               </tr>
             </tbody>
           </table>
+
+
+          <div class="row demo-vertical-spacing">
+   
+            <div class="col">
+              <a class="btn btn-primary text-nowrap" href="{{ route('users.index') }}">Назад</a>
+            </div>
+          </div>
+
+
+           
+
         </div>
       </div>
     </div>

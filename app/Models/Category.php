@@ -18,11 +18,11 @@ class Category extends Model
         return $this->hasMany(Category::class);
     }
     public function childrenCategories()
-{
-    return $this->hasMany(Category::class)->with('categories');
-}
-public function videos()
-{
-    return $this->morphedByMany(Video::class, 'categoryable');
-}
+    {
+        return $this->hasMany(Category::class)->with('categories');
+    }
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

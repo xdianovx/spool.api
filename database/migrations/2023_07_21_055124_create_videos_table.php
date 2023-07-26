@@ -22,8 +22,9 @@ return new class extends Migration
             $table->date('event_date');
             $table->string('minimum_age');
             $table->string('display_slider')->nullable();
-
             $table->timestamps();
+            $table->foreignId('partner_company_id')->constrained();
+            // $table->foreignId('category_id')->constrained()->nullable();
         });
     }
 

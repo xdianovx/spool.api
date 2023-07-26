@@ -72,11 +72,16 @@ class Client extends Model implements JWTSubject
 
     public function country()
     {
-        return $this->morphMany(Country::class, 'countryable');
+        return $this->belongsTo(Country::class);
     }
-    
-    public function smscod()
+    public function tickets_store()
     {
-        return $this->morphOne(Smscod::class, 'smscodable');
+        return $this->hasMany(ClientTicket::class);
+        
+    }
+    public function client_temporary_passes()
+    {
+        return $this->hasOne(ClientTemporaryPass::class);
+        
     }
 }

@@ -23,20 +23,21 @@ class Video extends Model
 
     public function partner_company()
     {
-        return $this->morphMany(Partner_company::class, 'partner_companyable');
+        return $this->belongsTo(Partner_company::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+        
     }
     public function tags()
     {
-        return $this->morphToMany(Tag::class, 'taggable');
-    }
-    public function categories()
-    {
-        return $this->morphToMany(Category::class, 'categoryable');
-        
+        return $this->belongsToMany(Tag::class);
     }
     public function tickets()
     {
-        return $this->morphToMany(Ticket::class, 'ticketable');
+        return $this->hasMany(Ticket::class);
         
     }
+
 }

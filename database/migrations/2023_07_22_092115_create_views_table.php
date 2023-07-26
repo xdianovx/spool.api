@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->string('seconds_viewed');
-            $table->string('video');
-            $table->string('country');
-            $table->string('client');
+            $table->foreignId('video_id')->constrained();
+            $table->foreignId('country_id')->constrained();
+            $table->foreignId('client_id')->constrained();
             $table->timestamps();
         });
     }

@@ -10,8 +10,12 @@ class Partner_company extends Model
     use HasFactory;
     protected $fillable = ['number','addition','description'];
     
-    public function partner_companyable()
+    public function clients()
     {
-        return $this->morphTo();
+        return $this->hasMany(User::class);
+    }
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
     }
 }

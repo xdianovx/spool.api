@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class ClientTemporaryPass extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
-    public function clients()
+    public function client()
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsTo(Client::class);
+        
     }
 }
