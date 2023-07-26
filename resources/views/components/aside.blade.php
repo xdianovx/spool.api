@@ -36,7 +36,7 @@
                                     </g>
                                 </g>
                             </svg>
-                        </span> -->
+                        </span>
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">SPOOL</span>
 
 
