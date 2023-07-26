@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\User\UserCrateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
-use App\Models\Partner_company;
+use App\Models\Partners_company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $partner_companies = Partner_company::all();
+        $partner_companies = Partners_company::all();
         return view('users.create',compact('partner_companies'));
     }
 
@@ -33,7 +33,7 @@ class UserController extends Controller
     
     public function edit(User $user)
     { 
-        $partner_companies = Partner_company::all();
+        $partner_companies = Partners_company::all();
         return view('users.edit', compact('user', 'partner_companies'));
     }
 
