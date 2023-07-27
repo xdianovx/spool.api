@@ -28,7 +28,7 @@ Route::group([
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
-    Route::get('account/user-profile', [AuthController::class, 'userProfile']);    
+    Route::get('profile', [AuthController::class, 'userProfile']);    
 });
 
 Route::get('/v1/ping', function () {
