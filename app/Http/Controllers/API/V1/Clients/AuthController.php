@@ -22,7 +22,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'login_confirm','login_profile']]);
+        $this->middleware('auth:api', ['except' => ['login', 'login_confirm']]);
     }
 
 
@@ -113,19 +113,7 @@ class AuthController extends Controller
     
     public function login_profile(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:17',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
-        if (!$token = auth('api')->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        $client_id = Client::where('email', $request->email)->value('id');
+        $client_id = Client::where('id', auth()->user()->id)->value('id');
         Client::where('id', $client_id)->update([
             'name' => $request['name'],
             'age' => $request['age'],
