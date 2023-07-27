@@ -24,7 +24,8 @@ Route::group([
     'prefix' => 'v1'
 ], function ($router) {
     Route::post('account/login', [AuthController::class, 'login']);
-    Route::post('account/register', [AuthController::class, 'register']);
+    Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
+    Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
     Route::get('account/user-profile', [AuthController::class, 'userProfile']);    
