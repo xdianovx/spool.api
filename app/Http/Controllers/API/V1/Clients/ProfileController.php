@@ -8,7 +8,7 @@ use App\Models\Country;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class ProfileController extends Controller
@@ -32,7 +32,7 @@ class ProfileController extends Controller
             'name' => $client->value('name'),
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
-            'avatar' => $client->value('avatar_image'),
+            'avatar' => Storage::url($client->value('avatar_image')),
             'blocked_at' => $client->value('blocked_at'),
             'email' => $client->value('email'),
             'phone' => $client->value('phone_number'),
@@ -145,10 +145,10 @@ class ProfileController extends Controller
    //   $fileNameToStore . "storage/";
            $client = Client::where('id', auth()->user()->id);
            $client_id = $client->value('id');
-           Client::where('id', $client_id)->update(['avatar_image'=>'storage/' . $path]);
+           Client::where('id', $client_id)->update(['avatar_image'=> $path]);
            return response()->json([
                'message' => 'success',
-               'avatar_image' => $client->value('avatar_image'),
+               'avatar_image' => Storage::url($client->value('avatar_image')),
            ], 200);
        }
    
