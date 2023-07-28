@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\API\V1\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Client;
 use App\Models\ClientsTemporaryPassword;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class AuthController extends Controller
 {
+
     /**
      * Create a new AuthController instance.
      *
@@ -33,27 +36,29 @@ class AuthController extends Controller
         if ($validator->fails()) :
             if ($validator->messages()->first('email', ':message') == "The email has already been taken.") :
                 $client_id = Client::where('email', $request->email)->value('id');
+                $comb = "abcdefghijklmnopqrstuvwxyz";
+                $shfl = str_shuffle($comb);
+                $password = substr($shfl, 0, 15);
+                $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
+                $password_hashe = Hash::make($password);
+                ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
+                Client::where('id', $client_id)->update(['password' => $password_hashe]);
+                $client_email = Client::where('id', $client_id)->value('email');
+
                 if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
-                    $comb = "abcdefghijklmnopqrstuvwxyz";
-                    $shfl = str_shuffle($comb);
-                    $password = substr($shfl, 0, 15);
-                    $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
-                    $password_hashe = Hash::make($password);
-                    ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
-                    Client::where('id', $client_id)->update(['password' => $password_hashe]);
-                    $client_email = Client::where('id', $client_id)->value('email');
                     return response()->json([
                         'message' => 'success',
                         'password' => $password,
                         'email' => $client_email
                     ], 200);
                 else :
-                    $client_email = Client::where('id', $client_id)->value('email');
+
                     return response()->json([
                         'message' => 'success',
-                        'password' => 'Enter the last password that was sent to your email.',
+                        'password' => $password,
                         'email' => $client_email
                     ], 200);
+
                 endif;
             endif;
             return response()->json($validator->errors(), 422);
@@ -81,11 +86,12 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function login_confirm(Request $request)
+    public function login_confirm(LoginRequest $request)
     {
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:17',
+            'password' => 'required|string|min:17|',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -99,7 +105,8 @@ class AuthController extends Controller
 
 
     public function login_profile(Request $request)
-    {
+    {        
+ 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'age' => 'required|integer|min:1',
@@ -117,9 +124,11 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
+        Auth::guard('api')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return response()->json(['message' => 'client successfully signed out']);
     }
 
@@ -140,6 +149,3 @@ class AuthController extends Controller
         ]);
     }
 }
-
-
-

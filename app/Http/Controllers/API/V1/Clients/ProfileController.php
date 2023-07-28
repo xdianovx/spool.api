@@ -26,19 +26,19 @@ class ProfileController extends Controller
 
        public function userProfile()
        {
-        $avatar = null;
+        // $avatar = null;
         $client = Client::find(auth()->user('api')->id);
-        if(!empty($client->avatar_image)):
-            $avatar = null;
-        elase:
-            $avatar = env('API_URL') . Storage::url($client->avatar_image);
-        endif;
+        // if(!empty($client->avatar_image)):
+        //     $avatar = null;
+        // elase:
+        //     $avatar = env('API_URL') . Storage::url($client->avatar_image);
+        // endif;
         return response()->json([
             'id' => $client->value('id'),
             'name' => $client->value('name'),
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
-            'avatar' => $avatar,
+            'avatar' => env('API_URL') . Storage::url($client->avatar_image),
             'blocked_at' => $client->value('blocked_at'),
             'email' => $client->value('email'),
             'phone' => $client->value('phone_number'),

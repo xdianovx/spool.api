@@ -26,7 +26,7 @@ Route::group([
     'prefix' => 'v1'
 ], function ($router) {
     //auth
-    Route::post('account/login', [AuthController::class, 'login']);
+    Route::post('account/login', [AuthController::class, 'login'])->middleware('throttle:3,1440');
     Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
