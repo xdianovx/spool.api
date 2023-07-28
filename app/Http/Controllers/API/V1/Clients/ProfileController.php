@@ -27,12 +27,17 @@ class ProfileController extends Controller
        public function userProfile()
        {
         $client = Client::where('id', auth()->user('api')->id);
+        if($client->value('avatar_image')):
+            $avatar = env('API_URL') . Storage::url('api/v1',$client->value('avatar_image'));
+        elase:
+            $avatar = null;
+        endif;
         return response()->json([
             'id' => $client->value('id'),
             'name' => $client->value('name'),
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
-            'avatar' => env('API_URL') . Storage::url('api/v1',$client->value('avatar_image')),
+            'avatar' => $avatar,
             'blocked_at' => $client->value('blocked_at'),
             'email' => $client->value('email'),
             'phone' => $client->value('phone_number'),
@@ -141,14 +146,18 @@ class ProfileController extends Controller
        // Сохраняем файл
        $path = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
      }
-   //   // При выводе файла на странице нудно будет прибавить в начале "storage/"
-   //   $fileNameToStore . "storage/";
+     $client = Client::where('id', auth()->user('api')->id);
+     if($client->value('avatar_image')):
+         $avatar = env('API_URL') . Storage::url('api/v1',$client->value('avatar_image'));
+     elase:
+         $avatar = null;
+     endif;
            $client = Client::where('id', auth()->user()->id);
            $client_id = $client->value('id');
            Client::where('id', $client_id)->update(['avatar_image'=> $path]);
            return response()->json([
                'message' => 'success',
-               'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
+               'avatar_image' => $avatar,
            ], 200);
        }
    
