@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\Clients\AuthController;
+use App\Http\Controllers\API\V1\Clients\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,14 @@ Route::group([
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
-    Route::get('profile', [AuthController::class, 'userProfile']);    
+    Route::get('profile', [ProfileController::class, 'userProfile']);    
+    Route::post('profile/email', [ProfileController::class, 'profileEmail']);  
+    Route::get('profile/get_country', [ProfileController::class, 'profileGetCountry']);  
+    Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);  
+    Route::post('profile/name', [ProfileController::class, 'profileName']);
+    Route::post('profile/age', [ProfileController::class, 'profileAge']);
+    Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
+    Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
 });
 
 Route::get('/v1/ping', function () {

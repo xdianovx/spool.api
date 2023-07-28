@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\ClientsTemporaryPassword;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
@@ -25,26 +22,22 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'login_confirm']]);
     }
 
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login(Request $request)
     {
+
+        //Auth
 
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
-        if ($validator->fails()):
-            if($validator->messages()->first('email', ':message') == "The email has already been taken."):
+        if ($validator->fails()) :
+            if ($validator->messages()->first('email', ':message') == "The email has already been taken.") :
                 $client_id = Client::where('email', $request->email)->value('id');
-                if(Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))):
+                if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
                     $comb = "abcdefghijklmnopqrstuvwxyz";
                     $shfl = str_shuffle($comb);
-                    $password = substr($shfl,0,15);
-                    $password = mb_substr($password, 0, 5) . '-' . mb_substr($password,5, 5) . '-' . mb_substr($password, 10);
+                    $password = substr($shfl, 0, 15);
+                    $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
                     $password_hashe = Hash::make($password);
                     ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
                     Client::where('id', $client_id)->update(['password' => $password_hashe]);
@@ -53,29 +46,25 @@ class AuthController extends Controller
                         'message' => 'success',
                         'password' => $password,
                         'email' => $client_email
-                        // 'message' => 'We have sent the password to your email '.$client->email.'',
-                        // 'client' => $client
                     ], 200);
-                    else :
-                        $client_email = Client::where('id', $client_id)->value('email');
-                        return response()->json([
-                            'message' => 'success',
-                            'password' => 'Enter the last password that was sent to your email.',
-                            'email' => $client_email
-                            // 'message' => 'We have sent the password to your email '.$client->email.'',
-                            // 'client' => $client
-                        ], 200);
+                else :
+                    $client_email = Client::where('id', $client_id)->value('email');
+                    return response()->json([
+                        'message' => 'success',
+                        'password' => 'Enter the last password that was sent to your email.',
+                        'email' => $client_email
+                    ], 200);
                 endif;
             endif;
             return response()->json($validator->errors(), 422);
         endif;
         $client = Client::create(array_merge(
             $validator->validated()
-        )); 
+        ));
         $comb = "abcdefghijklmnopqrstuvwxyz";
         $shfl = str_shuffle($comb);
-        $password = substr($shfl,0,15);
-        $password =  mb_substr($password, 0, 5) . '-' . mb_substr($password,5, 5) . '-' . mb_substr($password, 10);
+        $password = substr($shfl, 0, 15);
+        $password =  mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
         $password_hashe = Hash::make($password);
         $clients_temporary_password = ClientsTemporaryPassword::create(array_merge([
             'password' => $password_hashe,
@@ -89,8 +78,6 @@ class AuthController extends Controller
             'message' => 'success',
             'password' => $password,
             'email' => $client->email
-            // 'message' => 'We have sent the password to your email '.$client->email.'',
-            // 'client' => $client
         ], 200);
     }
 
@@ -110,62 +97,39 @@ class AuthController extends Controller
         return $this->createNewToken($token);
     }
 
-    
+
     public function login_profile(Request $request)
     {
-        $client_id = Client::where('id', auth()->user()->id)->value('id');
-        Client::where('id', $client_id)->update([
-            'name' => $request['name'],
-            'age' => $request['age'],
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'age' => 'required|integer|min:1',
         ]);
-        $client_email = Client::where('id', $client_id)->value('email');
-        $client_name = Client::where('id', $client_id)->value('name');
-        $client_age = Client::where('id', $client_id)->value('age');
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $client = Client::where('id', auth()->user()->id);
+        $client_id = $client->value('id');
+        Client::where('id', $client_id)->update($validator->validated());
         return response()->json([
             'message' => 'success',
-            'name' => $client_name,
-            'email' => $client_email,
-            'age' => $client_age
-            // 'message' => 'We have sent the password to your email '.$client->email.'',
-            // 'client' => $client
+            'name' => $client->value('name'),
+            'age' => $client->value('age'),
         ], 200);
-  
     }
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function logout()
     {
         auth()->logout();
         return response()->json(['message' => 'client successfully signed out']);
     }
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function refresh()
     {
         return $this->createNewToken(auth('api')->refresh());
     }
-    /**
-     * Get the authenticated client.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function userProfile()
-    {
-        return response()->json(auth()->user('api'));
-    }
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+
+    //Token
+
     protected function createNewToken($token)
     {
         return response()->json([
@@ -176,3 +140,6 @@ class AuthController extends Controller
         ]);
     }
 }
+
+
+
