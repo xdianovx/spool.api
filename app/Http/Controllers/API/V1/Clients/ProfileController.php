@@ -28,6 +28,7 @@ class ProfileController extends Controller
        {
         $client = Client::where('id', auth()->user('api')->id);
         return response()->json([
+            'id' => $client->value('id'),
             'name' => $client->value('name'),
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
@@ -39,7 +40,10 @@ class ProfileController extends Controller
             'email_verified_at' => $client->value('email_verified_at'),
             'created_at' => $client->value('created_at'),
             'updated_at' => $client->value('updated_at'),
-            'country' => Client::find(auth()->user()->id)->country->name ?? "null"
+            'country' => [
+                'id' => $client->value('country_id'),
+                'country' => Client::find(auth()->user()->id)->country->name ?? "null"
+                ]
         ], 200);
        }
    
