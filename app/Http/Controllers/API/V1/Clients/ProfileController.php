@@ -26,7 +26,21 @@ class ProfileController extends Controller
 
        public function userProfile()
        {
-           return response()->json(auth()->user('api'));
+        $client = Client::where('id', auth()->user('api')->id);
+        return response()->json([
+            'name' => $client->value('name'),
+            'age' => $client->value('age'),
+            'gender' => $client->value('gender'),
+            'avatar' => $client->value('avatar_image'),
+            'blocked_at' => $client->value('blocked_at'),
+            'email' => $client->value('email'),
+            'phone' => $client->value('phone_number'),
+            'last_login_date' => $client->value('last_login_date'),
+            'email_verified_at' => $client->value('email_verified_at'),
+            'created_at' => $client->value('created_at'),
+            'updated_at' => $client->value('updated_at'),
+            'country' => Client::find(auth()->user()->id)->country->name ?? "null"
+        ], 200);
        }
    
        public function profileEmail(Request $request)
@@ -45,13 +59,7 @@ class ProfileController extends Controller
                'email' => $client->value('email'),
            ], 200);
        }
-   
-       public function profileGetCountry()
-       {
-           $countries = Country::all();
-           return response()->json($countries);
-       }
-   
+      
        public function profilePostCountry(Request $request)
        {
    
