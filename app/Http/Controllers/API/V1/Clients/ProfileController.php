@@ -32,7 +32,7 @@ class ProfileController extends Controller
             'name' => $client->value('name'),
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
-            'avatar' => Storage::url($client->value('avatar_image')),
+            'avatar' => env('API_URL') . Storage::url('api/v1',$client->value('avatar_image')),
             'blocked_at' => $client->value('blocked_at'),
             'email' => $client->value('email'),
             'phone' => $client->value('phone_number'),
@@ -148,7 +148,7 @@ class ProfileController extends Controller
            Client::where('id', $client_id)->update(['avatar_image'=> $path]);
            return response()->json([
                'message' => 'success',
-               'avatar_image' => Storage::url($client->value('avatar_image')),
+               'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
            ], 200);
        }
    
