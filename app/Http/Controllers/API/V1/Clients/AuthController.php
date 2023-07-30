@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\API\V1\Clients;
 
+use App\Events\Auth\ClientRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Client;
 use App\Models\ClientsTemporaryPassword;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
@@ -22,54 +27,37 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'login_confirm']]);
+        $this->middleware('jwt.verify', ['except' => ['login', 'login_confirm']]);
     }
 
     public function login(Request $request)
     {
-
-        //Auth
-
+        $this->headers_check($request);
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
         if ($validator->fails()) :
             if ($validator->messages()->first('email', ':message') == "The email has already been taken.") :
-                $client_id = Client::where('email', $request->email)->value('id');
-                $comb = "abcdefghijklmnopqrstuvwxyz";
-                $shfl = str_shuffle($comb);
-                $password = substr($shfl, 0, 15);
-                $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
+                $client = Client::where('email', $request->email);
+                $client_id = $client->value('id');
+                $password = $this->password_generate();
                 $password_hashe = Hash::make($password);
                 ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
                 Client::where('id', $client_id)->update(['password' => $password_hashe]);
-                $client_email = Client::where('id', $client_id)->value('email');
-
-                if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
+                event(new ClientRegistered(Client::find($client->value('id')), $password));  // Sending password
                     return response()->json([
-                        'message' => 'success',
+                        'message' => 'The password has been sent to your email.',
                         'password' => $password,
-                        'email' => $client_email
-                    ], 200);
-                else :
-
-                    return response()->json([
-                        'message' => 'success',
-                        'password' => $password,
-                        'email' => $client_email
+                        'email' => $client->value('email')
                     ], 200);
 
-                endif;
             endif;
             return response()->json($validator->errors(), 422);
         endif;
         $client = Client::create(array_merge(
             $validator->validated()
         ));
-        $comb = "abcdefghijklmnopqrstuvwxyz";
-        $shfl = str_shuffle($comb);
-        $password = substr($shfl, 0, 15);
-        $password =  mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
+        $password = $this->password_generate();
         $password_hashe = Hash::make($password);
         $clients_temporary_password = ClientsTemporaryPassword::create(array_merge([
             'password' => $password_hashe,
@@ -79,8 +67,10 @@ class AuthController extends Controller
             'password' => $password_hashe,
         ]);
 
+        event(new ClientRegistered($client, $password)); // Sending password
+        
         return response()->json([
-            'message' => 'success',
+            'message' => 'The password has been sent to your email.',
             'password' => $password,
             'email' => $client->email
         ], 200);
@@ -88,11 +78,15 @@ class AuthController extends Controller
 
     public function login_confirm(LoginRequest $request)
     {
-
+        $this->headers_check($request);
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:17|',
         ]);
+        $client_id = Client::where('email', $request->email)->value('id');
+        if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
+            return response()->json(['message' => 'Your password has expired']);
+        endif;
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -106,7 +100,7 @@ class AuthController extends Controller
 
     public function login_profile(Request $request)
     {        
- 
+        $this->headers_check($request);
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'age' => 'required|integer|min:1',
@@ -114,8 +108,9 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth()->user()->id);
+        $client = Client::where('id', auth('api')->user()->id);
         $client_id = $client->value('id');
+
         Client::where('id', $client_id)->update($validator->validated());
         return response()->json([
             'message' => 'success',
@@ -126,9 +121,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        $this->headers_check($request);
         Auth::guard('api')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
         return response()->json(['message' => 'client successfully signed out']);
     }
 
@@ -145,7 +139,28 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'client' => auth()->user('api')
+            'is_filled' => (auth('api')->user()->name && auth('api')->user()->age) ? true : false
         ]);
+    }
+
+    protected function password_generate()
+    {
+        $comb = "abcdefghijklmnopqrstuvwxyz";
+        $shfl = str_shuffle($comb);
+        $password = substr($shfl, 0, 15);
+        $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
+        return $password;
+    }
+    protected function headers_check($request)
+    {
+        if (!$request->header('language')) :
+            App::abort(500);
+        endif;
+        if (!$request->header('system')) :
+            App::abort(500);
+        endif;
+        if (!$request->header('version')) :
+            App::abort(500);
+        endif;
     }
 }

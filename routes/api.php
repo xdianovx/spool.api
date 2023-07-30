@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\Clients\AuthController;
 use App\Http\Controllers\API\V1\Clients\ProfileController;
 use App\Http\Controllers\API\V1\Countries\CountryController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +27,7 @@ Route::group([
     'prefix' => 'v1'
 ], function ($router) {
     //auth
-    Route::post('account/login', [AuthController::class, 'login'])->middleware('throttle:3,1440');
+    Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
     Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
@@ -37,6 +38,7 @@ Route::group([
     Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);  
     Route::post('profile/name', [ProfileController::class, 'profileName']);
     Route::post('profile/age', [ProfileController::class, 'profileAge']);
+    Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
     Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
     Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
     //country

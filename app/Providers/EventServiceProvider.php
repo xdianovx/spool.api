@@ -29,13 +29,16 @@ class EventServiceProvider extends ServiceProvider
         Verified::class => [
             LogVerifiedUser::class,
         ],
+        'App\Events\Auth\ClientRegistered' => [
+            'App\Listeners\Auth\SendRegisterNotification',
+        ],
     ];
     /**
      * Register any events for your application.
      */
     public function boot(): void
     {
-        //
+        parent::boot();
     }
 
     /**
