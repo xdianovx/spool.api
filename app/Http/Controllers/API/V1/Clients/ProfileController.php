@@ -26,7 +26,7 @@ class ProfileController extends Controller
     }
     //Profile
 
-    public function userProfile()
+    public function userProfile(Request $request)
     {
         $this->headers_check($request);
         $avatar = null;
