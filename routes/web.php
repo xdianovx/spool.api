@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\PartnersCompanyController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Partners_company;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/all',  [UserController::class, 'index'])->name('users.index');
+        Route::get('/search',  [UserController::class, 'search'])->name('users.search');
         Route::get('/create',  [UserController::class, 'create'])->name('user.create');
         Route::post('/',  [UserController::class, 'store'])->name('user.store');
         Route::get('/{user}/show',  [UserController::class, 'show'])->name('user.show');
@@ -39,11 +42,24 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('countries')->group(function () {
         Route::get('/all',  [CountryController::class, 'index'])->name('countries.index');
-        // Route::get('/create',  [CountryController::class, 'create'])->name('user.create');
-        // Route::get('/',  [CountryController::class, 'store'])->name('user.store');
-        // Route::get('/{country}',  [CountryController::class, 'show'])->name('country.show');
-        // Route::get('/{country}/edit',  [CountryController::class, 'edit'])->name('country.edit');
-        // Route::get('/{country}',  [CountryController::class, 'destroy'])->name('country.destroy');
+        Route::get('/search',  [CountryController::class, 'search'])->name('countries.search');
+        Route::get('/create',  [CountryController::class, 'create'])->name('country.create');
+        Route::post('/',  [CountryController::class, 'store'])->name('country.store');
+        Route::get('/{country}/show',  [CountryController::class, 'show'])->name('country.show');
+        Route::get('/{country}/edit',  [CountryController::class, 'edit'])->name('country.edit');
+        Route::patch('/{country}',  [CountryController::class, 'update'])->name('country.update');
+        Route::delete('/{country}',  [CountryController::class, 'destroy'])->name('country.destroy');
+    });
+
+    Route::prefix('partners_companies')->group(function () {
+        Route::get('/all',  [PartnersCompanyController::class, 'index'])->name('partners_companies.index');
+        Route::get('/search',  [PartnersCompanyController::class, 'search'])->name('partners_companies.search');
+        Route::get('/create',  [PartnersCompanyController::class, 'create'])->name('partners_company.create');
+        Route::post('/',  [PartnersCompanyController::class, 'store'])->name('partners_company.store');
+        Route::get('/{partners_company}/show',  [PartnersCompanyController::class, 'show'])->name('partners_company.show');
+        Route::get('/{partners_company}/edit',  [PartnersCompanyController::class, 'edit'])->name('partners_company.edit');
+        Route::patch('/{partners_company}',  [PartnersCompanyController::class, 'update'])->name('partners_company.update');
+        Route::delete('/{partners_company}',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
     });
 });
 

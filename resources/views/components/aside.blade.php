@@ -52,7 +52,7 @@
                 <ul class="menu-inner py-1">
 
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Пользователи</span></li>
-                    <li class="menu-item">
+                    <li class="menu-item @if(Route::current()->getName() == 'users.index') active @endif">
                         <a href="{{ route('users.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Администраторы</div>
@@ -87,14 +87,14 @@
                     </li>
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Видео</span></li>
 
-                    <li class="menu-item">
+                    <li class="menu-item @if(Route::current()->getName() == 'countries.index') active @endif">
                         <a href="{{ route('countries.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Страны</div>
                         </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    </li> 
+                    <li class="menu-item @if(Route::current()->getName() == 'partners_companies.index') active @endif">
+                        <a href="{{ route('partners_companies.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Партнерские компании</div>
                         </a>

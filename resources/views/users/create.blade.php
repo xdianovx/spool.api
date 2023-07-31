@@ -7,12 +7,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <h5 class="card-header">Детали профиля</h5>
+                    <h5 class="card-header">Детали</h5>
 
                     <hr class="my-0">
                     <div class="card-body">
-
-
 
                         <form id="formAccountSettings" method="POST" action="{{ route('user.store') }}">
                             @csrf
@@ -55,49 +53,50 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            <div class="mb-3 col-md-6">
-                                <label class="form-label" for="phoneNumber">Phone Number*</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="text" id="phoneNumber" name="phone_number" class="form-control"
-                                        placeholder="John" value="{{ old('phone_number') }}" required>
-                                    @error('phone_number')
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label" for="phoneNumber">Phone Number*</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" id="phoneNumber" name="phone_number" class="form-control"
+                                            placeholder="John" value="{{ old('phone_number') }}" required>
+                                        @error('phone_number')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="organization" class="form-label">Пароль*</label>
+                                    <input type="text" class="form-control" id="organization" name="password"
+                                        placeholder="John" value="{{ old('password') }}" required>
+                                    @error('password')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="language" class="form-label">Партнерская компания</label>
+                                    <select id="language" class="select2 form-select" name="partner_company_id">
+                                        @foreach ($partner_companies as $partner_company)
+                                            <option value="{{ $partner_company->id }}"
+                                                {{ $partner_company->id == old('partner_company_id') ? 'selected' : '' }}>
+                                                {{ $partner_company->name }}</option>
+                                        @endforeach
+                                        <option value=""
+                                            @if (old('partner_company_id') == '') {{ 'selected' }} @endif>
+                                            Без партнерской компании</option>
+                                    </select>
+                                    @error('partner_company_id')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="organization" class="form-label">Пароль*</label>
-                                <input type="text" class="form-control" id="organization" name="password"
-                                    placeholder="John" value="{{ old('password') }}" required>
-                                @error('password')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                            <div class="demo-inline-spacing">
+                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <button type="reset" class="btn btn-secondary">Отмена</button>
                             </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="language" class="form-label">Партнерская компания</label>
-                                <select id="language" class="select2 form-select" name="partner_company_id">
-                                    @foreach ($partner_companies as $partner_company)
-                                        <option value="{{ $partner_company->id }}"
-                                            {{ $partner_company->id == old('partner_company_id') ? 'selected' : '' }}>
-                                            {{ $partner_company->name }}</option>
-                                    @endforeach
-                                    <option value="" @if (old('partner_company_id') == '') {{ 'selected' }} @endif>
-                                        Без партнерской компании</option>
-                                </select>
-                                @error('partner_company_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                    <div class="demo-inline-spacing">
-                        <button type="submit" class="btn btn-primary">Создать</button>
-                        <button type="reset" class="btn btn-secondary">Отмена</button>
+                        </form>
+                        
                     </div>
-                
-                </form>
-            </div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

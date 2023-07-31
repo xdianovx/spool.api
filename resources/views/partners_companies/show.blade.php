@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
-    <a href="{{ route('countries.index') }}"> Страны</a> / {{$country->name}} /</span> Информация</h4>
+    <a href="{{ route('partners_companies.index') }}"> Страны</a> / {{$partners_company->name}} /</span> Информация</h4>
 <div class="row">
   <!-- Inline text elements -->
   <div class="col">
@@ -15,13 +15,13 @@
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Id:</small></td>
               <td class="py-3">
-                <p class="mb-0">{{$country->id}}</p>
+                <p class="mb-0">{{$partners_company->id}}</p>
               </td>
             </tr>
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Название:</small></td>
               <td class="py-3">
-                <p class="mb-0">{{$country->name}}</p>
+                <p class="mb-0">{{$partners_company->name}}</p>
               </td>
             </tr>
           </tbody>
@@ -31,7 +31,7 @@
         <div class="row demo-vertical-spacing">
  
           <div class="col">
-            <a class="btn btn-primary text-nowrap" href="{{ route('countries.index') }}">Назад</a>
+            <a class="btn btn-primary text-nowrap" href="{{ route('partners_companies.index') }}">Назад</a>
           </div>
         </div>
 

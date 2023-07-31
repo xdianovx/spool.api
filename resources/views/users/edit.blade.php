@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="demo-inline-spacing">
-                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
                                 <button type="reset" class="btn btn-secondary">Отмена</button>
                             </div>
                         </form>

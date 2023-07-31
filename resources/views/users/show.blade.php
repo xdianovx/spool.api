@@ -2,12 +2,12 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
-      <a href="{{ route('users.index') }}"> Администраторы</a> / Пользователь {{$user->name}} /</span> Информация о профиле</h4>
+      <a href="{{ route('users.index') }}"> Администраторы</a> / {{$user->name}} /</span> Информация</h4>
 <div class="row">
     <!-- Inline text elements -->
     <div class="col">
       <div class="card mb-4">
-        <h5 class="card-header">Информация о профиле</h5>
+        <h5 class="card-header">Информация</h5>
         <div class="card-body">
 
           <table class="table table-borderless">

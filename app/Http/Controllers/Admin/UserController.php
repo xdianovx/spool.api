@@ -62,4 +62,17 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('status', 'account-deleted');
     }
+
+    public function search(Request $request)
+    {
+        if (request('search')) {
+            $users = User::where('name', 'like', '%' . request('search') . '%')->
+            orWhere('id', 'like', '%' . request('search') . '%')->
+            orWhere('email', 'like', '%' . request('search') . '%')->
+            orWhere('role', 'like', '%' . request('search') . '%')->get();
+        } else {
+            $users = User::all();
+        }
+        return view('users.index', compact('users'));
+    }
 }
