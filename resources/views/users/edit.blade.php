@@ -76,14 +76,14 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Партнерская компания</label>
                                     <select id="language" class="select2 form-select" name="partner_company_id">
+                                        <option value=""
+                                        @if ($user->partner_company_id == '') {{ 'selected' }} @endif>
+                                        Без партнерской компании</option>
                                         @foreach ($partner_companies as $partner_company)
                                             <option value="{{ $partner_company->id }}"
                                                 {{ $partner_company->id == $user->partner_company_id ? 'selected' : '' }}>
                                                 {{ $partner_company->name }}</option>
                                         @endforeach
-                                        <option value=""
-                                            @if ($user->partner_company_id == '') {{ 'selected' }} @endif>
-                                            Без партнерской компании</option>
                                     </select>
                                     @error('partner_company_id')
                                         <div class="text-danger">{{ $message }}</div>
