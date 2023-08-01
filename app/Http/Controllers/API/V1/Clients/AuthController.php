@@ -27,7 +27,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['jwt.verify'], ['except' => ['login', 'login_confirm']]);
+        $this->middleware(['jwt.verify'], ['except' => ['login', 'login_confirm','refresh']]);
     }
 
     public function login(Request $request)
@@ -128,6 +128,7 @@ class AuthController extends Controller
 
     public function refresh()
     {
+
         return $this->createNewToken(auth('api')->refresh());
     }
 
