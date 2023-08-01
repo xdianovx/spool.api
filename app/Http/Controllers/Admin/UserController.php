@@ -69,7 +69,7 @@ class UserController extends Controller
             $users = User::where('name', 'like', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
             orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('role', 'like', '%' . request('search') . '%')->get();
+            orWhere('role', 'like', '%' . request('search') . '%')->paginate(5);
         } else {
             $users = User::all();
         }

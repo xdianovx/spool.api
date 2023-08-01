@@ -59,7 +59,7 @@ class CountryController extends Controller
     {
         if (request('search')) {
             $countries = Country::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->get();
+            orWhere('id', 'like', '%' . request('search') . '%')->paginate(5);
         } else {
             $countries = Country::all();
         }

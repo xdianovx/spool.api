@@ -46,7 +46,7 @@ class ClientController extends Controller
             $clients = Client::where('name', 'like', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
             orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('name', 'like', '%' . request('search') . '%')->get();
+            orWhere('name', 'like', '%' . request('search') . '%')->paginate(5);
         } else {
             $clients = Client::all();
         }

@@ -59,7 +59,7 @@ class PartnersCompanyController extends Controller
     {
         if (request('search')) {
             $partners_companies = Partners_company::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->get();
+            orWhere('id', 'like', '%' . request('search') . '%')->paginate(5);
         } else {
             $partners_companies = Partners_company::all();
         }

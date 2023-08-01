@@ -47,6 +47,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Аватар</th>
                                 <th>Id</th>
                                 <th>Имя</th>
                                 <th>Email</th>
@@ -57,6 +58,16 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($clients as $client)
                                 <tr>
+                                    <td>
+                                           @if(!empty($client->avatar_image))
+                                            <img src="{{ asset('storage/app' . $client->avatar_image) }}" >
+                                            @else
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAN1JREFUSEvdldsNwjAMRU83gU1gE5gEmAQ2ASaBTU
+                                            AXNZUVFSfN46f+qhrVx76+cQc6x9A5P+sC7IArsKmU7Q0cgYfyWInugCAtQpBtDPi0yGxy/Iq3HVjADbgAB+BUCHYBAax5vHoAVL26UPXqoiTcDlIJ5RI5zotiwH60oDrzINkA+fk5yqVnAUK
+                                            cHRNkAUJCDVvzkDQ29F5dzN2fJGC6LAmtBdEljTdAEhC0Tg1c53N2dgFLkocC4qEnO8ipfJFNWy67yW12F8kJckrtRv27rmslmf1+Xb/MLhJ9AaOeKxkN8OojAAAAAElFTkSuQmCC"/>
+                                            @endif
+                                     
+                                      </td>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                         <strong>{{ $client->id }}</strong>
                                     </td>

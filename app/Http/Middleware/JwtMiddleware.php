@@ -3,10 +3,9 @@ namespace App\Http\Middleware;
 
 
 use Closure;
-use JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 
@@ -24,15 +23,15 @@ class JwtMiddleware extends BaseMiddleware
 	public function handle($request, Closure $next)
 	{
 		try {
-		   $user = FacadesJWTAuth::parseToken()->authenticate();
+		   $user = JWTAuth::parseToken()->authenticate();
  		} catch (Exception $e) {
         	  if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
 		    return response()->json(['status' => 'Token is Invalid'], 403);
 		  }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
 			try
 			{
-			  $refreshed = FacadesJWTAuth::refresh(FacadesJWTAuth::getToken());
-			  $user = FacadesJWTAuth::setToken($refreshed)->toUser();
+			  $refreshed = JWTAuth::refresh(JWTAuth::getToken());
+			  $user = JWTAuth::setToken($refreshed)->toUser();
 			  $request->headers->set('Authorization','Bearer '.$refreshed);
 			}catch (JWTException $e){
 				return response()->json([
