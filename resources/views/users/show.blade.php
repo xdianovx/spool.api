@@ -9,7 +9,7 @@
       <div class="card mb-4">
         <h5 class="card-header">Информация</h5>
         <div class="card-body">
-
+          <hr class="m-0">
           <table class="table table-borderless">
             <tbody>
               <tr>
@@ -70,7 +70,7 @@
             </tbody>
           </table>
 
-
+          <hr class="m-0">
           <div class="row demo-vertical-spacing">
    
             <div class="col">

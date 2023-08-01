@@ -1,26 +1,26 @@
 @extends('template.main')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Страны /</span></h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Клиенты /</h4>
         <div class="card">
             <h5 class="card-header">Список</h5>
             <div class="card-body">
-                <a type="button" class="btn btn-outline-secondary fw-semibold"
-                    href="{{ route('country.create') }}">Добавить</a>
+
 
                 <div class="demo-inline-spacing">
-                    @if (session('status') === 'country-updated')
-                        <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
+                    @if (session('status') === 'account-banned')
+                        <div class="alert alert-primary" role="alert">
+                            {{ __('Клиент заблокирован успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'country-created')
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            {{ __('Создано успешно.') }}
+                    @if (session('status') === 'account-unbanned')
+                        <div class="alert alert-primary" role="alert">
+                            {{ __('Клиент разблокирован успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'country-deleted')
+                    @if (session('status') === 'account-deleted')
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             {{ __('Удалено успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -31,7 +31,7 @@
 
             <hr class="m-0">
             <div class="card-body">
-                <form class="navbar-nav-right d-flex align-items-center" action="{{ route('countries.search') }}"
+                <form class="navbar-nav-right d-flex align-items-center" action="{{ route('clients.search') }}"
                     method="get">
                     <div class="nav-item d-flex align-items-center">
                         <i class="bx bx-search fs-4 lh-0"></i>
@@ -48,17 +48,23 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Название</th>
+                                <th>Имя</th>
+                                <th>Email</th>
+                                <th>Дата последнего входа</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse ($countries as $country)
+                            @forelse ($clients as $client)
                                 <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ $country->id }}</strong>
+                                        <strong>{{ $client->id }}</strong>
                                     </td>
-                                    <td>{{ $country->name }}</td>
+                                    <td>{{ $client->name }}</td>
+                                    <td>
+                                        {{ $client->email }}
+                                    </td>
+                                    <td><span class="badge bg-label-primary me-1">{{ $client->last_login_date }}</span></td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -66,11 +72,8 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-
-                                                <a class="dropdown-item" href="{{ route('country.show', $country->id) }}"><i
+                                                <a class="dropdown-item" href="{{ route('client.show', $client->id) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
-                                                <a class="dropdown-item" href="{{ route('country.edit', $country->id) }}"><i
-                                                        class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
                                                     data-bs-toggle="modal" data-bs-target="#modalScrollable"><i
@@ -88,17 +91,16 @@
 
                         </tbody>
                     </table>
-                    @if ($countries->links()->paginator->hasPages())
+                    @if ($clients->links()->paginator->hasPages())
                         <div class="demo-inline-spacing">
-                            {{ $countries->links() }}
+                            {{ $clients->links() }}
                         </div>
                     @endif
-
                 </div>
             </div>
         </div>
     </div>
-    @if ($country ?? null)
+    @if ($client ?? null)
         <div class="modal fade" id="modalScrollable" tabindex="-1" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
@@ -115,7 +117,7 @@
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                             Закрыть
                         </button>
-                        <form action="{{ route('country.destroy', $country->id) }}" method="POST">
+                        <form action="{{ route('client.destroy', $client->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" data-bs-toggle="modal"

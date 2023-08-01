@@ -27,7 +27,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('jwt.verify', ['except' => ['login', 'login_confirm']]);
+        $this->middleware(['jwt.verify'], ['except' => ['login', 'login_confirm']]);
     }
 
     public function login(Request $request)
@@ -128,6 +128,7 @@ class AuthController extends Controller
 
     public function refresh()
     {
+
         return $this->createNewToken(auth('api')->refresh());
     }
 
@@ -135,12 +136,20 @@ class AuthController extends Controller
 
     protected function createNewToken($token)
     {
+        if(auth('api')->user()):
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             'is_filled' => (auth('api')->user()->name && auth('api')->user()->age) ? true : false
         ]);
+    else:
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
+    endif;
     }
 
     protected function password_generate()

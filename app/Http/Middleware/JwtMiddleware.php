@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use JWTAuth;
 use Exception;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth as FacadesJWTAuth;
 use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 
@@ -22,11 +24,23 @@ class JwtMiddleware extends BaseMiddleware
 	public function handle($request, Closure $next)
 	{
 		try {
-		   $user = JWTAuth::parseToken()->authenticate();
+		   $user = FacadesJWTAuth::parseToken()->authenticate();
  		} catch (Exception $e) {
         	  if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
 		    return response()->json(['status' => 'Token is Invalid'], 403);
 		  }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+			try
+			{
+			  $refreshed = FacadesJWTAuth::refresh(FacadesJWTAuth::getToken());
+			  $user = FacadesJWTAuth::setToken($refreshed)->toUser();
+			  $request->headers->set('Authorization','Bearer '.$refreshed);
+			}catch (JWTException $e){
+				return response()->json([
+					'code'   => 103,
+					'message' => 'Token cannot be refreshed, please Login again'
+				]);
+			}
+		}else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
 			return response()->json(['status' => 'Token is Expired'], 401);
 		  }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException){
 			return response()->json(['status' => 'Token is Blacklisted'], 400);
@@ -37,3 +51,4 @@ class JwtMiddleware extends BaseMiddleware
             return $next($request);
 	}
 }
+

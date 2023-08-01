@@ -84,7 +84,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @empty
+                            @empty
                                 <tr>
                                     <td class="text-danger">По вашему запросу ничего не найдено.</td>
                                 </tr>
@@ -92,36 +92,41 @@
 
                         </tbody>
                     </table>
+                    @if ($users->links()->paginator->hasPages())
+                        <div class="demo-inline-spacing">
+                            {{ $users->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     @if ($user ?? null)
-    <div class="modal fade" id="modalScrollable" tabindex="-1" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning">
-                        {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                        Закрыть
-                    </button>
-                    <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#modalScrollableConfirm">Подтвердить</button>
-                    </form>
+        <div class="modal fade" id="modalScrollable" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning">
+                            {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Закрыть
+                        </button>
+                        <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#modalScrollableConfirm">Подтвердить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 @endsection

@@ -67,9 +67,11 @@
                                             </button>
                                             <div class="dropdown-menu">
 
-                                                <a class="dropdown-item" href="{{ route('partners_company.show', $partners_company->id) }}"><i
+                                                <a class="dropdown-item"
+                                                    href="{{ route('partners_company.show', $partners_company->id) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
-                                                <a class="dropdown-item" href="{{ route('partners_company.edit', $partners_company->id) }}"><i
+                                                <a class="dropdown-item"
+                                                    href="{{ route('partners_company.edit', $partners_company->id) }}"><i
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
@@ -88,6 +90,11 @@
 
                         </tbody>
                     </table>
+                    @if ($partners_companies->links()->paginator->hasPages())
+                        <div class="demo-inline-spacing">
+                            {{ $partners_companies->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

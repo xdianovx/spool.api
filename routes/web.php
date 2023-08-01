@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\PartnersCompanyController;
 use App\Http\Controllers\Admin\UserController;
@@ -38,6 +39,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
         Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
         Route::delete('/{user}/destroy',  [UserController::class, 'destroy'])->name('user.destroy');
+    });
+
+    Route::prefix('clients')->group(function () {
+        Route::get('/all',  [ClientController::class, 'index'])->name('clients.index');
+        Route::get('/search',  [ClientController::class, 'search'])->name('clients.search');
+        Route::get('/{client}/show',  [ClientController::class, 'show'])->name('client.show');
+        Route::patch('/{client}',  [ClientController::class, 'send_ban'])->name('client.send_ban');
+        Route::delete('/{client}/destroy',  [ClientController::class, 'destroy'])->name('client.destroy');
     });
 
     Route::prefix('countries')->group(function () {

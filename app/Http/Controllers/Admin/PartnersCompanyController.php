@@ -12,7 +12,7 @@ class PartnersCompanyController extends Controller
 {
     public function index()
     {
-        $partners_companies = Partners_company::orderBy('id', 'DESC')->get();
+        $partners_companies = Partners_company::orderBy('id', 'DESC')->paginate(5);
         return view('partners_companies.index', compact('partners_companies'));
     }
 

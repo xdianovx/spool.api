@@ -50,16 +50,25 @@
                 <div class="menu-inner-shadow"></div>
 
                 <ul class="menu-inner py-1">
-
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Пользователи</span></li>
-                    <li class="menu-item @if(Route::current()->getName() == 'users.index') active @endif">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'users.index',
+                        'user.create',
+                        'users.search',
+                        'user.show',
+                        'user.edit',
+                    ])) active @endif">
                         <a href="{{ route('users.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Администраторы</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="sss" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'clients.index',
+                        'clients.search',
+                        'client.show',
+                    ])) active @endif">
+                        <a href="{{ route('clients.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Клиенты</div>
                         </a>
@@ -87,13 +96,25 @@
                     </li>
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Видео</span></li>
 
-                    <li class="menu-item @if(Route::current()->getName() == 'countries.index') active @endif">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'countries.index',
+                        'country.create',
+                        'countries.search',
+                        'country.show',
+                        'country.edit',
+                    ])) active @endif">
                         <a href="{{ route('countries.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Страны</div>
                         </a>
                     </li> 
-                    <li class="menu-item @if(Route::current()->getName() == 'partners_companies.index') active @endif">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'partners_companies.index',
+                        'partners_company.create',
+                        'partners_companies.search',
+                        'partners_company.show',
+                        'partners_company.edit',
+                    ])) active @endif">
                         <a href="{{ route('partners_companies.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Партнерские компании</div>
