@@ -76,7 +76,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function login_confirm(LoginRequest $request)
+    public function login_confirm(Request $request)
     {
  
         $validator = Validator::make($request->all(), [
