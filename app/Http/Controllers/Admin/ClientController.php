@@ -11,7 +11,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::orderBy('id', 'DESC')->paginate(5);
+        $clients = Client::orderBy('id', 'DESC')->paginate(10);
         return view('clients.index', compact('clients'));
     }
 
@@ -42,14 +42,16 @@ class ClientController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search')) {
+        
+        if (request('search') == 'null'):
+            $clients = Client::all();
+         else:
             $clients = Client::where('name', 'like', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
             orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('name', 'like', '%' . request('search') . '%')->paginate(5);
-        } else {
-            $clients = Client::all();
-        }
+            orWhere('name', 'like', '%' . request('search') . '%')->paginate(10);
+         endif;
+
         return view('clients.index', compact('clients'));
     }
 }

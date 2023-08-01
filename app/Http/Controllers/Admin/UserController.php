@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'DESC')->paginate(5);
+        $users = User::orderBy('id', 'DESC')->paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -65,14 +65,15 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search')) {
+        if (request('search' == 'null')):
+            $users = User::all();
+
+        else:
             $users = User::where('name', 'like', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
             orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('role', 'like', '%' . request('search') . '%')->paginate(5);
-        } else {
-            $users = User::all();
-        }
+            orWhere('role', 'like', '%' . request('search') . '%')->paginate(10);
+        endif;
         return view('users.index', compact('users'));
     }
 }

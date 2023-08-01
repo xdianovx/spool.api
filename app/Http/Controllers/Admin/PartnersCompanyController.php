@@ -12,7 +12,7 @@ class PartnersCompanyController extends Controller
 {
     public function index()
     {
-        $partners_companies = Partners_company::orderBy('id', 'DESC')->paginate(5);
+        $partners_companies = Partners_company::orderBy('id', 'DESC')->paginate(10);
         return view('partners_companies.index', compact('partners_companies'));
     }
 
@@ -57,12 +57,12 @@ class PartnersCompanyController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search')) {
-            $partners_companies = Partners_company::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->paginate(5);
-        } else {
+        if (request('search' == 'null')):
             $partners_companies = Partners_company::all();
-        }
+        else:
+            $partners_companies = Partners_company::where('name', 'like', '%' . request('search') . '%')->
+            orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);
+        endif;
         return view('partners_companies.index', compact('partners_companies'));
     }
 }

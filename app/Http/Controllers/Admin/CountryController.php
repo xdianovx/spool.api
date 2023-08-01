@@ -13,7 +13,7 @@ class CountryController extends Controller
 {
     public function index()
     {
-        $countries = Country::orderBy('id', 'DESC')->paginate(5);
+        $countries = Country::orderBy('id', 'DESC')->paginate(10);
         return view('countries.index', compact('countries'));
     }
 
@@ -57,12 +57,12 @@ class CountryController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search')) {
-            $countries = Country::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->paginate(5);
-        } else {
+        if (request('search' == 'null')):
             $countries = Country::all();
-        }
+        else:
+            $countries = Country::where('name', 'like', '%' . request('search') . '%')->
+            orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);
+        endif;
         return view('countries.index', compact('countries'));
     }
 
