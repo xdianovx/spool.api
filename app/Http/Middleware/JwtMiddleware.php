@@ -23,6 +23,7 @@ class JwtMiddleware extends BaseMiddleware
 	 */
 	public function handle($request, Closure $next)
 	{
+
 		try {
 		   $user = FacadesJWTAuth::parseToken()->authenticate();
  		} catch (Exception $e) {

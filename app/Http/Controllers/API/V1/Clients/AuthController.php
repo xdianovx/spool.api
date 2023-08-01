@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $this->headers_check($request);
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
     public function login_confirm(LoginRequest $request)
     {
-        $this->headers_check($request);
+ 
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:17|',
@@ -100,7 +100,7 @@ class AuthController extends Controller
 
     public function login_profile(Request $request)
     {        
-        $this->headers_check($request);
+      
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'age' => 'required|integer|min:1',
@@ -121,7 +121,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $this->headers_check($request);
+  
         Auth::guard('api')->logout();
         return response()->json(['message' => 'client successfully signed out']);
     }
@@ -160,16 +160,5 @@ class AuthController extends Controller
         $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
         return $password;
     }
-    protected function headers_check($request)
-    {
-        if (!$request->header('language')) :
-            App::abort(500);
-        endif;
-        if (!$request->header('system')) :
-            App::abort(500);
-        endif;
-        if (!$request->header('version')) :
-            App::abort(500);
-        endif;
-    }
+
 }
