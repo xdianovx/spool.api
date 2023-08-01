@@ -60,7 +60,7 @@
                                 <tr>
                                     <td>
                                            @if(!empty($client->avatar_image))
-                                            <img src="{{ asset('storage/app' . $client->avatar_image) }}" >
+                                            <img src="{{ asset('storage/' . $client->avatar_image) }}" >
                                             @else
                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAN1JREFUSEvdldsNwjAMRU83gU1gE5gEmAQ2ASaBTU
                                             AXNZUVFSfN46f+qhrVx76+cQc6x9A5P+sC7IArsKmU7Q0cgYfyWInugCAtQpBtDPi0yGxy/Iq3HVjADbgAB+BUCHYBAax5vHoAVL26UPXqoiTcDlIJ5RI5zotiwH60oDrzINkA+fk5yqVnAUK
