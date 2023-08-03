@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">
-      <a href="{{ route('users.index') }}"> Администраторы</a> / {{$user->name}} /</span> Информация</h4>
+      <a href="{{ route('users.index') }}"> Администраторы</a> / {{$user->name}} </h4>
 <div class="row">
     <!-- Inline text elements -->
     <div class="col">

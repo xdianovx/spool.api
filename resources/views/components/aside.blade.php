@@ -74,22 +74,33 @@
                         </a>
                     </li>
 
-
-                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Видео</span></li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'categories.index',
+                        'category.create',
+                        'categories.search', 
+                        'category.show',
+                        'category.edit',
+                    ])) active @endif">
+                        <a href="{{ route('categories.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Категории</div>
                         </a>
                     </li>
+
                     <li class="menu-item">
                         <a href="#" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Видеоролики</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'tags.index',
+                        'tag.create',
+                        'tags.search',
+                        'tag.show',
+                        'tag.edit',
+                    ])) active @endif">
+                        <a href="{{ route('tags.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Теги</div>
                         </a>

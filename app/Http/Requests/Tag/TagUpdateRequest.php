@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\PartnersCompany;
+namespace App\Http\Requests\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PartnersCompanyUpdateRequest extends FormRequest
+class TagUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class PartnersCompanyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|unique:partners_companies',
+            'name' => 'nullable|string',
+            'display' => 'nullable|string',
         ];
     }
 }

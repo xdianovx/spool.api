@@ -27,7 +27,6 @@ class UserUpdateRequest extends FormRequest
             'surname' => 'nullable|string',
             'role' => 'required|string',
             'email' => 'nullable|string|email',
-            'password' => 'required|min:8',
             'phone_number' => 'nullable|string',
             'partner_company_id' =>'nullable|string'
         ];

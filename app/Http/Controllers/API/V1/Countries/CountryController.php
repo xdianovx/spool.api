@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
-    public function getCountry()
+    public function getCountries()
     {
         $countries = Country::all();
         return response()->json($countries);

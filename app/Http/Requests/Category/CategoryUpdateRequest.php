@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\PartnersCompany;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PartnersCompanyCrateRequest extends FormRequest
+class CategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class PartnersCompanyCrateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'nullable|string',
+            'sort' => 'nullable|numeric',
+            'image' => 'image|nullable|max:1999',
+            'parent_id' => 'nullable|numeric',
         ];
     }
 }

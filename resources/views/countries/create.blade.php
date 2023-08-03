@@ -26,7 +26,7 @@
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Создать</button>
-                                <button type="reset" class="btn btn-secondary">Отмена</button>
+                                <a href="{{ route('countries.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
                         

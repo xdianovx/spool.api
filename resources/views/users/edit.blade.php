@@ -19,32 +19,32 @@
                             @method('patch')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label for="firstName" class="form-label">Имя</label>
+                                    <label for="firstName" class="form-label">Имя*</label>
                                     <input class="form-control" type="text" id="firstName" name="name"
-                                        value="{{ $user->name }}" autofocus autocomplete="name">
+                                        value="{{ $user->name }}" autofocus autocomplete="name" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="lastName" class="form-label">Фамилия</label>
+                                    <label for="lastName" class="form-label">Фамилия*</label>
                                     <input class="form-control" type="text" name="surname" id="lastName"
-                                        value="{{ $user->surname }}" autofocus autocomplete="surname">
+                                        value="{{ $user->surname }}" autofocus autocomplete="surname" required>
                                     @error('surname')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="email" class="form-label">E-mail</label>
+                                    <label for="email" class="form-label">E-mail*</label>
                                     <input class="form-control" type="text" id="email" name="email"
-                                        value="{{ $user->email }}" autofocus autocomplete="email">
+                                        value="{{ $user->email }}" autofocus autocomplete="email" required>
                                     @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="language" class="form-label">Роль</label>
+                                    <label for="language" class="form-label">Роль*</label>
                                     <select id="language" class="select2 form-select" name="role">
                                         <option value="admin" @if ($user->role == 'admin') {{ 'selected' }} @endif>
                                             Администратор</option>
@@ -56,23 +56,16 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label" for="phoneNumber">Номер телефона</label>
+                                    <label class="form-label" for="phoneNumber">Номер телефона*</label>
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="phoneNumber" name="phone_number" class="form-control"
-                                            value="{{ $user->phone_number }}" autofocus autocomplete="phone_number">
+                                            value="{{ $user->phone_number }}" autofocus autocomplete="phone_number" required>
                                         @error('phone_number')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="organization" class="form-label">Пароль*</label>
-                                    <input type="text" class="form-control" id="organization" name="password" autofocus
-                                        autocomplete="password">
-                                    @error('password')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Партнерская компания</label>
                                     <select id="language" class="select2 form-select" name="partner_company_id">
@@ -92,7 +85,7 @@
                             </div>
                             <div class="demo-inline-spacing">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                                <button type="reset" class="btn btn-secondary">Отмена</button>
+                                <a href="{{ route('users.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
 

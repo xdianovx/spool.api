@@ -58,15 +58,15 @@
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="phoneNumber" name="phone_number" class="form-control"
                                             placeholder="John" value="{{ old('phone_number') }}" required>
-                                        @error('phone_number')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
+                                    @error('phone_number')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="organization" class="form-label">Пароль*</label>
                                     <input type="text" class="form-control" id="organization" name="password"
-                                        placeholder="John" value="{{ old('password') }}" required>
+                                        placeholder="Введите пароль" value="{{ old('password') }}" required>
                                     @error('password')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -90,7 +90,7 @@
                             </div>
                             <div class="demo-inline-spacing">
                                 <button type="submit" class="btn btn-primary">Создать</button>
-                                <button type="reset" class="btn btn-secondary">Отмена</button>
+                                <a href="{{ route('users.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
                         

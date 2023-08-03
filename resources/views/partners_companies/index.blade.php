@@ -31,14 +31,10 @@
 
             <hr class="m-0">
             <div class="card-body">
-                <form class="navbar-nav-right d-flex align-items-center" action="{{ route('partners_companies.search') }}"
-                    method="get">
-                    <div class="nav-item d-flex align-items-center">
-                        <i class="bx bx-search fs-4 lh-0"></i>
-                        <input type="text" class="form-control border-0 shadow-none" name="search"
-                            placeholder="Search..." aria-label="Search...">
-                    </div>
-                </form>
+                <form class="d-flex" action="{{ route('partners_companies.search') }}" method="get">
+                    <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Поиск</button>
+                  </form>
             </div>
 
             <hr class="m-0">
@@ -47,7 +43,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Название</th>
                                 <th></th>
                             </tr>
@@ -55,9 +50,6 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($partners_companies as $partners_company)
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ $partners_company->id }}</strong>
-                                    </td>
                                     <td>{{ $partners_company->name }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -75,13 +67,39 @@
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable"><i
+                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$partners_company->id}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="modalScrollable{{$partners_company->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning text-wrap">
+                                                    {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                    Закрыть
+                                                </button>
+                                                <form action="{{ route('partners_company.destroy', $partners_company->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#modalScrollableConfirm">Подтвердить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @empty
                                 <tr>
                                     <td class="text-danger">По вашему запросу ничего не найдено.</td>
@@ -99,32 +117,5 @@
             </div>
         </div>
     </div>
-    @if ($partners_company ?? null)
-        <div class="modal fade" id="modalScrollable" tabindex="-1" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning">
-                            {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Закрыть
-                        </button>
-                        <form action="{{ route('partners_company.destroy', $partners_company->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#modalScrollableConfirm">Подтвердить</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Country\CountryCrateRequest;
+use App\Http\Requests\Country\CountryStoreRequest;
 use App\Http\Requests\Country\CountryUpdateRequest;
 use App\Models\Country;
 use Illuminate\Http\Request;
@@ -23,18 +23,19 @@ class CountryController extends Controller
         return view('countries.create');
     }
 
-    public function show(Country $country)
+    public function show($country)
     {
+        $country = Country::whereId($country)->firstOrFail();
         return view('countries.show', compact('country'));
     }
     
-    public function edit(Country $country)
+    public function edit($country)
     { 
-
+        $country = Country::whereId($country)->firstOrFail();
         return view('countries.edit', compact('country'));
     }
 
-    public function store(CountryCrateRequest $request)
+    public function store(CountryStoreRequest $request)
     {
         $data = $request->validated();
         Country::firstOrCreate([
@@ -43,14 +44,16 @@ class CountryController extends Controller
         return redirect()->route('countries.index')->with('status', 'country-created');
     }
 
-    public function update(CountryUpdateRequest $request, Country $country)
+    public function update(CountryUpdateRequest $request, $country)
     {
+        $country = Country::whereId($country)->firstOrFail();
         $data = $request->validated();
         $country->update($data);
         return redirect()->route('countries.index')->with('status', 'country-updated');
     }
-    public function destroy(Country $country)
+    public function destroy($country)
     {
+        $country = Country::whereId($country)->firstOrFail();
         $country->delete();
         return redirect()->route('countries.index')->with('status', 'country-deleted');
     }
@@ -58,7 +61,7 @@ class CountryController extends Controller
     public function search(Request $request)
     {
         if (request('search' == 'null')):
-            $countries = Country::all();
+            $countries = Country::orderBy('id', 'DESC')->paginate(10);
         else:
             $countries = Country::where('name', 'like', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);

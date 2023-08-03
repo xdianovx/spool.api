@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\V1\Categories\CategoryController;
 use App\Http\Controllers\API\V1\Clients\AuthController;
 use App\Http\Controllers\API\V1\Clients\ProfileController;
 use App\Http\Controllers\API\V1\Countries\CountryController;
+use App\Http\Controllers\API\V1\Tags\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,8 +43,12 @@ Route::group([
     Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
     Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
     Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
-    //country
-    Route::get('country', [CountryController::class, 'getCountry']); 
+    //countries
+    Route::get('countries', [CountryController::class, 'getCountries']); 
+     //categories
+     Route::get('categories', [CategoryController::class, 'getCategories']); 
+        //tags
+        Route::get('tags', [TagController::class, 'getTags']); 
 });
 
 Route::get('/v1/ping', function () {

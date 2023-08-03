@@ -1,27 +1,26 @@
 @extends('template.main')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Клиенты /</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Категории /</span></h4>
         <div class="card">
-
             <h5 class="card-header">Список</h5>
             <div class="card-body">
-
+                <a type="button" class="btn btn-outline-secondary fw-semibold"
+                    href="{{ route('category.create') }}">Добавить</a>
 
                 <div class="demo-inline-spacing">
-                    @if (session('status') === 'account-banned')
-                        <div class="alert alert-primary" role="alert">
-                            {{ __('Клиент заблокирован успешно.') }}
+                    @if (session('status') === 'category-updated')
+                        <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'account-unbanned')
-                        <div class="alert alert-primary" role="alert">
-                            {{ __('Клиент разблокирован успешно.') }}
+                    @if (session('status') === 'category-created')
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ __('Создано успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'account-deleted')
+                    @if (session('status') === 'category-deleted')
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             {{ __('Удалено успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -32,7 +31,7 @@
 
             <hr class="m-0">
             <div class="card-body">
-                <form class="d-flex" action="{{ route('clients.search') }}" method="get">
+                <form class="d-flex" action="{{ route('categories.search') }}" method="get">
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
                 </form>
@@ -44,22 +43,20 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Аватар</th>
-                                <th>Id</th>
-                                <th>Имя</th>
-                                <th>Email</th>
-                                <th>Дата последнего входа</th>
-                                <th>Статус</th>
+                                <th>Изображение</th>
+                                <th>Название</th>
+                                <th>Родительская категория</th>
+                                <th>Соритровка</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse ($clients as $client)
+                            @forelse ($categories as $category)
                                 <tr>
                                     <td>
-                                        @if (!empty($client->avatar_image))
+                                        @if (!empty($category->image))
                                             <div class="avatar avatar-xs">
-                                                <img src="{{ Storage::url($client->avatar_image) }}" alt="Avatar"
+                                                <img src="{{ Storage::url($category->image) }}" alt="Avatar"
                                                     class="rounded-circle">
                                             </div>
                                         @else
@@ -75,22 +72,15 @@
                                             </div>
                                         @endif
                                     </td>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ $client->id }}</strong>
-                                    </td>
-                                    <td>{{ $client->name }}</td>
+                                    <td>{{ $category->name }}</td>
                                     <td>
-                                        {{ $client->email }}
-                                    </td>
-                                    <td><span class="badge bg-label-primary me-1">{{ $client->last_login_date }}</span></td>
-                                    <td>
-                                        @if (empty($client->blocked_at))
-                                            <span class="badge bg-label-primary me-1">Действующий</span>
+                                        @if (!empty($category->parent->name))
+                                            {{ $category->parent->name }}
                                         @else
-                                            <span class="badge bg-label-warning me-1">Заблокирован:
-                                                {{ $client->blocked_at }}</span>
+                                        Без родительской категории
                                         @endif
                                     </td>
+                                    <td>{{ $category->name }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -98,18 +88,23 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('client.show', $client->id) }}"><i
+
+                                                <a class="dropdown-item"
+                                                    href="{{ route('category.show', $category->slug) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('category.edit', $category->slug) }}"><i
+                                                        class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$client->id}}"><i
+                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$category->slug}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalScrollable{{$client->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modalScrollable{{$category->slug}}" tabindex="-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -125,7 +120,7 @@
                                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                                     Закрыть
                                                 </button>
-                                                <form action="{{ route('client.destroy', $client->id) }}" method="POST">
+                                                <form action="{{ route('category.destroy', $category->slug) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
@@ -143,11 +138,12 @@
 
                         </tbody>
                     </table>
-                    @if ($clients->links()->paginator->hasPages())
+                    @if ($categories->links()->paginator->hasPages())
                         <div class="demo-inline-spacing">
-                            {{ $clients->links() }}
+                            {{ $categories->links() }}
                         </div>
                     @endif
+
                 </div>
             </div>
         </div>

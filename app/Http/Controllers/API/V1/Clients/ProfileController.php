@@ -28,7 +28,7 @@ class ProfileController extends Controller
 
     public function userProfile(Request $request)
     {
-        $this->headers_check($request);
+  
         $avatar = null;
         $client = Client::find(auth('api')->user('api')->id);
         if (!empty($client->avatar_image)) :
@@ -60,7 +60,6 @@ class ProfileController extends Controller
 
     public function profileEmail(Request $request)
     {
-        $this->headers_check($request);
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
@@ -78,7 +77,7 @@ class ProfileController extends Controller
 
     public function profilePostCountry(Request $request)
     {
-        $this->headers_check($request);
+  
         $validator = Validator::make($request->all(), [
             'country_id' => 'required|integer|min:1',
         ]);
@@ -96,7 +95,7 @@ class ProfileController extends Controller
 
     public function profileName(Request $request)
     {
-        $this->headers_check($request);
+  
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
         ]);
@@ -114,7 +113,7 @@ class ProfileController extends Controller
 
     public function profileAge(Request $request)
     {
-        $this->headers_check($request);
+
         $validator = Validator::make($request->all(), [
             'age' => 'required|integer|min:1',
         ]);
@@ -132,7 +131,7 @@ class ProfileController extends Controller
 
     public function profilePhone(Request $request)
     {
-        $this->headers_check($request);
+
         $validator = Validator::make($request->all(), [
             'phone_number' => ['min:10', 'required', 'numeric', 'unique:clients']
         ]);
@@ -150,9 +149,8 @@ class ProfileController extends Controller
 
     public function profileAvatar(Request $request)
     {
-        $this->headers_check($request);
         $validator = Validator::make($request->all(), [
-            'avatar_image' => 'image|nullable|max:1999',
+            'avatar_image' => 'image|required|max:1999',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -164,6 +162,7 @@ class ProfileController extends Controller
             $filenameWithExt = $request->file('avatar_image')->getClientOriginalName();
             // Только оригинальное имя файла
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename = str_replace(' ','_',$filename);
             // Расширение
             $extention = $request->file('avatar_image')->getClientOriginalExtension();
             // Путь для сохранения
@@ -178,16 +177,5 @@ class ProfileController extends Controller
             'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
         ], 200);
     }
-    protected function headers_check($request)
-    {
-        if (!$request->header('language')) :
-            App::abort(500);
-        endif;
-        if (!$request->header('system')) :
-            App::abort(500);
-        endif;
-        if (!$request->header('version')) :
-            App::abort(500);
-        endif;
-    }
+
 }

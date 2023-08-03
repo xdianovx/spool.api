@@ -19,7 +19,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Название*</label>
                                     <input class="form-control" type="text" id="firstName" name="name"
-                                        value="{{ $partners_company->name }}" autofocus autocomplete="name">
+                                        value="{{ $partners_company->name }}" autofocus autocomplete="name" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -27,7 +27,7 @@
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>
-                                <button type="reset" class="btn btn-secondary">Отмена</button>
+                                <a href="{{ route('partners_companies.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
 

@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\PartnersCompanyController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Partners_company;
@@ -37,7 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/',  [UserController::class, 'store'])->name('user.store');
         Route::get('/{user}/show',  [UserController::class, 'show'])->name('user.show');
         Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
-        Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
+        Route::patch('/{user}/update',  [UserController::class, 'update'])->name('user.update');
+        Route::patch('/{user}/update_password',  [UserController::class, 'updatePassword'])->name('user.update_password');
         Route::delete('/{user}/destroy',  [UserController::class, 'destroy'])->name('user.destroy');
     });
 
@@ -57,7 +60,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/{country}/show',  [CountryController::class, 'show'])->name('country.show');
         Route::get('/{country}/edit',  [CountryController::class, 'edit'])->name('country.edit');
         Route::patch('/{country}',  [CountryController::class, 'update'])->name('country.update');
-        Route::delete('/{country}',  [CountryController::class, 'destroy'])->name('country.destroy');
+        Route::delete('/{country}/destroy',  [CountryController::class, 'destroy'])->name('country.destroy');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/all',  [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/search',  [CategoryController::class, 'search'])->name('categories.search');
+        Route::get('/create',  [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/',  [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/{category_slug}/show',  [CategoryController::class, 'show'])->name('category.show');
+        Route::get('/{category_slug}/edit',  [CategoryController::class, 'edit'])->name('category.edit');
+        Route::patch('/{category_slug}',  [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/{category_slug}/destroy',  [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 
     Route::prefix('partners_companies')->group(function () {
@@ -68,7 +82,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/{partners_company}/show',  [PartnersCompanyController::class, 'show'])->name('partners_company.show');
         Route::get('/{partners_company}/edit',  [PartnersCompanyController::class, 'edit'])->name('partners_company.edit');
         Route::patch('/{partners_company}',  [PartnersCompanyController::class, 'update'])->name('partners_company.update');
-        Route::delete('/{partners_company}',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
+        Route::delete('/{partners_company}/destroy',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
+    });
+    Route::prefix('tags')->group(function () {
+        Route::get('/all',  [TagController::class, 'index'])->name('tags.index');
+        Route::get('/search',  [TagController::class, 'search'])->name('tags.search');
+        Route::get('/create',  [TagController::class, 'create'])->name('tag.create');
+        Route::post('/',  [TagController::class, 'store'])->name('tag.store');
+        Route::get('/{tag}/show',  [TagController::class, 'show'])->name('tag.show');
+        Route::get('/{tag}/edit',  [TagController::class, 'edit'])->name('tag.edit');
+        Route::patch('/{tag}',  [TagController::class, 'update'])->name('tag.update');
+        Route::delete('/{tag}/destroy',  [TagController::class, 'destroy'])->name('tag.destroy');
     });
 });
 

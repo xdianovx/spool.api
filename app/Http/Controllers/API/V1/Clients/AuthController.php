@@ -27,7 +27,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['jwt.verify'], ['except' => ['login', 'login_confirm','refresh']]);
+        $this->middleware(['jwt.verify'], ['except' => ['login', 'login_confirm', 'refresh']]);
     }
 
     public function login(Request $request)
@@ -45,11 +45,11 @@ class AuthController extends Controller
                 ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
                 Client::where('id', $client_id)->update(['password' => $password_hashe]);
                 event(new ClientRegistered(Client::find($client->value('id')), $password));  // Sending password
-                    return response()->json([
-                        'message' => 'The password has been sent to your email.',
-                        'password' => $password,
-                        'email' => $client->value('email')
-                    ], 200);
+                return response()->json([
+                    'message' => 'The password has been sent to your email.',
+                    'password' => $password,
+                    'email' => $client->value('email')
+                ], 200);
 
             endif;
             return response()->json($validator->errors(), 422);
@@ -68,7 +68,7 @@ class AuthController extends Controller
         ]);
 
         event(new ClientRegistered($client, $password)); // Sending password
-        
+
         return response()->json([
             'message' => 'The password has been sent to your email.',
             'password' => $password,
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
     public function login_confirm(Request $request)
     {
- 
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:17|',
@@ -99,8 +99,8 @@ class AuthController extends Controller
 
 
     public function login_profile(Request $request)
-    {        
-      
+    {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'age' => 'required|integer|min:1',
@@ -121,7 +121,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-  
+
         Auth::guard('api')->logout();
         return response()->json(['message' => 'client successfully signed out']);
     }
@@ -136,20 +136,20 @@ class AuthController extends Controller
 
     protected function createNewToken($token)
     {
-        if(auth('api')->user()):
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'is_filled' => (auth('api')->user()->name && auth('api')->user()->age) ? true : false
-        ]);
-    else:
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]);
-    endif;
+        if (auth('api')->user()) :
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('api')->factory()->getTTL() * 60,
+                'is_filled' => (auth('api')->user()->name && auth('api')->user()->age) ? true : false
+            ]);
+        else :
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('api')->factory()->getTTL() * 60
+            ]);
+        endif;
     }
 
     protected function password_generate()
@@ -160,5 +160,4 @@ class AuthController extends Controller
         $password = mb_substr($password, 0, 5) . '-' . mb_substr($password, 5, 5) . '-' . mb_substr($password, 10);
         return $password;
     }
-
 }
