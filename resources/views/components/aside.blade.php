@@ -87,8 +87,14 @@
                         </a>
                     </li>
 
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'videos.index',
+                        'video.create',
+                        'videos.search',
+                        'video.show',
+                        'video.edit',
+                    ])) active @endif">
+                        <a href="{{ route('videos.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Видеоролики</div>
                         </a>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\PartnersCompanyController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Partners_company;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -72,6 +73,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/{category_slug}/edit',  [CategoryController::class, 'edit'])->name('category.edit');
         Route::patch('/{category_slug}',  [CategoryController::class, 'update'])->name('category.update');
         Route::delete('/{category_slug}/destroy',  [CategoryController::class, 'destroy'])->name('category.destroy');
+    });
+
+    Route::prefix('videos')->group(function () {
+        Route::get('/all',  [VideoController::class, 'index'])->name('videos.index');
+        Route::get('/search',  [VideoController::class, 'search'])->name('videos.search');
+        Route::get('/create',  [VideoController::class, 'create'])->name('video.create');
+        Route::post('/',  [VideoController::class, 'store'])->name('video.store');
+        Route::get('/{video}/show',  [VideoController::class, 'show'])->name('video.show');
+        Route::get('/{video}/edit',  [VideoController::class, 'edit'])->name('video.edit');
+        Route::patch('/{video}',  [VideoController::class, 'update'])->name('video.update');
+        Route::delete('/{video}/destroy',  [VideoController::class, 'destroy'])->name('video.destroy');
     });
 
     Route::prefix('partners_companies')->group(function () {

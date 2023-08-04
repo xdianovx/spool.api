@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('display_slider')->nullable();
             $table->timestamps();
             $table->foreignId('partners_company_id')->constrained();
-            // $table->foreignId('category_id')->constrained()->nullable();
+            $table->foreignId('category_id')->constrained();
         });
     }
 
