@@ -50,7 +50,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="sort" class="form-label">Изображение*</label>
+                                    <label for="sort" class="form-label">Изображение</label>
                                     @if (!empty($category->image))
                                         <div class="input-group">
                                             <img src="{{ Storage::url($category->image) }}" class="w-px-100">

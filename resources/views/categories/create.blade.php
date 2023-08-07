@@ -47,7 +47,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="sort" class="form-label">Изображение*</label>
+                                    <label for="sort" class="form-label">Изображение</label>
                                     <div class="input-group">
                                         <input type="file" class="form-control" id="inputGroupFile02" name="image" value="{{ old('image') }}">
                                     </div>
