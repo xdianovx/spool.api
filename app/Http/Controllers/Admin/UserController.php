@@ -41,7 +41,6 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $data = $request->validated();
-
         $data['password'] = Hash::make($data['password']);
 
         User::firstOrCreate([

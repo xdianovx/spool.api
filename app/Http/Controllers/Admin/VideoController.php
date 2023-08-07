@@ -33,13 +33,15 @@ class VideoController extends Controller
     
     public function edit($video)
     { 
+        $partner_companies = Partners_company::all();
+        $categories = Category::all();
         $video = Video::whereId($video)->firstOrFail();
-        return view('videos.edit', compact('video'));
+        return view('videos.edit', compact('video','partner_companies','categories'));
     }
 
     public function store(VideoStoreRequest $request)
     {
-        dd($request);
+      
         $data = $request->validated();
         if ($request->hasFile('image')) {
             // Имя и расширение файла

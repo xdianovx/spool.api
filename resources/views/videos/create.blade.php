@@ -103,11 +103,11 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="event_date" class="form-label">Допустимый минимальный возраст*</label>
-                                    <input class="form-control" type="text-area" id="event_date" name="event_date"
+                                    <label for="minimum_age" class="form-label">Допустимый минимальный возраст*</label>
+                                    <input class="form-control" type="text-area" id="minimum_age" name="minimum_age"
                                         placeholder="Введите минимальный возраст" value="{{ old('event_date') }}" required>
                                     </input>
-                                    @error('event_date')
+                                    @error('minimum_age')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

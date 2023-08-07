@@ -18,7 +18,9 @@ class Video extends Model
         'duration',
         'event_date',
         'minimum_age',
-        'display_slider'
+        'display_slider',
+        'partners_company_id',
+        'category_id'
     ];
 
     public function partner_company()

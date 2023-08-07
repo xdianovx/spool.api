@@ -81,21 +81,21 @@
                                             <div class="dropdown-menu">
 
                                                 <a class="dropdown-item"
-                                                    href="{{ route('video.show', $video->slug) }}"><i
+                                                    href="{{ route('video.show', $video->id) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('video.edit', $video->slug) }}"><i
+                                                    href="{{ route('video.edit', $video->id) }}"><i
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$video->slug}}"><i
+                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$video->id}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalScrollable{{$video->slug}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modalScrollable{{$video->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -111,7 +111,7 @@
                                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                                     Закрыть
                                                 </button>
-                                                <form action="{{ route('video.destroy', $video->slug) }}" method="POST">
+                                                <form action="{{ route('video.destroy', $video->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger" data-bs-toggle="modal"

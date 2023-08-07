@@ -42,12 +42,7 @@
                 <p class="mb-0">{{$video->name}}</p>
               </td>
             </tr>
-            <tr>
-              <td class="align-middle"><small class="text-light fw-semibold">Слаг:</small></td>
-              <td class="py-3">
-                <p class="mb-0">{{$video->slug}}</p>
-              </td>
-            </tr>
+         
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Родительская категория:</small></td>
               <td class="py-3">

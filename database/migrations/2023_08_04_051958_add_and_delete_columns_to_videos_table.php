@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::table('videos', function (Blueprint $table) {
             $table->dropColumn('duration');
             $table->dropColumn('minimum_age');
+            $table->dropColumn('partners_company_id');
+            $table->dropColumn('category_id');
         });
         Schema::table('videos', function (Blueprint $table) {
             $table->integer('duration');
             $table->integer('minimum_age');
+            $table->integer('partners_company_id');
+            $table->integer('category_id');
         });
     }
 
@@ -29,10 +33,14 @@ return new class extends Migration
         Schema::table('videos', function (Blueprint $table) {
             $table->dropColumn('duration');
             $table->dropColumn('minimum_age');
+            $table->dropColumn('partners_company_id');
+            $table->dropColumn('category_id');
         });
         Schema::table('videos', function (Blueprint $table) {
             $table->string('duration');
             $table->string('minimum_age');
+            $table->foreignId('partners_company_id')->constrained();
+            $table->foreignId('category_id')->constrained();
         });
     }
 };
