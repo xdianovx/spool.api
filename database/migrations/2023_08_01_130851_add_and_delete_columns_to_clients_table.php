@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::table('clients', function (Blueprint $table) {
             $table->dropColumn('age');
             $table->dropColumn('phone_number');
-            $table->dropColumn('description');
         });
         Schema::table('clients', function (Blueprint $table) {
             $table->integer('age')->nullable();
