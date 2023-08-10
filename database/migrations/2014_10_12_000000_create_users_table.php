@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('partner_company_id')->nullable();
+            $table->foreignId('partner_company_id')->nullable();
         });
     }
 

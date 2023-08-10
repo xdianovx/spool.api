@@ -43,35 +43,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Изображение</th>
                                 <th>Название</th>
+                                <th>Категория</th>
+                                <th>Дата события</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($videos as $video)
                                 <tr>
-                                    <td>
-                                        @if (!empty($video->image))
-                                            <div class="avatar avatar-xs">
-                                                <img src="{{ Storage::url($video->image) }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        @else
-                                            <div class="avatar avatar-xs">
-                                                <img
-                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAA
-                                                    ADgdz34AAAAAXNSR0IArs4c6QAAAN1JREFUSEvdldsNwjAMRU83gU1gE5gEmAQ2AS
-                                                    aBTUAXNZUVFSfN46f+qhrVx76+cQc6x9A5P+sC7IArsKmU7Q0cgYfyWInugCAtQpB
-                                                    tDPi0yGxy/Iq3HVjADbgAB+BUCHYBAax5vHoAVL26UPXqoiTcDlIJ5RI5zotiwH60
-                                                    oDrzINkA+fk5yqVnAUKcHRNkAUJCDVvzkDQ29F5dzN2fJGC6LAmtBdEljTdAEhC0T
-                                                    g1c53N2dgFLkocC4qEnO8ipfJFNWy67yW12F8kJckrtRv27rmslmf1+Xb/MLhJ9Aa
-                                                    OeKxkN8OojAAAAAElFTkSuQmCC" />
-                                            </div>
-                                        @endif
-                                    </td>
                                     <td>{{ $video->name }}</td>
-                
+                                    <td>{{ $video->category->name }}</td>
+                                    <td>{{$video->event_date}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

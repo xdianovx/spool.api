@@ -31,7 +31,7 @@
                 </td>
               </tr>
               <tr>
-                <td><small class="text-light fw-semibold">Email:</small></td>
+                <td><small class="text-light fw-semibold">Почта:</small></td>
                 <td class="py-3">
                   <p class="mb-0">{{$user->email}}</p>
                 </td>
@@ -45,7 +45,11 @@
               <tr>
                 <td><small class="text-light fw-semibold">Роль:</small></td>
                 <td class="py-3">
-                  <p class="mb-0">{{$user->role}}</p>
+                  <p class="mb-0">@if ($user->role == 'partner')
+                    Партнер
+                @elseif ($user->role == 'admin')
+                    Администратор
+                @endif</p>
                 </td>
               </tr>
               <tr>
@@ -70,7 +74,7 @@
             </tbody>
           </table>
 
-          <hr class="m-0">
+          <hr class="m-0"> 
           <div class="row demo-vertical-spacing">
    
             <div class="col">

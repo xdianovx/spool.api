@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('display')->nullable();
             $table->timestamps();
+            $table->foreignId('video_id');
         });
     }
 

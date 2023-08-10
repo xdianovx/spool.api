@@ -47,7 +47,7 @@
                                 <th>Аватар</th>
                                 <th>Id</th>
                                 <th>Имя</th>
-                                <th>Email</th>
+                                <th>Почта</th>
                                 <th>Дата последнего входа</th>
                                 <th>Статус</th>
                                 <th></th>
@@ -85,7 +85,7 @@
                                     <td><span class="badge bg-label-primary me-1">{{ $client->last_login_date }}</span></td>
                                     <td>
                                         @if (empty($client->blocked_at))
-                                            <span class="badge bg-label-primary me-1">Действующий</span>
+                                            <span class="badge bg-label-primary me-1">Активный</span>
                                         @else
                                             <span class="badge bg-label-warning me-1">Заблокирован:
                                                 {{ $client->blocked_at }}</span>

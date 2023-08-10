@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('country_id')->nullable();
+            $table->foreignId('country_id')->nullable();
         });
     }
 

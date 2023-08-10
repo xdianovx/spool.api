@@ -69,6 +69,7 @@ class VideoController extends Controller
             // Сохраняем файл
             $data['image_banner'] = $request->file('image_banner')->storeAs('public', $fileNameToStore);
         }
+
         Video::firstOrCreate($data);
         return redirect()->route('videos.index')->with('status', 'video-created');
     }
@@ -119,7 +120,8 @@ class VideoController extends Controller
             $videos = Video::orderBy('id', 'DESC')->paginate(10);
         else:
             $videos = Video::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);
+            orWhere('category_id', 'like', '%' . Category::where('name',request('search'))->firstOrFail()->id . '%')->
+            orWhere('event_date', 'like', '%' . request('search') . '%')->paginate(10);
         endif;
         return view('videos.index', compact('videos'));
     }

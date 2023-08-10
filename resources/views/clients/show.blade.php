@@ -57,7 +57,7 @@
                             <li class="mb-3">
                                 <span class="fw-medium me-2">Статус:</span>
                                 @if (empty($client->blocked_at))
-                                    <span class="badge bg-label-primary me-1">ДЕЙСТВУЮЩИЙ</span>
+                                    <span class="badge bg-label-primary me-1">Активный</span>
                                 @else
                                     <span class="badge bg-label-danger me-1">Заблокирован {{ $client->blocked_at }}</span>
                                 @endif

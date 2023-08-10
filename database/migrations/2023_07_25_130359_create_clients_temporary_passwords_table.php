@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clients_temporary_passwords', function (Blueprint $table) {
             $table->id();
             $table->string('password');
-            $table->string('clients_temporary_password_id');
+            $table->foreignId('clients_temporary_password_id');
             $table->timestamps();
         });
     }

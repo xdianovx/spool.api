@@ -23,8 +23,9 @@ return new class extends Migration
             $table->string('minimum_age');
             $table->string('display_slider')->nullable();
             $table->timestamps();
-            $table->foreignId('partners_company_id')->constrained();
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('partners_company_id');
+            $table->foreignId('category_id');
+
         });
     }
 

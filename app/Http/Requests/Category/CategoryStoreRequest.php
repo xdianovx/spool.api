@@ -23,7 +23,6 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:categories',
-            'sort' => 'required|numeric',
             'image' => 'image|nullable',
             'parent_id' => 'required|numeric',
         ];

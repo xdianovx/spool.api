@@ -49,7 +49,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Имя</th>
-                                <th>Email</th>
+                                <th>Почта</th>
                                 <th>Роль</th>
                                 <th></th>
                             </tr>
@@ -57,14 +57,18 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($users as $user)
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                    <td><i class="fab fa-angular fa-lg text-danger"></i>
                                         <strong>{{ $user->id }}</strong>
                                     </td>
                                     <td>{{ $user->name }}</td>
                                     <td>
                                         {{ $user->email }}
                                     </td>
-                                    <td><span class="badge bg-label-primary me-1">{{ $user->role }}</span></td>
+                                    <td><span class="badge bg-label-primary me-1">@if ($user->role == 'partner')
+                                        Партнер
+                                    @elseif ($user->role == 'admin')
+                                        Администратор
+                                    @endif</span></td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

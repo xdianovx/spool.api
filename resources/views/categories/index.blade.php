@@ -1,5 +1,9 @@
 @extends('template.main')
 @section('content')
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Категории /</span></h4>
         <div class="card">
@@ -43,44 +47,25 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Изображение</th>
                                 <th>Название</th>
                                 <th>Родительская категория</th>
                                 <th>Сортировка</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody class="table-border-bottom-0">
+                        <tbody id="list" class="table-border-bottom-0">
                             @forelse ($categories as $category)
-                                <tr>
-                                    <td>
-                                        @if (!empty($category->image))
-                                            <div class="avatar avatar-xs">
-                                                <img src="{{ Storage::url($category->image) }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        @else
-                                            <div class="avatar avatar-xs">
-                                                <img
-                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAA
-                                                    ADgdz34AAAAAXNSR0IArs4c6QAAAN1JREFUSEvdldsNwjAMRU83gU1gE5gEmAQ2AS
-                                                    aBTUAXNZUVFSfN46f+qhrVx76+cQc6x9A5P+sC7IArsKmU7Q0cgYfyWInugCAtQpB
-                                                    tDPi0yGxy/Iq3HVjADbgAB+BUCHYBAax5vHoAVL26UPXqoiTcDlIJ5RI5zotiwH60
-                                                    oDrzINkA+fk5yqVnAUKcHRNkAUJCDVvzkDQ29F5dzN2fJGC6LAmtBdEljTdAEhC0T
-                                                    g1c53N2dgFLkocC4qEnO8ipfJFNWy67yW12F8kJckrtRv27rmslmf1+Xb/MLhJ9Aa
-                                                    OeKxkN8OojAAAAAElFTkSuQmCC" />
-                                            </div>
-                                        @endif
-                                    </td>
+                                <tr data-sort-id="{{ $category->sort }}">
+
                                     <td>{{ $category->name }}</td>
                                     <td>
                                         @if (!empty($category->parent->name))
                                             {{ $category->parent->name }}
                                         @else
-                                        Без родительской категории
+                                            Без родительской категории
                                         @endif
                                     </td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->sort }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -97,30 +82,37 @@
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$category->slug}}"><i
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalScrollable{{ $category->slug }}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalScrollable{{$category->slug}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modalScrollable{{ $category->slug }}" tabindex="-1"
+                                    style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите
+                                                    удалить?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning text-wrap">
+                                                <p
+                                                    class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning text-wrap">
                                                     {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">
                                                     Закрыть
                                                 </button>
-                                                <form action="{{ route('category.destroy', $category->slug) }}" method="POST">
+                                                <form action="{{ route('category.destroy', $category->slug) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
@@ -149,4 +141,36 @@
         </div>
     </div>
 
+    <script>
+        let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        Sortable.create(list, {
+            swap: false,
+            swapClass: "highlight",
+            animation: 150,
+            onEnd: function(e) {
+                let oldId = e.oldIndex;
+                let newId = e.newIndex;
+                updateOrder(oldId, newId);
+            }
+        });
+        const updateOrder = (oldId, newId) => {
+            fetch("{{ route('category.sort',[2]) }}", {
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    },
+                    method: 'post',
+                    body: {
+                        oldId,
+                        newId
+                    }
+                })
+                .then((data) => {
+                  console.log(data);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+    </script>
 @endsection

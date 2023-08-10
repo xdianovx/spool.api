@@ -18,7 +18,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Название*</label>
                                     <input class="form-control" type="text" id="firstName" name="name"
-                                        placeholder="Введите название страны" value="{{ old('name') }}" required>
+                                        placeholder="Введите название" value="{{ old('name') }}" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

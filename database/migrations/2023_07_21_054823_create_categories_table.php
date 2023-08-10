@@ -15,10 +15,10 @@ return new class extends Migration
 
                 $table->bigIncrements('id');
                 $table->string('name');
-                $table->string('image');
                 $table->string('sort');
-                $table->unsignedBigInteger('category_id')->nullable();
-                $table->foreign('category_id')->references('id')->on('categories');
+                $table->string('slug')->unique()->nullable();
+                $table->foreignId('parent_id')->nullable();
+                $table->string('image')->nullable();
                 $table->timestamps();
             
         });

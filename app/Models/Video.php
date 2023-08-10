@@ -20,12 +20,12 @@ class Video extends Model
         'minimum_age',
         'display_slider',
         'partners_company_id',
-        'category_id'
+        'category_id' 
     ];
 
     public function partner_company()
     {
-        return $this->belongsTo(Partner_company::class);
+        return $this->belongsTo(Partners_company::class,'partners_company_id');
     }
     public function category()
     {

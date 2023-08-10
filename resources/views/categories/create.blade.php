@@ -18,7 +18,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Название*</label>
                                     <input class="form-control" type="text" id="firstName" name="name"
-                                        placeholder="Введите название категории" value="{{ old('name') }}" required>
+                                        placeholder="Введите название" value="{{ old('name') }}" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -38,14 +38,14 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-6">
+                                {{-- <div class="mb-3 col-md-6">
                                     <label for="sort" class="form-label">Сортировка*</label>
                                     <input class="form-control" type="text" id="sort" name="sort"
                                         placeholder="Введите число" value="{{ old('sort') }}" required>
                                     @error('sort')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="sort" class="form-label">Изображение</label>
                                     <div class="input-group">

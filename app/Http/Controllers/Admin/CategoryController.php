@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    
     public function index()
     {
-        $categories = Category::orderBy('id', 'DESC')->paginate(10);
+        $categories = Category::orderBy('sort', 'DESC')->paginate(10);
         return view('categories.index', compact('categories'));
     }
     public function create()
@@ -53,6 +54,7 @@ class CategoryController extends Controller
             // Сохраняем файл
             $data['image'] = $request->file('image')->storeAs('public', $fileNameToStore);
         }
+        $data['sort'] = Category::orderby('id', 'desc')->first()->id + 1;
         Category::firstOrCreate($data);
         return redirect()->route('categories.index')->with('status', 'category-created');
     }
@@ -97,4 +99,9 @@ class CategoryController extends Controller
 
         return view('categories.index', compact('categories'));
     }
+    public function sort($id)
+    {
+        dd(1111);
+    }
+
 }

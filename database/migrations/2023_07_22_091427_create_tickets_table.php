@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('discounted_price');
             $table->timestamps();
-            $table->foreignId('video_id')->constrained();
+            $table->foreignId('video_id');
         });
     }
 
