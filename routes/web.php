@@ -69,10 +69,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/search',  [CategoryController::class, 'search'])->name('categories.search');
         Route::get('/create',  [CategoryController::class, 'create'])->name('category.create');
         Route::post('/',  [CategoryController::class, 'store'])->name('category.store');
+        Route::post('/sort',  [CategoryController::class, 'sort'])->name('category.sort');
         Route::get('/{category_slug}/show',  [CategoryController::class, 'show'])->name('category.show');
         Route::get('/{category_slug}/edit',  [CategoryController::class, 'edit'])->name('category.edit');
         Route::patch('/{category_slug}',  [CategoryController::class, 'update'])->name('category.update');
-        Route::post('/{id}/sort',  [CategoryController::class, 'sort'])->name('category.sort');
         Route::delete('/{category_slug}/destroy',  [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 

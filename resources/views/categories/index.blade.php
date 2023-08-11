@@ -1,9 +1,5 @@
 @extends('template.main')
 @section('content')
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-    <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Категории /</span></h4>
         <div class="card">
@@ -55,7 +51,7 @@
                         </thead>
                         <tbody id="list" class="table-border-bottom-0">
                             @forelse ($categories as $category)
-                                <tr data-sort-id="{{ $category->sort }}">
+                                <tr class="list-item" data-sort-id="{{ $category->id }}">
 
                                     <td>{{ $category->name }}</td>
                                     <td>
@@ -143,6 +139,7 @@
 
     <script>
         let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         Sortable.create(list, {
             swap: false,
             swapClass: "highlight",
@@ -150,27 +147,35 @@
             onEnd: function(e) {
                 let oldId = e.oldIndex;
                 let newId = e.newIndex;
-                updateOrder(oldId, newId);
+                let id = e.item.attributes[0].value;
+
+                updateOrder(oldId, newId, id);
+
             }
         });
-        const updateOrder = (oldId, newId) => {
-            fetch("{{ route('category.sort',[2]) }}", {
+        const updateOrder = (oldId, newId, id) => {
+            const listItem = document.querySelectorAll('.list-item');
+            const order = [];
+            listItem.forEach((item, idx) => {
+                const id = item.getAttribute('data-sort-id');
+                order.push({
+                    id: id,
+                    order: idx
+                })
+            });
+            fetch("{{ route('category.sort') }}", {
                     headers: {
                         "X-CSRF-TOKEN": token
                     },
                     method: 'post',
-                    body: {
-                        oldId,
-                        newId
-                    }
+                    credentials: "same-origin",
+                    body: JSON.stringify(order)
                 })
-                .then((data) => {
-                  console.log(data);
-                })
+                .then(response => response.json())
+                .then(data => console.log(data))
                 .catch(function(error) {
                     console.log(error);
                 });
         }
-
     </script>
 @endsection

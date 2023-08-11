@@ -13,7 +13,7 @@ class CategoryController extends Controller
     
     public function index()
     {
-        $categories = Category::orderBy('sort', 'DESC')->paginate(10);
+        $categories = Category::orderBy('sort', 'ASC')->paginate(10);
         return view('categories.index', compact('categories'));
     }
     public function create()
@@ -38,7 +38,6 @@ class CategoryController extends Controller
   
     public function store(CategoryStoreRequest $request)
     {
-
         $data = $request->validated();
         // Если есть файл
         if ($request->hasFile('image')) {
@@ -54,7 +53,15 @@ class CategoryController extends Controller
             // Сохраняем файл
             $data['image'] = $request->file('image')->storeAs('public', $fileNameToStore);
         }
-        $data['sort'] = Category::orderby('id', 'desc')->first()->id + 1;
+        // Автоинкремент поля sort
+        $categories = Category::get();
+        $last_category = Category::orderby('id', 'desc')->first();
+
+        if(count($categories) == 0):
+        $data['sort'] = 0;
+        else:
+        $data['sort'] = $last_category->sort + 1;
+        endif;
         Category::firstOrCreate($data);
         return redirect()->route('categories.index')->with('status', 'category-created');
     }
@@ -99,9 +106,15 @@ class CategoryController extends Controller
 
         return view('categories.index', compact('categories'));
     }
-    public function sort($id)
+    public function sort(Request $request)
     {
-        dd(1111);
+        $bodyContent = $request->getContent();
+        $data = json_decode($bodyContent);
+
+        foreach ($data as $key => $order) {
+            $post = Category::find($order->id)->update(['sort' => $order->order]);
+        }
+        return response()->json('Update Successfully.', 200);
     }
 
-}
+}   

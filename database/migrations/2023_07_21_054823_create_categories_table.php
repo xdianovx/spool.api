@@ -15,7 +15,7 @@ return new class extends Migration
 
                 $table->bigIncrements('id');
                 $table->string('name');
-                $table->string('sort');
+                $table->integer('sort');
                 $table->string('slug')->unique()->nullable();
                 $table->foreignId('parent_id')->nullable();
                 $table->string('image')->nullable();

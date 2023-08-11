@@ -53,7 +53,7 @@
                             @forelse ($videos as $video)
                                 <tr>
                                     <td>{{ $video->name }}</td>
-                                    <td>{{ $video->category->name }}</td>
+                                    <td>{{ $video->category->name ?? 'Без категории'}}</td>
                                     <td>{{$video->event_date}}</td>
                                     <td>
                                         <div class="dropdown">
