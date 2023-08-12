@@ -51,7 +51,7 @@
                         </thead>
                         <tbody id="list" class="table-border-bottom-0">
                             @forelse ($categories as $category)
-                                <tr class="list-item" data-sort-id="{{ $category->id }}">
+                                <tr class="list-item cursor-move" data-sort-id="{{ $category->id }}">
 
                                     <td>{{ $category->name }}</td>
                                     <td>
@@ -172,7 +172,6 @@
                     body: JSON.stringify(order)
                 })
                 .then(response => response.json())
-                .then(data => console.log(data))
                 .catch(function(error) {
                     console.log(error);
                 });
