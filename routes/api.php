@@ -40,6 +40,7 @@ Route::group([
     Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);  
     Route::post('profile/name', [ProfileController::class, 'profileName']);
     Route::post('profile/age', [ProfileController::class, 'profileAge']);
+    Route::post('profile/gender', [ProfileController::class, 'profileGender']);
     Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
     Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
     Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);

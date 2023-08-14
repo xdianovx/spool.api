@@ -128,6 +128,23 @@ class ProfileController extends Controller
             'age' => $client->value('age'),
         ], 200);
     }
+    public function profileGender(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'gender' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+        $client = Client::where('id', auth('api')->user()->id);
+        $client_id = $client->value('id');
+        Client::where('id', $client_id)->update($validator->validated());
+        return response()->json([
+            'message' => 'success',
+            'gender' => $client->value('gender'),
+        ], 200);
+    }
 
     public function profilePhone(Request $request)
     {

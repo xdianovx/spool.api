@@ -28,7 +28,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Родительская категория</label>
                                     <select id="language" class="select2 form-select" name="parent_id">
-                                        <option value="" @if ($category->parent_id == '') {{ 'selected' }} @endif>
+                                        <option value="0" @if ($category->parent_id == '0') {{ 'selected' }} @endif>
                                             Без родительской категории</option>
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}"

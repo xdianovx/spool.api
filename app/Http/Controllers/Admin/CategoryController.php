@@ -13,7 +13,7 @@ class CategoryController extends Controller
     
     public function index()
     {
-        $categories = Category::orderBy('sort', 'ASC')->paginate(10);
+        $categories = Category::with('childrenCategories')->where('parent_id','0')->orderBy('sort', 'ASC')->paginate(10);
         return view('categories.index', compact('categories'));
     }
     public function create()
@@ -24,8 +24,10 @@ class CategoryController extends Controller
     }
     public function show($category_slug)
     {
+        
         $category = Category::whereSlug($category_slug)->firstOrFail();
-        return view('categories.show', compact('category'));
+        $child_categories = Category::with('childrenCategories')->where('parent_id',$category->id)->orderBy('sort', 'ASC')->paginate(10);
+        return view('categories.show', compact('category','child_categories'));
     }
     public function edit($category_slug) 
     {
@@ -89,7 +91,7 @@ class CategoryController extends Controller
     {
         $category = Category::whereSlug($category_slug)->firstOrFail();
         $category->delete();
-        return redirect()->route('categories.index')->with('status', 'category-deleted');
+        return redirect()->back()->with('status', 'category-deleted');
     }
     
     public function search(Request $request)
