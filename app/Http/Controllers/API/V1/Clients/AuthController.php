@@ -93,7 +93,9 @@ class AuthController extends Controller
         if (!$token = auth('api')->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
+        Client::where('id', $client_id)->update([
+            'last_login_date'=>Carbon::now()
+        ]);
         return $this->createNewToken($token);
     }
 

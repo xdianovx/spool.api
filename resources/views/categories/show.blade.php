@@ -82,13 +82,13 @@
                         <div class="row demo-vertical-spacing">
 
                             <div class="col">
-                                <a class="btn btn-primary text-nowrap" href="{{ route('categories.index') }}">Назад</a>
+                                @if (!$category->parent_id == 0)
+                                <a href="{{ route('category.show',$category->parent_id) }}" class="btn btn-primary text-nowrap">Назад</a>
+                                @else
+                                <a href="{{ route('categories.index') }}" class="btn btn-primary text-nowrap">Назад</a>
+                                @endif
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -122,13 +122,7 @@
                 </div>
             </div>
 
-            <hr class="m-0">
-            <div class="card-body">
-                <form class="d-flex" action="{{ route('categories.search') }}" method="get">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Поиск</button>
-                </form>
-            </div>
+   
 
             <hr class="m-0">
             <div class="card-body">
@@ -137,7 +131,7 @@
                         <thead>
                             <tr>
                                 <th>Название</th>
-                                <th>Родительская категория</th>
+                                <th>Слаг</th>
                                 <th>Сортировка</th>
                                 <th></th>
                             </tr>
@@ -147,13 +141,7 @@
                                 <tr class="list-item cursor-move" data-sort-id="{{ $child_category->id }}">
 
                                     <td>{{ $child_category->name }}</td>
-                                    <td>
-                                        @if (!empty($child_category->parent->name))
-                                            {{ $child_category->parent->name }}
-                                        @else
-                                            Без родительской категории
-                                        @endif
-                                    </td>
+                                    <td>{{ $category->slug }}</td>
                                     <td>{{ $child_category->sort }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -213,7 +201,7 @@
                                 </div>
                             @empty
                                 <tr>
-                                    <td class="text-danger">По вашему запросу ничего не найдено.</td>
+                                    <td class="text-danger">Записи отсутстувют.</td>
                                 </tr>
                             @endforelse
 

@@ -94,20 +94,7 @@ class CategoryController extends Controller
         return redirect()->back()->with('status', 'category-deleted');
     }
     
-    public function search(Request $request)
-    {
-        
-        if (request('search') == 'null'):
-            $categories = Category::orderBy('id', 'DESC')->paginate(10);
-         else:
-            $categories = Category::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->
-            orWhere('slug', 'like', '%' . request('search') . '%')->
-            orWhere('name', 'like', '%' . request('search') . '%')->paginate(10);
-         endif;
 
-        return view('categories.index', compact('categories'));
-    }
     public function sort(Request $request)
     {
         $bodyContent = $request->getContent();

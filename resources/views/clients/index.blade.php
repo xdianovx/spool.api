@@ -44,7 +44,6 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Аватар</th>
                                 <th>Id</th>
                                 <th>Имя</th>
                                 <th>Почта</th>
@@ -56,33 +55,15 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($clients as $client)
                                 <tr>
+            
                                     <td>
-                                        @if (!empty($client->avatar_image))
-                                            <div class="avatar avatar-xs">
-                                                <img src="{{ Storage::url($client->avatar_image) }}" alt="Avatar"
-                                                    class="rounded-circle">
-                                            </div>
-                                        @else
-                                            <div class="avatar avatar-xs">
-                                                <img
-                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAA
-                                                    ADgdz34AAAAAXNSR0IArs4c6QAAAN1JREFUSEvdldsNwjAMRU83gU1gE5gEmAQ2AS
-                                                    aBTUAXNZUVFSfN46f+qhrVx76+cQc6x9A5P+sC7IArsKmU7Q0cgYfyWInugCAtQpB
-                                                    tDPi0yGxy/Iq3HVjADbgAB+BUCHYBAax5vHoAVL26UPXqoiTcDlIJ5RI5zotiwH60
-                                                    oDrzINkA+fk5yqVnAUKcHRNkAUJCDVvzkDQ29F5dzN2fJGC6LAmtBdEljTdAEhC0T
-                                                    g1c53N2dgFLkocC4qEnO8ipfJFNWy67yW12F8kJckrtRv27rmslmf1+Xb/MLhJ9Aa
-                                                    OeKxkN8OojAAAAAElFTkSuQmCC" />
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                         <strong>{{ $client->id }}</strong>
                                     </td>
                                     <td>{{ $client->name }}</td>
                                     <td>
                                         {{ $client->email }}
                                     </td>
-                                    <td><span class="badge bg-label-primary me-1">{{ $client->last_login_date }}</span></td>
+                                    <td>{{ $client->last_login_date }}</td>
                                     <td>
                                         @if (empty($client->blocked_at))
                                             <span class="badge bg-label-primary me-1">Активный</span>

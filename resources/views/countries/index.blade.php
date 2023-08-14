@@ -43,14 +43,18 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Флаг</th>
                                 <th>Название</th>
+                                <th>ISO</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($countries as $country)
                                 <tr>
+                                    <td>{!! $country->icon_class !!}</td>
                                     <td>{{ $country->name }}</td>
+                                    <td>{{ $country->flag }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -116,5 +120,8 @@
             </div>
         </div>
     </div>
-
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+  ></script>
 @endsection

@@ -66,7 +66,6 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('categories')->group(function () {
         Route::get('/all',  [CategoryController::class, 'index'])->name('categories.index');
-        Route::get('/search',  [CategoryController::class, 'search'])->name('categories.search');
         Route::get('/create',  [CategoryController::class, 'create'])->name('category.create');
         Route::post('/',  [CategoryController::class, 'store'])->name('category.store');
         Route::post('/sort',  [CategoryController::class, 'sort'])->name('category.sort');

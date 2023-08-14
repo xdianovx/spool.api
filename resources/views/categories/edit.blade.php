@@ -28,12 +28,12 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Родительская категория</label>
                                     <select id="language" class="select2 form-select" name="parent_id">
-                                        <option value="0" @if ($category->parent_id == '0') {{ 'selected' }} @endif>
+                                        <option value="0"  {{ $category->parent_id == 0 ? 'selected' : '' }}>
                                             Без родительской категории</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ $category->id == $category->parent_id ? 'selected' : '' }}>
-                                                {{ $category->name }}</option>
+                                        @foreach ($categories as $category_select)
+                                            <option value="{{ $category_select->id }}"
+                                                {{ $category_select->id == $category->parent_id ? 'selected' : '' }}>
+                                                {{ $category_select->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('parent_id')
@@ -68,7 +68,12 @@
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>
+                                @if (!$category->parent_id == 0)
+                                <a href="{{ route('category.show',$category->parent_id) }}" class="btn btn-secondary">Отмена</a>
+                                @else
                                 <a href="{{ route('categories.index') }}" class="btn btn-secondary">Отмена</a>
+                                @endif
+                                
                             </div>
                         </form>
 

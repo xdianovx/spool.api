@@ -29,13 +29,6 @@
                 </div>
             </div>
 
-            <hr class="m-0">
-            <div class="card-body">
-                <form class="d-flex" action="{{ route('categories.search') }}" method="get">
-                    <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Поиск</button>
-                </form>
-            </div>
 
             <hr class="m-0">
             <div class="card-body">
@@ -44,7 +37,7 @@
                         <thead>
                             <tr>
                                 <th>Название</th>
-                                <th>Родительская категория</th>
+                                <th>Слаг</th>
                                 <th>Сортировка</th>
                                 <th></th>
                             </tr>
@@ -54,13 +47,7 @@
                                 <tr class="list-item cursor-move" data-sort-id="{{ $category->id }}">
 
                                     <td>{{ $category->name }}</td>
-                                    <td>
-                                        @if (!empty($category->parent->name))
-                                            {{ $category->parent->name }}
-                                        @else
-                                            Без родительской категории
-                                        @endif
-                                    </td>
+                                    <td>{{ $category->slug }}</td>
                                     <td>{{ $category->sort }}</td>
                                     <td>
                                         <div class="dropdown">
@@ -120,7 +107,7 @@
                                 </div>
                             @empty
                                 <tr>
-                                    <td class="text-danger">По вашему запросу ничего не найдено.</td>
+                                    <td class="text-danger">Записи отсутстувют.</td>
                                 </tr>
                             @endforelse
 
