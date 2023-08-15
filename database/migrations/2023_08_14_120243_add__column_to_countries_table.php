@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('countries', function (Blueprint $table) {
             $table->string('flag')->nullable();
-            $table->string('icon_class')->nullable();
         });
     }
 
@@ -24,7 +23,6 @@ return new class extends Migration
     {
         Schema::table('countries', function (Blueprint $table) {
             $table->dropColumn('flag');
-            $table->dropColumn('icon_class');
         });
     }
 };

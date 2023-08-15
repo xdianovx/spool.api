@@ -7,6 +7,7 @@ use App\Http\Requests\Tag\TagStoreRequest;
 use App\Http\Requests\Tag\TagUpdateRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -36,11 +37,14 @@ class TagController extends Controller
 
     public function store(TagStoreRequest $request)
     {
+
         $data = $request->validated();
+
         Tag::firstOrCreate([
-            'name' => $data['name']
+            'name' => $data['name'],
+            'user_id' => Auth::user()->id
         ],$data);
-        return redirect()->route('tags.index')->with('status', 'tag-created');
+        return redirect()->back()->with('status', 'tag-created');
     }
 
     public function update(TagUpdateRequest $request, $tag)

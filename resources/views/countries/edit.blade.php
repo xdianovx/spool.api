@@ -24,6 +24,14 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label  class="form-label">ISO 3166-2</label>
+                                    <input class="form-control" type="text"  name="flag"
+                                        value="{{ $country->flag }}" required>
+                                    @error('flag')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>

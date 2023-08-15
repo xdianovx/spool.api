@@ -7,8 +7,10 @@ use App\Http\Requests\Video\VideoStoreRequest;
 use App\Http\Requests\Video\VideoUpdateRequest;
 use App\Models\Category;
 use App\Models\Partners_company;
+use App\Models\Tag;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VideoController extends Controller
 {
@@ -19,10 +21,11 @@ class VideoController extends Controller
     }
 
     public function create()
-    {
+    { 
+        $user_tags = Tag::where('user_id', Auth::user()->id)->get();
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.create',compact('partner_companies','categories'));
+        return view('videos.create',compact('partner_companies','categories','user_tags'));
     }
 
     public function show($video)

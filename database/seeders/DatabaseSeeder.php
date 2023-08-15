@@ -27,13 +27,11 @@ class DatabaseSeeder extends Seeder
 
             array(
                 'flag' => '🇦🇺',
-                'name' => 'Австралия',
-                'icon_class' => '<i class="flag flag-australia"></i>'
+                'name' => 'Австралия'
             ),
             array(
                 'flag' => '🇦🇹',
-                'name' => 'Австрия',
-                'icon_class' => '<i class="flag flag-austria"></i>'
+                'name' => 'Австрия'
             ),
             array(
                 'flag' => '🇦🇿',
@@ -41,43 +39,35 @@ class DatabaseSeeder extends Seeder
             ),
             array(
                 'flag' => '🇦🇽',
-                'name' => 'Аландские острова',
-                'icon_class' => '<i class="flag flag-aland-islands"></i>'
+                'name' => 'Аландские острова'
             ),
             array(
                 'flag' => '🇦🇱',
-                'name' => 'Албания',
-                'icon_class' => '<i class="flag flag-albania"></i>'
+                'name' => 'Албания'
             ),
             array(
                 'flag' => '🇩🇿',
-                'name' => 'Алжир',
-                'icon_class' => '<i class="flag flag-algeria"></i>'
+                'name' => 'Алжир'
             ),
             array(
                 'flag' => '🇦🇸',
-                'name' => 'Американское Самоа',
-                'icon_class' => '<i class="flag flag-american-samoa"></i>'
+                'name' => 'Американское Самоа'
             ),
             array(
                 'flag' => '🇦🇮',
-                'name' => 'Ангилья',
-                'icon_class' => '<i class="flag flag-anguilla"></i>'
+                'name' => 'Ангилья'
             ),
             array(
-                'flag' => 'EN',
-                'name' => 'Англия',
-                'icon_class' => '<i class="flag flag-england"></i>'
+                'flag' => '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+                'name' => 'Англия'
             ),
             array(
                 'flag' => '🇦🇴',
-                'name' => 'Ангола',
-                'icon_class' => '<i class="flag flag-angola"></i>'
+                'name' => 'Ангола'
             ),
             array(
                 'flag' => '🇦🇩',
-                'name' => 'Андорра',
-                'icon_class' => '<i class="flag flag-andorra"></i>'
+                'name' => 'Андорра'
             ),
             array(
                 'flag' => '🇦🇶',
@@ -85,83 +75,67 @@ class DatabaseSeeder extends Seeder
             ),
             array(
                 'flag' => '🇦🇬',
-                'name' => 'Антигуа и Барбуда',
-                'icon_class' => '<i class="flag flag-antigua"></i>'
+                'name' => 'Антигуа и Барбуда'
             ),
             array(
                 'flag' => '🇦🇷',
-                'name' => 'Аргентина',
-                'icon_class' => '<i class="flag flag-argentina"></i>'
+                'name' => 'Аргентина'
             ),
             array(
                 'flag' => '🇦🇲',
-                'name' => 'Армения',
-                'icon_class' => '<i class="flag flag-armenia"></i>'
+                'name' => 'Армения'
             ),
             array(
                 'flag' => '🇦🇼',
-                'name' => 'Аруба',
-                'icon_class' => '<i class="flag flag-aruba"></i>'
+                'name' => 'Аруба'
             ),
             array(
                 'flag' => '🇦🇫',
-                'name' => 'Афганистан',
-                'icon_class' => '<i class="flag flag-afghanistan"></i>'
+                'name' => 'Афганистан'
             ),
             array(
                 'flag' => '🇧🇸',
-                'name' => 'Багамские Острова',
-                'icon_class' => '<i class="flag flag-bahamas"></i>'
+                'name' => 'Багамские Острова'
             ),
             array(
                 'flag' => '🇧🇩',
-                'name' => 'Бангладеш',
-                'icon_class' => '<i class="flag flag-bangladesh"></i>'
+                'name' => 'Бангладеш'
             ),
             array(
                 'flag' => '🇧🇧',
-                'name' => 'Барбадос',
-                'icon_class' => '<i class="flag flag-barbados"></i>'
+                'name' => 'Барбадос'
             ),
             array(
                 'flag' => '🇧🇭',
-                'name' => 'Бахрейн',
-                'icon_class' => '<i class="flag flag-bahrain"></i>'
+                'name' => 'Бахрейн'
             ),
             array(
                 'flag' => '🇧🇿',
-                'name' => 'Белиз',
-                'icon_class' => '<i class="flag flag-belize"></i>'
+                'name' => 'Белиз'
             ),
             array(
                 'flag' => '🇧🇾',
-                'name' => 'Белоруссия',
-                'icon_class' => '<i class="flag flag-belarus"></i>'
+                'name' => 'Белоруссия'
             ),
             array(
                 'flag' => '🇧🇪',
-                'name' => 'Бельгия',
-                'icon_class' => '<i class="flag flag-belgium"></i>'
+                'name' => 'Бельгия'
             ),
             array(
                 'flag' => '🇧🇯',
-                'name' => 'Бенин',
-                'icon_class' => '<i class="flag flag-benin"></i>'
+                'name' => 'Бенин'
             ),
             array(
                 'flag' => '🇧🇲',
-                'name' => 'Бермудские Острова',
-                'icon_class' => '<i class="flag flag-bermuda"></i>'
+                'name' => 'Бермудские Острова'
             ),
             array(
                 'flag' => '🇧🇬',
-                'name' => 'Болгария',
-                'icon_class' => '<i class="flag flag-bulgaria"></i>'
+                'name' => 'Болгария'
             ),
             array(
                 'flag' => '🇧🇴',
-                'name' => 'Боливия',
-                'icon_class' => '<i class="flag flag-bolivia"></i>'
+                'name' => 'Боливия'
             ),
             array(
                 'flag' => '🇧🇶',
@@ -169,148 +143,119 @@ class DatabaseSeeder extends Seeder
             ),
             array(
                 'flag' => '🇧🇦',
-                'name' => 'Босния и Герцеговина',
-                'icon_class' => '<i class="flag flag-bosnia"></i>'
+                'name' => 'Босния и Герцеговина'
             ),
             array(
                 'flag' => '🇧🇼',
-                'name' => 'Ботсвана',
-                'icon_class' => '<i class="flag flag-botswana"></i>'
+                'name' => 'Ботсвана'
             ),
             array(
                 'flag' => '🇧🇷',
-                'name' => 'Бразилия',
-                'icon_class' => '<i class="flag flag-brazil"></i>'
+                'name' => 'Бразилия'
             ),
             array(
                 'flag' => '🇮🇴',
-                'name' => 'Британская Территория в Индийском Океане',
-                'icon_class' => '<i class="flag flag-indian-ocean-territory"></i>'
+                'name' => 'Британская Территория в Индийском Океане'
             ),
             array(
                 'flag' => '🇧🇳',
-                'name' => 'Бруней',
-                'icon_class' => '<i class="flag flag-brunei"></i>'
+                'name' => 'Бруней'
             ),
             array(
                 'flag' => '🇧🇫',
-                'name' => 'Буркина-Фасо',
-                'icon_class' => '<i class="flag flag-burkina-faso"></i>'
+                'name' => 'Буркина-Фасо'
             ),
             array(
                 'flag' => '🇧🇮',
-                'name' => 'Бурунди',
-                'icon_class' => '<i class="flag flag-burundi"></i>'
+                'name' => 'Бурунди'
             ),
             array(
                 'flag' => '🇧🇹',
-                'name' => 'Бутан',
-                'icon_class' => '<i class="flag flag-bhutan"></i>'
+                'name' => 'Бутан'
             ),
             array(
                 'flag' => '🇻🇺',
-                'name' => 'Вануату',
-                'icon_class' => '<i class="flag flag-vanuatu"></i>'
+                'name' => 'Вануату'
             ),
             array(
                 'flag' => '🇻🇦',
-                'name' => 'Ватикан',
-                'icon_class' => '<i class="flag flag-vatican-city"></i>'
+                'name' => 'Ватикан'
             ),
             array(
                 'flag' => '🇬🇧',
-                'name' => 'Великобритания',
-                'icon_class' => '<i class="flag flag-united-kingdom"></i>'
+                'name' => 'Великобритания'
             ),
             array(
                 'flag' => '🇭🇺',
-                'name' => 'Венгрия',
-                'icon_class' => '<i class="flag flag-hungary"></i>'
+                'name' => 'Венгрия'
             ),
             array(
                 'flag' => '🇻🇪',
-                'name' => 'Венесуэла',
-                'icon_class' => '<i class="flag flag-venezuela"></i>'
+                'name' => 'Венесуэла'
             ),
             array(
                 'flag' => '🇻🇬',
-                'name' => 'Виргинские Острова (Великобритания)',
-                'icon_class' => '<i class="flag flag-british-virgin-islands"></i>'
+                'name' => 'Виргинские Острова (Великобритания)'
             ),
             array(
                 'flag' => '🇻🇮',
-                'name' => 'Виргинские Острова (США)',
-                'icon_class' => '<i class="flag flag-us-virgin-islands"></i>'
+                'name' => 'Виргинские Острова (США)'
             ),
             array(
                 'flag' => '🇺🇲',
-                'name' => 'Внешние малые острова США',
-                'icon_class' => '<i class="flag flag-us-minor-islands"></i>'
+                'name' => 'Внешние малые острова США'
             ),
             array(
                 'flag' => '🇹🇱',
-                'name' => 'Восточный Тимор',
-                'icon_class' => '<i class="flag flag-timorleste"></i>'
+                'name' => 'Восточный Тимор'
             ),
             array(
                 'flag' => '🇻🇳',
-                'name' => 'Вьетнам',
-                'icon_class' => '<i class="flag flag-vietnam"></i>'
+                'name' => 'Вьетнам'
             ),
             array(
                 'flag' => '🇬🇦',
-                'name' => 'Габон',
-                'icon_class' => '<i class="flag flag-gabon"></i>'
+                'name' => 'Габон'
             ),
             array(
                 'flag' => '🇭🇹',
-                'name' => 'Республика Гаити',
-                'icon_class' => '<i class="flag flag-haiti"></i>'
+                'name' => 'Республика Гаити'
             ),
             array(
                 'flag' => '🇬🇾',
-                'name' => 'Гайана',
-                'icon_class' => '<i class="flag flag-guyana"></i>'
+                'name' => 'Гайана'
             ),
             array(
                 'flag' => '🇬🇲',
-                'name' => 'Гамбия',
-                'icon_class' => '<i class="flag flag-gambia"></i>'
+                'name' => 'Гамбия'
             ),
             array(
                 'flag' => '🇬🇭',
-                'name' => 'Гана',
-                'icon_class' => '<i class="flag flag-ghana"></i>'
+                'name' => 'Гана'
             ),
             array(
                 'flag' => '🇬🇵',
-                'name' => 'Гваделупа',
-                'icon_class' => '<i class="flag flag-guadeloupe"></i>'
+                'name' => 'Гваделупа'
             ),
             array(
                 'flag' => '🇬🇹',
-                'name' => 'Гватемала',
-                'icon_class' => '<i class="flag flag-guatemala"></i>'
+                'name' => 'Гватемала'
             ),
             array(
                 'flag' => '🇬🇫',
-                'name' => 'Гвиана',
-                'icon_class' => '<i class="flag flag-french-guiana"></i>'
+                'name' => 'Гвиана'
             ),
             array(
                 'flag' => '🇬🇳',
-                'name' => 'Гвинея',
-                'icon_class' => '<i class="flag flag-guinea"></i>'
+                'name' => 'Гвинея'
             ),
             array(
                 'flag' => '🇬🇼',
-                'name' => 'Гвинея-Бисау',
-                'icon_class' => '<i class="flag flag-guinea-bissau"></i>'
+                'name' => 'Гвинея-Бисау'
             ),
             array(
                 'flag' => '🇩🇪',
-                'name' => 'Германия',
-                'icon_class' => '<i class="flag flag-germany"></i>'
+                'name' => 'Германия'
             ),
             array(
                 'flag' => '🇬🇬',
@@ -318,13 +263,11 @@ class DatabaseSeeder extends Seeder
             ),
             array(
                 'flag' => '🇬🇮',
-                'name' => 'Гибралтар',
-                'icon_class' => '<i class="flag flag-gibraltar"></i>'
+                'name' => 'Гибралтар'
             ),
             array(
                 'flag' => '🇭🇳',
-                'name' => 'Гондурас',
-                'icon_class' => '<i class="flag flag-honduras"></i>'
+                'name' => 'Гондурас'
             ),
             array(
                 'flag' => '🇭🇰',

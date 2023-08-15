@@ -10,10 +10,16 @@ class Tag extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'display'
+        'display',
+        'user_id',
+        'video_id'
     ];
-    public function videos()
+    public function video()
     {
-        return $this->belongsToMany(Video::class);
+        return $this->belongsTo(Video::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

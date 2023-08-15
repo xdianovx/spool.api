@@ -150,7 +150,111 @@
                                 <a href="{{ route('videos.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
+                    </div>
+                    <hr class="my-0">
+                    <h5 class="card-header">Теги</h5>
+                        <div class="card-body">
 
+                          
+                                    @if (session('status') === 'tag-updated')
+                                        <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                    @if (session('status') === 'tag-created')
+                                        <div class="alert alert-success alert-dismissible" role="alert">
+                                            {{ __('Создано успешно.') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                                    @if (session('status') === 'tag-deleted')
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            {{ __('Удалено успешно.') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
+                            
+
+                            <form id="formAccountSettings" method="POST" action="{{ route('tag.store') }}">
+                                @csrf
+                                <div class="row">
+                                    <label for="firstName" class="form-label">Название*</label>
+                                    <div class="mb-3 col-md-6 d-flex gap-2">
+                                       
+                                        <input class="form-control" type="text" id="firstName" name="name"
+                                            placeholder="Введите название" value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                  
+                                    {{-- <div class="mb-3 col-md-6">
+                                        <label for="firstName" class="form-label">Отображение</label>
+                                        <div class="form-check mt-3">
+                                            <input name="display" class="form-check-input" type="radio" value="false"
+                                                id="defaultRadio1"
+                                                @if (old('display') == 'false') checked="checked" @else @endif>
+                                            <label class="form-check-label" for="defaultRadio1"> Нет </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input name="display" class="form-check-input" type="radio" value="true"
+                                                id="defaultRadio2"
+                                                @if (old('display') == 'true') checked="checked" @else @endif>
+                                            <label class="form-check-label" for="defaultRadio2"> Да </label>
+                                        </div>
+                                        @error('display')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div> --}}
+                                   
+                                        <button type="submit" class="btn btn-primary">Создать</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @forelse ($user_tags as $tag)
+                                        <tr>
+                                            <td>{{ $tag->name }}</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                        data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+    
+                                                        <a class="dropdown-item" href="{{ route('tag.edit', $tag->id) }}"><i
+                                                                class="bx bx-edit-alt me-1"></i> Редактировать</a>
+        
+                                                                <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item text-danger">
+                                                                <i class="bx bx-trash me-1 text-danger" role="button"></i>
+                                                                 Удалить</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+  
+                                    @empty
+                                        <tr>
+                                            <td class="text-danger">По вашему запросу ничего не найдено.</td>
+                                        </tr>
+                                    @endforelse
+        
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
