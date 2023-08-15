@@ -43,16 +43,16 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Флаг</th></th>
                                 <th>Название</th>
-                                <th>ISO</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($countries as $country)
                                 <tr>
-                                    <td>{{ $country->name }}</td>
                                     <td>{{ $country->flag }}</td>
+                                    <td>{{ $country->name }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

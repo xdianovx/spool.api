@@ -22,7 +22,7 @@ class VideoController extends Controller
 
     public function create()
     { 
-        $user_tags = Tag::where('user_id', Auth::user()->id)->get();
+        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', NULL)->get();
         $partner_companies = Partners_company::all();
         $categories = Category::all();
         return view('videos.create',compact('partner_companies','categories','user_tags'));
@@ -36,10 +36,11 @@ class VideoController extends Controller
     
     public function edit($video)
     { 
+        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video)->get();
         $partner_companies = Partners_company::all();
         $categories = Category::all();
         $video = Video::whereId($video)->firstOrFail();
-        return view('videos.edit', compact('video','partner_companies','categories'));
+        return view('videos.edit', compact('video','partner_companies','categories','user_tags'));
     }
 
     public function store(VideoStoreRequest $request)

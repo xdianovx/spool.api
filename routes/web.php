@@ -98,10 +98,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('tags')->group(function () {
         Route::get('/all',  [TagController::class, 'index'])->name('tags.index');
-        Route::get('/search',  [TagController::class, 'search'])->name('tags.search');
         Route::get('/create',  [TagController::class, 'create'])->name('tag.create');
         Route::post('/',  [TagController::class, 'store'])->name('tag.store');
-        Route::get('/{tag}/show',  [TagController::class, 'show'])->name('tag.show');
         Route::get('/{tag}/edit',  [TagController::class, 'edit'])->name('tag.edit');
         Route::patch('/{tag}',  [TagController::class, 'update'])->name('tag.update');
         Route::delete('/{tag}/destroy',  [TagController::class, 'destroy'])->name('tag.destroy');

@@ -132,7 +132,6 @@
                             <tr>
                                 <th>Название</th>
                                 <th>Слаг</th>
-                                <th>Сортировка</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -142,7 +141,6 @@
 
                                     <td>{{ $child_category->name }}</td>
                                     <td>{{ $category->slug }}</td>
-                                    <td>{{ $child_category->sort }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

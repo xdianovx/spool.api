@@ -22,12 +22,6 @@ class TagController extends Controller
 
         return view('tags.create');
     }
-
-    public function show($tag)
-    {
-        $tag = Tag::whereId($tag)->firstOrFail();
-        return view('tags.show', compact('tag'));
-    }
     
     public function edit($tag)
     { 
@@ -52,23 +46,14 @@ class TagController extends Controller
         $tag = Tag::whereId($tag)->firstOrFail();
         $data = $request->validated();
         $tag->update($data);
-        return redirect()->route('tags.index')->with('status', 'tag-updated');
+        return redirect()->back()->with('status', 'tag-updated');
     }
     public function destroy($tag)
     {
         $tag = Tag::whereId($tag)->firstOrFail();
         $tag->delete();
-        return redirect()->route('tags.index')->with('status', 'tag-deleted');
+        return redirect()->back()->with('status', 'tag-deleted');
     }
 
-    public function search(Request $request)
-    {
-        if (request('search' == 'null')):
-            $tags = Tag::orderBy('id', 'DESC')->paginate(10);
-        else:
-            $tags = Tag::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);
-        endif;
-        return view('tags.index', compact('tags'));
-    }
+
 }

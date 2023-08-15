@@ -38,17 +38,14 @@
                             <tr>
                                 <th>Название</th>
                                 <th>Слаг</th>
-                                <th>Сортировка</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody id="list" class="table-border-bottom-0">
                             @forelse ($categories as $category)
                                 <tr class="list-item cursor-move" data-sort-id="{{ $category->id }}">
-
                                     <td>{{ $category->name }}</td>
                                     <td>{{ $category->slug }}</td>
-                                    <td>{{ $category->sort }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

@@ -99,7 +99,7 @@
                             <div data-i18n="Basic">Видеоролики</div>
                         </a>
                     </li>
-                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                    {{-- <li class="menu-item @if(in_array(Route::current()->getName(), [
                         'tags.index',
                         'tag.create',
                         'tags.search',
@@ -110,7 +110,7 @@
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Теги</div>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Видео</span></li>
 
                     <li class="menu-item @if(in_array(Route::current()->getName(), [
