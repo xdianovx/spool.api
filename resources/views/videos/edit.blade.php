@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-xxl flegrow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('videos.index') }}">
-                    Видео</a> / </span>Редактировать</h4>
+                    Видеоролики</a> / {{ $video->name }} / </span>Редактировать</h4>
 
         <div class="row">
             <div class="col-md-12">
@@ -11,6 +11,15 @@
 
                     <hr class="my-0">
                     <div class="card-body">
+
+                        @if (session('status') === 'video-created')
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                {{ __('Создано успешно.') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
+
                         <form id="formAccountSettings" method="POST" action="{{ route('video.update', $video->id) }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -100,15 +109,15 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="description" class="form-label">Описание*</label>
-                                    <textarea class="form-control" type="text-area" id="description" name="description" placeholder="Текст"
-                                        value="{{ $video->description }}" required>{{ $video->description }}
-                                    </textarea>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-default-message">Описание*</label>
+                                    <textarea id="basic-default-message" class="form-control" name="description" placeholder="Текст" style="height: 234px;"
+                                        required>{{ $video->description }}</textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label for="duration" class="form-label">Длительность*</label>
                                     <input class="form-control" type="text" id="duration" name="duration"
@@ -158,115 +167,149 @@
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <button type="submit" class="btn btn-primary">Создать</button>
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
                                 <a href="{{ route('videos.index') }}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
-                        <hr class="my-0">
-                        <h5 class="card-header">Теги</h5>
-                            <div class="card-body">
-    
-                              
-                                        @if (session('status') === 'tag-updated')
-                                            <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        @endif
-                                        @if (session('status') === 'tag-created')
-                                            <div class="alert alert-success alert-dismissible" role="alert">
-                                                {{ __('Создано успешно.') }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        @endif
-                                        @if (session('status') === 'tag-deleted')
-                                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                                {{ __('Удалено успешно.') }}
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                        @endif
-                                
-                                        <form id="formAccountSettings" method="POST" action="{{ route('tag.store') }}">
-                                            @csrf
-                                            <div class="row">
-                                                <label for="firstName" class="form-label">Название*</label>
-                                                <div class="mb-3 col-md-6 d-flex gap-2">
-                                                   
-                                                    <input class="form-control" type="text" id="firstName" name="name"
-                                                        placeholder="Введите название" value="{{ old('name') }}" required>
-                                                    @error('name')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                              
-                                                {{-- <div class="mb-3 col-md-6">
-                                                    <label for="firstName" class="form-label">Отображение</label>
-                                                    <div class="form-check mt-3">
-                                                        <input name="display" class="form-check-input" type="radio" value="false"
-                                                            id="defaultRadio1"
-                                                            @if (old('display') == 'false') checked="checked" @else @endif>
-                                                        <label class="form-check-label" for="defaultRadio1"> Нет </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input name="display" class="form-check-input" type="radio" value="true"
-                                                            id="defaultRadio2"
-                                                            @if (old('display') == 'true') checked="checked" @else @endif>
-                                                        <label class="form-check-label" for="defaultRadio2"> Да </label>
-                                                    </div>
-                                                    @error('display')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div> --}}
-                                               
-                                                    <button type="submit" class="btn btn-primary">Создать</button>
-                                                </div>
-                                            </div>
-            
-                                        </form>
-    
+                        <div class="divider">
+                            <div class="divider-text">Теги</div>
+                        </div>
+                        <div class="card-body">
+                            @if (session('status') === 'tag-updated')
+                                <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+                            @if (session('status') === 'tag-created')
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    {{ __('Создано успешно.') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+                            @if (session('status') === 'tag-deleted')
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    {{ __('Удалено успешно.') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            <form id="formAccountSettings" method="POST" action="{{ route('tag.store', $video->id) }}">
+                                @csrf
+                                <div class="row">
+                                    <label for="firstName" class="form-label">Название*</label>
+                                    <div class="mb-3 col-md-6 d-flex gap-2">
+
+                                        <input class="form-control" type="text" id="firstName" name="name"
+                                            placeholder="Введите название" value="{{ old('name') }}" required>
+                                        @error('name')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <button type="submit" class="btn btn-primary">Создать</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                            @if ($user_tags->count() > 0)
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th>Название</th>
+                                            <th>Показать?</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-0">
                                         @forelse ($user_tags as $tag)
-                                            <tr>
+                                            <tr class="tag_row" data-tag-id="{{ $tag->id }}">
                                                 <td>{{ $tag->name }}</td>
                                                 <td>
-                                                    <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                            data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-        
-                                                            <a class="dropdown-item" href="{{ route('tag.edit', $tag->id) }}"><i
-                                                                    class="bx bx-edit-alt me-1"></i> Редактировать</a>
-            
-                                                                    <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="dropdown-item text-danger">
-                                                                    <i class="bx bx-trash me-1 text-danger" role="button"></i>
-                                                                     Удалить</button>
-                                                        </div>
+                                                    <div class="form-check form-switch">
+                                                        <input name="display" class="form-check-input tag_display" 
+                                                            type="checkbox"
+                                                            @if ($tag->display == '1') checked @endif>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                            <button class="btn btn-xs tag_delete"> 
+                                                                <i class="bx bx-trash me-1 text-danger"
+                                                                    role="button"></i>
+                                                            </button>
+                                                </td>
                                             </tr>
-      
+
                                         @empty
                                             <tr>
                                                 <td class="text-danger">По вашему запросу ничего не найдено.</td>
                                             </tr>
                                         @endforelse
-            
+
                                     </tbody>
                                 </table>
-                            </div>
+                                @if ($user_tags->links()->paginator->hasPages())
+                                    <div class="demo-inline-spacing">
+                                        {{ $user_tags->links() }}
+                                    </div>
+                                @endif
+                            @else
+                            @endif
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const tags = document.querySelectorAll('.tag_row'); 
+        tags.forEach(item => {
+            const checkButton = item.querySelector('.tag_display');
+            const tagId = item.getAttribute('data-tag-id');
+            const deleteButton =  item.querySelector('.tag_delete');
+
+            checkButton.addEventListener('change', () => {
+                const isCheck = checkButton.checked;
+                
+                fetch("{{ route('tag.display') }}", {
+                        headers: {
+                            "X-CSRF-TOKEN": token
+                        },
+                        method: 'post',
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            id:tagId,
+                            isCheck
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            })
+
+
+            deleteButton.addEventListener('click', (e) => {
+               e.preventDefault();
+               const url = "/tags/delete/" + tagId;
+               fetch(url, {
+                        headers: {
+                            "X-CSRF-TOKEN": token
+                        },
+                        method: 'delete',
+                        body:JSON.stringify({
+                            id:tagId
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            })
+        });
+    </script>
 @endsection

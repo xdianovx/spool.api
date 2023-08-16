@@ -22,10 +22,9 @@ class VideoController extends Controller
 
     public function create()
     { 
-        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', NULL)->get();
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.create',compact('partner_companies','categories','user_tags'));
+        return view('videos.create',compact('partner_companies','categories'));
     }
 
     public function show($video)
@@ -36,7 +35,7 @@ class VideoController extends Controller
     
     public function edit($video)
     { 
-        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video)->get();
+        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video)->paginate(10);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
         $video = Video::whereId($video)->firstOrFail();
@@ -74,8 +73,8 @@ class VideoController extends Controller
             $data['image_banner'] = $request->file('image_banner')->storeAs('public', $fileNameToStore);
         }
 
-        Video::firstOrCreate($data);
-        return redirect()->route('videos.index')->with('status', 'video-created');
+       $video = Video::firstOrCreate($data);
+        return redirect()->route('video.edit',$video->id)->with('status', 'video-created');
     }
 
     public function update(VideoUpdateRequest $request, $video)
@@ -113,6 +112,10 @@ class VideoController extends Controller
     }
     public function destroy($video)
     {
+        $tags = Tag::where('video_id',$video)->get();
+        foreach($tags as $tag):
+        $tag->delete();
+        endforeach;
         $video = Video::whereId($video)->firstOrFail();
         $video->delete();
         return redirect()->route('videos.index')->with('status', 'video-deleted');

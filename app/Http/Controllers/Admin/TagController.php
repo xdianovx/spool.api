@@ -6,37 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tag\TagStoreRequest;
 use App\Http\Requests\Tag\TagUpdateRequest;
 use App\Models\Tag;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
-    public function index()
-    {
-        $tags = Tag::orderBy('id', 'DESC')->paginate(10);
-        return view('tags.index', compact('tags'));
-    }
 
-    public function create()
-    {
-
-        return view('tags.create');
-    }
-    
     public function edit($tag)
     { 
         $tag = Tag::whereId($tag)->firstOrFail();
-        return view('tags.edit', compact('tag'));
+        $video_id = $tag->video_id;
+        $video = Video::whereId($video_id)->firstOrFail();
+        return view('tags.edit', compact('tag','video_id','video'));
     }
 
-    public function store(TagStoreRequest $request)
+    public function store(TagStoreRequest $request, $video_id)
     {
-
         $data = $request->validated();
-
         Tag::firstOrCreate([
             'name' => $data['name'],
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'video_id' => $video_id
         ],$data);
         return redirect()->back()->with('status', 'tag-created');
     }
@@ -45,8 +36,9 @@ class TagController extends Controller
     {
         $tag = Tag::whereId($tag)->firstOrFail();
         $data = $request->validated();
+        $video_id = $tag->video_id;
         $tag->update($data);
-        return redirect()->back()->with('status', 'tag-updated');
+        return redirect()->route('video.edit',$video_id)->with('status', 'tag-updated');
     }
     public function destroy($tag)
     {
@@ -54,6 +46,20 @@ class TagController extends Controller
         $tag->delete();
         return redirect()->back()->with('status', 'tag-deleted');
     }
+    public function destroy_ajax(Request $request)
+    {
+        $bodyContent = $request->getContent();
+        $data = json_decode($bodyContent);
+        // $tag = Tag::whereId($tag)->firstOrFail();
+        // $tag->delete();
+        return response()->json($data, 200);
+    }
 
-
+    public function display(Request $request)
+    {
+        $bodyContent = $request->getContent();
+        $data = json_decode($bodyContent);
+        Tag::whereId($data->id)->update(['display'=> $data->isCheck]);
+        return response()->json($data, 200);
+    }
 }

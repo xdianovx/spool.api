@@ -97,12 +97,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{partners_company}/destroy',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
     });
     Route::prefix('tags')->group(function () {
-        Route::get('/all',  [TagController::class, 'index'])->name('tags.index');
-        Route::get('/create',  [TagController::class, 'create'])->name('tag.create');
-        Route::post('/',  [TagController::class, 'store'])->name('tag.store');
+        Route::post('/{video_id}',  [TagController::class, 'store'])->name('tag.store');
         Route::get('/{tag}/edit',  [TagController::class, 'edit'])->name('tag.edit');
         Route::patch('/{tag}',  [TagController::class, 'update'])->name('tag.update');
-        Route::delete('/{tag}/destroy',  [TagController::class, 'destroy'])->name('tag.destroy');
+        Route::post('/',  [TagController::class, 'display'])->name('tag.display');
+        Route::delete('/destroy/{tag}',  [TagController::class, 'destroy'])->name('tag.destroy');
     });
 });
 

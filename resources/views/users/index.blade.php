@@ -57,7 +57,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($users as $user)
                                 <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger"></i>
+                                    <td>
                                         <strong>{{ $user->id }}</strong>
                                     </td>
                                     <td>{{ $user->name }}</td>
