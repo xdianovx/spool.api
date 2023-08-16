@@ -13,12 +13,20 @@ use Illuminate\Support\Facades\Auth;
 class TagController extends Controller
 {
 
+    public function getAll()
+    {
+        $tags = Tag::all();
+
+        return response()->json($tags);
+    }
+
+
     public function edit($tag)
-    { 
+    {
         $tag = Tag::whereId($tag)->firstOrFail();
         $video_id = $tag->video_id;
         $video = Video::whereId($video_id)->firstOrFail();
-        return view('tags.edit', compact('tag','video_id','video'));
+        return view('tags.edit', compact('tag', 'video_id', 'video'));
     }
 
     public function store(TagStoreRequest $request, $video_id)
@@ -28,7 +36,7 @@ class TagController extends Controller
             'name' => $data['name'],
             'user_id' => Auth::user()->id,
             'video_id' => $video_id
-        ],$data);
+        ], $data);
         return redirect()->back()->with('status', 'tag-created');
     }
 
@@ -38,13 +46,13 @@ class TagController extends Controller
         $data = $request->validated();
         $video_id = $tag->video_id;
         $tag->update($data);
-        return redirect()->route('video.edit',$video_id)->with('status', 'tag-updated');
+        return redirect()->route('video.edit', $video_id)->with('status', 'tag-updated');
     }
     public function destroy($tag)
     {
         $tag = Tag::whereId($tag)->firstOrFail();
         $tag->delete();
-        return redirect()->back()->with('status', 'tag-deleted');
+        return response()->json($tag, 200);
     }
     public function destroy_ajax(Request $request)
     {
@@ -55,11 +63,12 @@ class TagController extends Controller
         return response()->json($data, 200);
     }
 
+
     public function display(Request $request)
     {
         $bodyContent = $request->getContent();
         $data = json_decode($bodyContent);
-        Tag::whereId($data->id)->update(['display'=> $data->isCheck]);
+        Tag::whereId($data->id)->update(['display' => $data->isCheck]);
         return response()->json($data, 200);
     }
 }

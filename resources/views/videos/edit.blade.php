@@ -40,7 +40,8 @@
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
                                                     {{ $category->id == $video->category_id ? 'selected' : '' }}>
-                                                    {{ $category->name }}</option>
+                                                    {{ $category->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('category_id')
@@ -58,7 +59,8 @@
                                             @foreach ($partner_companies as $partner_company)
                                                 <option value="{{ $partner_company->id }}"
                                                     {{ $partner_company->id == $partner_company->partners_company_id ? 'selected' : '' }}>
-                                                    {{ $partner_company->name }}</option>
+                                                    {{ $partner_company->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('partners_company_id')
@@ -175,6 +177,7 @@
                             <div class="divider-text">Теги</div>
                         </div>
                         <div class="card-body">
+
                             @if (session('status') === 'tag-updated')
                                 <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
@@ -221,30 +224,7 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-border-bottom-0">
-                                        @forelse ($user_tags as $tag)
-                                            <tr class="tag_row" data-tag-id="{{ $tag->id }}">
-                                                <td>{{ $tag->name }}</td>
-                                                <td>
-                                                    <div class="form-check form-switch">
-                                                        <input name="display" class="form-check-input tag_display" 
-                                                            type="checkbox"
-                                                            @if ($tag->display == '1') checked @endif>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                            <button class="btn btn-xs tag_delete"> 
-                                                                <i class="bx bx-trash me-1 text-danger"
-                                                                    role="button"></i>
-                                                            </button>
-                                                </td>
-                                            </tr>
-
-                                        @empty
-                                            <tr>
-                                                <td class="text-danger">По вашему запросу ничего не найдено.</td>
-                                            </tr>
-                                        @endforelse
+                                    <tbody class="table-border-bottom-0 tag__wrap position-relative block">
 
                                     </tbody>
                                 </table>
@@ -264,52 +244,102 @@
     </div>
     <script>
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        const tags = document.querySelectorAll('.tag_row'); 
-        tags.forEach(item => {
-            const checkButton = item.querySelector('.tag_display');
-            const tagId = item.getAttribute('data-tag-id');
-            const deleteButton =  item.querySelector('.tag_delete');
+        let data
+        let tagWrap
 
-            checkButton.addEventListener('change', () => {
-                const isCheck = checkButton.checked;
-                
-                fetch("{{ route('tag.display') }}", {
-                        headers: {
-                            "X-CSRF-TOKEN": token
-                        },
-                        method: 'post',
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            id:tagId,
-                            isCheck
-                        })
+        const listUpdate = async () => {
+            await fetch('/tags')
+                .then(res => res.json())
+                .then(body => data = body)
+                .then(() => {
+                    tagWrap = document.querySelector('.tag__wrap')
+                    tagWrap.innerHTML = " "
+                    console.log(data);
+
+                })
+                .then(() => {
+
+                    data.forEach(item => {
+                        isChecked = item.display
+                        const htmlEl = `
+                        <tr class="tag_row" data-tag-id="${item.id}">
+                            <td>${item.name}</td>
+                            <td>
+                                <div class="form-check form-switch">
+                                    <input name="display" class="form-check-input tag_display" type="checkbox" ${item.display == 1 ? 'checked' : ""} />
+                                </div>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-xs tag_delete">
+                                    <i class="bx bx-trash me-1 text-danger" role="button"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        `
+                        tagWrap.insertAdjacentHTML("beforeend", htmlEl)
                     })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(function(error) {
-                        console.log(error);
-                    });
-            })
+                })
+                .then(() => {
+                    const tags = document.querySelectorAll('.tag_row')
 
 
-            deleteButton.addEventListener('click', (e) => {
-               e.preventDefault();
-               const url = "/tags/delete/" + tagId;
-               fetch(url, {
-                        headers: {
-                            "X-CSRF-TOKEN": token
-                        },
-                        method: 'delete',
-                        body:JSON.stringify({
-                            id:tagId
+                    tags.forEach(item => {
+
+                        const checkButton = item.querySelector('.tag_display');
+                        const tagId = item.getAttribute('data-tag-id');
+                        const deleteButton = item.querySelector('.tag_delete');
+
+                        checkButton.addEventListener('change', () => {
+                            const isCheck = checkButton.checked;
+
+                            fetch("{{ route('tag.display') }}", {
+                                    headers: {
+                                        "X-CSRF-TOKEN": token
+                                    },
+                                    method: 'post',
+                                    credentials: "same-origin",
+                                    body: JSON.stringify({
+                                        id: tagId,
+                                        isCheck
+                                    })
+                                })
+                                .then(response => response.json())
+
+                                .catch(function(error) {
+                                    console.log(error);
+                                });
                         })
-                    })
-                    .then(response => response.json())
-                    .then(data => console.log(data))
-                    .catch(function(error) {
-                        console.log(error);
+
+
+                        deleteButton.addEventListener('click', () => {
+                            deleteFunct(tagId)
+                        })
                     });
-            })
-        });
+
+                })
+
+
+        }
+
+        const deleteFunct = async (tagId) => {
+            const url = "/tags/destroy/" + tagId;
+            await fetch(url, {
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    },
+                    method: 'delete',
+                    body: JSON.stringify({
+                        id: tagId
+                    })
+                })
+                .then(() => listUpdate())
+
+                .catch(function(e) {
+                    console.log(e);
+                });
+        }
+
+        listUpdate()
     </script>
 @endsection
