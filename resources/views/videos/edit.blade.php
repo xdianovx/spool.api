@@ -244,6 +244,7 @@
     </div>
     <script>
         const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         let data
         let tagWrap
 
@@ -321,6 +322,8 @@
 
 
         }
+
+
 
         const deleteFunct = async (tagId) => {
             const url = "/tags/destroy/" + tagId;
