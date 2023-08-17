@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Auth;
 class TagController extends Controller
 {
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $tags = Tag::all();
+        $bodyContent = $request->getContent();
+        $data = json_decode($bodyContent);
+        // Ключевая часть этого запроса where('video_id', 'id видео записи который мы должны получить')
+        $tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $data->id)->paginate(10);
 
         return response()->json($tags);
     }

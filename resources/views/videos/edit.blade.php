@@ -224,7 +224,7 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-border-bottom-0 tag__wrap position-relative block">
+                                    <tbody class="table-border-bottom-0 tag__wrap position-relative block" data-video-id="{{$video->id}}">
 
                                     </tbody>
                                 </table>
@@ -261,6 +261,14 @@
                 .then(() => {
 
                     data.forEach(item => {
+
+
+                        //этот ДАТА выше я добавил
+                        const videoId = tagWrap.getAttribute('data-video-id');
+
+
+
+
                         isChecked = item.display
                         const htmlEl = `
                         <tr class="tag_row" data-tag-id="${item.id}">
@@ -290,7 +298,7 @@
                         const checkButton = item.querySelector('.tag_display');
                         const tagId = item.getAttribute('data-tag-id');
                         const deleteButton = item.querySelector('.tag_delete');
-
+                        
                         checkButton.addEventListener('change', () => {
                             const isCheck = checkButton.checked;
 
@@ -302,7 +310,8 @@
                                     credentials: "same-origin",
                                     body: JSON.stringify({
                                         id: tagId,
-                                        isCheck
+                                        isCheck,
+                                        videoId
                                     })
                                 })
                                 .then(response => response.json())

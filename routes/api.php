@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\Clients\AuthController;
 use App\Http\Controllers\API\V1\Clients\ProfileController;
 use App\Http\Controllers\API\V1\Countries\CountryController;
 use App\Http\Controllers\API\V1\Tags\TagController;
+use App\Http\Controllers\API\V1\Videos\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,9 @@ Route::group([
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
     //profile
-    Route::get('profile', [ProfileController::class, 'userProfile']);    
-    Route::post('profile/email', [ProfileController::class, 'profileEmail']);   
-    Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);  
+    Route::get('profile', [ProfileController::class, 'userProfile']);
+    Route::post('profile/email', [ProfileController::class, 'profileEmail']);
+    Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);
     Route::post('profile/name', [ProfileController::class, 'profileName']);
     Route::post('profile/age', [ProfileController::class, 'profileAge']);
     Route::post('profile/gender', [ProfileController::class, 'profileGender']);
@@ -45,11 +46,11 @@ Route::group([
     Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
     Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
     //countries
-    Route::get('countries', [CountryController::class, 'getCountries']); 
-     //categories
-     Route::get('categories', [CategoryController::class, 'getCategories']); 
-        //tags
-        Route::get('tags', [TagController::class, 'getTags']); 
+    Route::get('countries', [CountryController::class, 'getCountries']);
+    //categories
+    Route::get('categories', [CategoryController::class, 'getCategories']);
+    //videos
+    Route::get('videos', [VideoController::class, 'getVideos']);
 });
 
 Route::get('/v1/ping', function () {
