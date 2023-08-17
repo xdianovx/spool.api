@@ -17,7 +17,6 @@ class TagController extends Controller
     {
         // // Ключевая часть этого запроса where('video_id', 'id видео записи который мы должны получить')
         $tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video_id)->paginate(10);
-
         return response()->json($tags);
     }
 

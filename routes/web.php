@@ -97,7 +97,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{partners_company}/destroy',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
     });
     Route::prefix('tags')->group(function () {
-        Route::get('/', [TagController::class, 'getAll']);
+        Route::get('/{video_id}', [TagController::class, 'getAll']);
         Route::post('/{video_id}',  [TagController::class, 'store'])->name('tag.store');
         Route::get('/{tag}/edit',  [TagController::class, 'edit'])->name('tag.edit');
         Route::patch('/{tag}',  [TagController::class, 'update'])->name('tag.update');
