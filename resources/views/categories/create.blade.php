@@ -23,29 +23,8 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="language" class="form-label">Родительская категория</label>
-                                    <select id="language" class="select2 form-select" name="parent_id">
-                                        <option value="0" @if (old('parent_id') == '0') {{ 'selected' }} @endif>
-                                            Без родительской категории</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}"
-                                                {{ $category->id == old('parent_id') ? 'selected' : '' }}>
-                                                {{ $category->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('parent_id')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                {{-- <div class="mb-3 col-md-6">
-                                    <label for="sort" class="form-label">Сортировка*</label>
-                                    <input class="form-control" type="text" id="sort" name="sort"
-                                        placeholder="Введите число" value="{{ old('sort') }}" required>
-                                    @error('sort')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
+                                <input type="hidden" name="parent_id" value="0">
+                    
                                 <div class="mb-3 col-md-6">
                                     <label for="sort" class="form-label">Изображение</label>
                                     <div class="input-group">

@@ -60,7 +60,7 @@ class PartnersCompanyController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search' == 'null')):
+        if (request('search') == null):
             $partners_companies = Partners_company::orderBy('id', 'DESC')->paginate(10);
         else:
             $partners_companies = Partners_company::where('name', 'like', '%' . request('search') . '%')->

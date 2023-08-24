@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Setting;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryUpdateRequest extends FormRequest
+class SettingUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string',
-            'slug' => 'nullable|string',
-            'sort' => 'nullable|numeric',
-            'image' => 'image|nullable|max:1999',
-            'parent_id' => 'nullable|numeric',
+            'key' => 'nullable|string',
+            'value' => 'nullable|string'
         ];
     }
 }

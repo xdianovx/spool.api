@@ -11,7 +11,8 @@ class Ticket extends Model
 
     protected $fillable = [
         'price',
-        'discounted_price'
+        'discounted_price',
+        'video_id'
     ];
 
     public function video()

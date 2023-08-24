@@ -46,7 +46,7 @@ class ClientController extends Controller
     public function search(Request $request)
     {
         
-        if (request('search') == 'null'):
+        if (request('search') == null):
             $clients = Client::orderBy('id', 'DESC')->paginate(10);
          else:
             $clients = Client::where('name', 'like', '%' . request('search') . '%')->

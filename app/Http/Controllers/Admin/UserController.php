@@ -74,7 +74,7 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        if (request('search' == 'null')):
+        if (request('search') == null):
             $users = User::orderBy('id', 'DESC')->paginate(10);
 
         else:

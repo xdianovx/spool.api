@@ -1,27 +1,26 @@
 @extends('template.main')
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Клиенты /</h4>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Настройки /</span></h4>
         <div class="card">
-
             <h5 class="card-header">Список</h5>
             <div class="card-body">
-
+                <a type="button" class="btn btn-outline-secondary fw-semibold"
+                    href="{{ route('setting.create') }}">Добавить</a>
 
                 <div class="demo-inline-spacing">
-                    @if (session('status') === 'account-banned')
-                        <div class="alert alert-primary" role="alert">
-                            {{ __('Клиент заблокирован успешно.') }}
+                    @if (session('status') === 'setting-updated')
+                        <div class="alert alert-primary" role="alert">{{ __('Обновлено успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'account-unbanned')
-                        <div class="alert alert-primary" role="alert">
-                            {{ __('Клиент разблокирован успешно.') }}
+                    @if (session('status') === 'setting-created')
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ __('Создано успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    @if (session('status') === 'account-deleted')
+                    @if (session('status') === 'setting-deleted')
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             {{ __('Удалено успешно.') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -32,11 +31,11 @@
 
             <hr class="m-0">
             <div class="card-body">
-                <form class="d-flex" action="{{ route('clients.search') }}" method="get">
+                <form class="d-flex" action="{{ route('settings.search') }}" method="get">
                     @csrf
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
-                </form>
+                  </form>
             </div>
 
             <hr class="m-0">
@@ -45,34 +44,16 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Имя</th>
-                                <th>Почта</th>
-                                <th>Дата последнего входа</th>
-                                <th>Статус</th>
+                                <th>Ключь</th>
+                                <th>Значение</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @forelse ($clients as $client)
+                            @forelse ($settings as $setting)
                                 <tr>
-            
-                                    <td>
-                                        <strong>{{ $client->id }}</strong>
-                                    </td>
-                                    <td>{{ $client->name }}</td>
-                                    <td>
-                                        {{ $client->email }}
-                                    </td>
-                                    <td>{{ $client->last_login_date }}</td>
-                                    <td>
-                                        @if (empty($client->blocked_at))
-                                            <span class="badge bg-label-primary me-1">Активный</span>
-                                        @else
-                                            <span class="badge bg-label-warning me-1">Заблокирован:
-                                                {{ $client->blocked_at }}</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $setting->key }}</td>
+                                    <td>{{ $setting->value }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -80,18 +61,21 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('client.show', $client->id) }}"><i
+
+                                                <a class="dropdown-item" href="{{ route('setting.show', $setting->id) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
+                                                <a class="dropdown-item" href="{{ route('setting.edit', $setting->id) }}"><i
+                                                        class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$client->id}}"><i
+                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{$setting->id}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalScrollable{{$client->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modalScrollable{{$setting->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -107,7 +91,7 @@
                                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                                     Закрыть
                                                 </button>
-                                                <form action="{{ route('client.destroy', $client->id) }}" method="POST">
+                                                <form action="{{ route('setting.destroy', $setting->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger" data-bs-toggle="modal"
@@ -125,11 +109,12 @@
 
                         </tbody>
                     </table>
-                    @if ($clients->links()->paginator->hasPages())
+                    @if ($settings->links()->paginator->hasPages())
                         <div class="demo-inline-spacing">
-                            {{ $clients->links() }}
+                            {{ $settings->links() }}
                         </div>
                     @endif
+
                 </div>
             </div>
         </div>

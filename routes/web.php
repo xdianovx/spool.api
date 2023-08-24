@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\PartnersCompanyController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\ProfileController;
@@ -67,10 +69,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::get('/all',  [CategoryController::class, 'index'])->name('categories.index');
         Route::get('/create',  [CategoryController::class, 'create'])->name('category.create');
+        Route::get('/{category_slug}/create-child-category',  [CategoryController::class, 'createChild'])->name('category.create_child');
         Route::post('/',  [CategoryController::class, 'store'])->name('category.store');
         Route::post('/sort',  [CategoryController::class, 'sort'])->name('category.sort');
         Route::get('/{category_slug}/show',  [CategoryController::class, 'show'])->name('category.show');
         Route::get('/{category_slug}/edit',  [CategoryController::class, 'edit'])->name('category.edit');
+        Route::get('/{category_parent_slug}/edit-child-category/{category_slug}',  [CategoryController::class, 'editChild'])->name('category.edit_child');
         Route::patch('/{category_slug}',  [CategoryController::class, 'update'])->name('category.update');
         Route::delete('/{category_slug}/destroy',  [CategoryController::class, 'destroy'])->name('category.destroy');
     });
@@ -103,6 +107,26 @@ Route::middleware('auth')->group(function () {
         Route::patch('/{tag}',  [TagController::class, 'update'])->name('tag.update');
         Route::post('/',  [TagController::class, 'display'])->name('tag.display');
         Route::delete('/destroy/{tag}',  [TagController::class, 'destroy'])->name('tag.destroy');
+    });
+    Route::prefix('tickets')->group(function () {
+        Route::get('/all',  [TicketController::class, 'index'])->name('tickets.index');
+        Route::get('/search',  [TicketController::class, 'search'])->name('tickets.search');
+        Route::get('/create',  [TicketController::class, 'create'])->name('ticket.create');
+        Route::post('/',  [TicketController::class, 'store'])->name('ticket.store');
+        Route::get('/{ticket}/show',  [TicketController::class, 'show'])->name('ticket.show');
+        Route::get('/{ticket}/edit',  [TicketController::class, 'edit'])->name('ticket.edit');
+        Route::patch('/{ticket}',  [TicketController::class, 'update'])->name('ticket.update');
+        Route::delete('/{ticket}/destroy',  [TicketController::class, 'destroy'])->name('ticket.destroy');
+    });
+    Route::prefix('settings')->group(function () {
+        Route::get('/all',  [SettingController::class, 'index'])->name('settings.index');
+        Route::get('/search',  [SettingController::class, 'search'])->name('settings.search');
+        Route::get('/create',  [SettingController::class, 'create'])->name('setting.create');
+        Route::post('/',  [SettingController::class, 'store'])->name('setting.store');
+        Route::get('/{ticket}/show',  [SettingController::class, 'show'])->name('setting.show');
+        Route::get('/{ticket}/edit',  [SettingController::class, 'edit'])->name('setting.edit');
+        Route::patch('/{ticket}',  [SettingController::class, 'update'])->name('setting.update');
+        Route::delete('/{ticket}/destroy',  [SettingController::class, 'destroy'])->name('setting.destroy');
     });
 });
 

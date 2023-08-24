@@ -24,6 +24,12 @@
                 <p class="mb-0">{{$partners_company->name}}</p>
               </td>
             </tr>
+            <tr>
+              <td class="align-middle"><small class="text-light fw-semibold">Дата создания:</small></td>
+              <td class="py-3">
+                <p class="mb-0">{{$partners_company->created_at}}</p>
+              </td>
+            </tr>
           </tbody>
         </table>
 

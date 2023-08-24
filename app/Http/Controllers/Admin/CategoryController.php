@@ -18,9 +18,7 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        return view('categories.create', [
-            'categories'  => Category::with('childrenCategories')->where('parent_id','0')->get(),
-        ]);
+        return view('categories.create');
     }
     public function show($category_slug)
     {
@@ -33,14 +31,33 @@ class CategoryController extends Controller
     {
         $category = Category::whereSlug($category_slug)->firstOrFail();
         return view('categories.edit', [
-            'category' => $category,
-            'categories'  => Category::with('childrenCategories')->where('parent_id', '0')->get(),
+            'category' => $category
         ]);
     }
-  
+
+
+
+    public function createChild($category_parent)
+    {
+        $category_parent = Category::whereSlug($category_parent)->firstOrFail();
+        return view('categories.create_child', [
+            'category_parent' => $category_parent]);
+    }
+    public function editChild($category_parent,$category_slug) 
+    {
+        $category_parent = Category::whereSlug($category_parent)->firstOrFail();
+        $category = Category::whereSlug($category_slug)->firstOrFail();
+        return view('categories.edit_child', [
+            'category' => $category,
+            'category_parent' => $category_parent
+        ]);
+    }
+
+
     public function store(CategoryStoreRequest $request)
     {
         $data = $request->validated();
+
         // Если есть файл
         if ($request->hasFile('image')) {
             // Имя и расширение файла
@@ -64,12 +81,20 @@ class CategoryController extends Controller
         else:
         $data['sort'] = $last_category->sort + 1;
         endif;
-        Category::firstOrCreate($data);
-        return redirect()->route('categories.index')->with('status', 'category-created');
+        $category = Category::firstOrCreate($data);
+
+        if($category->parent_id > 0):
+            $category_parent = Category::whereId($category->parent_id)->firstOrFail();
+            return redirect()->route('category.show',$category_parent->slug)->with('status', 'category-created'); 
+        else:
+            return redirect()->route('categories.index')->with('status', 'category-created');
+        endif;
+       
     }
     public function update(CategoryUpdateRequest $request, $category_slug)
     {
         $category = Category::whereSlug($category_slug)->firstOrFail();
+
         $data = $request->validated();
         if ($request->hasFile('image')) {
             // Имя и расширение файла
@@ -85,15 +110,24 @@ class CategoryController extends Controller
             $data['image'] = $request->file('image')->storeAs('public', $fileNameToStore);
         }
         $category->update($data);
-        return redirect()->route('categories.index')->with('status', 'category-updated');
+        if($category->parent_id > 0):
+            $category_parent = Category::whereId($category->parent_id)->firstOrFail();
+            return redirect()->route('category.show',$category_parent->slug)->with('status', 'category-updated'); 
+        else:
+            return redirect()->route('categories.index')->with('status', 'category-updated');
+        endif;
     }
     public function destroy($category_slug)
     {
+
         $category = Category::whereSlug($category_slug)->firstOrFail();
+        $child_categories = Category::where('parent_id',$category->id)->get();
+        foreach($child_categories as $child_category):
+            $child_category->delete();
+        endforeach;
         $category->delete();
         return redirect()->back()->with('status', 'category-deleted');
     }
-    
 
     public function sort(Request $request)
     {

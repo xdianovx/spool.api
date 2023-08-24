@@ -11,7 +11,8 @@ class VideoController extends Controller
 {
     public function getVideos()
     {
-        $video = VideoResource::collection(Video::all());
+        $video = VideoResource::collection(Video::orderBy('event_date', 'ASC')->get());
         return response()->json($video);
     }
+    
 }

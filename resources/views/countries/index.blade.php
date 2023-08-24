@@ -32,6 +32,7 @@
             <hr class="m-0">
             <div class="card-body">
                 <form class="d-flex" action="{{ route('countries.search') }}" method="get">
+                    @csrf
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
                   </form>
@@ -43,7 +44,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Флаг</th></th>
+                                <th>Флаг</th>
                                 <th>Название</th>
                                 <th></th>
                             </tr>

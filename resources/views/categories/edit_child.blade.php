@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-xxl flegrow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('categories.index') }}">
-                    Категории</a> / </span>Редактировать</h4>
+                    Категории</a> / {{$category_parent->name}} / </span>Редактировать подкатегорию: {{ $category->name }}</h4>
 
         <div class="row">
             <div class="col-md-12">

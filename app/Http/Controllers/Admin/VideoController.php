@@ -121,15 +121,16 @@ class VideoController extends Controller
         return redirect()->route('videos.index')->with('status', 'video-deleted');
     }
 
-    public function search(Request $request)
+    public function search(Request $request) 
     {
-        if (request('search' == 'null')):
+        if (request('search') == null):
             $videos = Video::orderBy('id', 'DESC')->paginate(10);
         else:
             $videos = Video::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('category_id', 'like', '%' . Category::where('name',request('search'))->firstOrFail()->id . '%')->
+            orWhere('category_id', 'like', '%' . (Category::where('name',request('search'))->first()->id ?? request('search')) . '%')->
             orWhere('event_date', 'like', '%' . request('search') . '%')->paginate(10);
         endif;
+
         return view('videos.index', compact('videos'));
     }
 }

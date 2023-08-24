@@ -86,7 +86,10 @@
                                 <a href="{{ route('category.show',$category->parent_id) }}" class="btn btn-primary text-nowrap">Назад</a>
                                 @else
                                 <a href="{{ route('categories.index') }}" class="btn btn-primary text-nowrap">Назад</a>
+                                <a type="button" class="btn btn-outline-secondary fw-semibold"
+                                href="{{ route('category.create_child',$category->slug) }}">Добавить подкатегорию</a>
                                 @endif
+                             
                             </div>
                         </div>
                     </div>
@@ -140,7 +143,7 @@
                                 <tr class="list-item cursor-move" data-sort-id="{{ $child_category->id }}">
 
                                     <td>{{ $child_category->name }}</td>
-                                    <td>{{ $category->slug }}</td>
+                                    <td>{{ $child_category->slug }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -153,7 +156,7 @@
                                                     href="{{ route('category.show', $child_category->slug) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('category.edit', $child_category->slug) }}"><i
+                                                    href="{{ route('category.edit_child', [$category->slug,$child_category->slug]) }}"><i
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
                                                 <button type="submit" class="dropdown-item text-danger"

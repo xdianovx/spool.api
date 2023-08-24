@@ -137,16 +137,28 @@
                             <div data-i18n="Basic">Партнерские компании</div>
                         </a>
                     </li>
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'tickets.index',
+                        'ticket.create',
+                        'tickets.search',
+                        'ticket.show',
+                        'ticket.edit',
+                    ])) active @endif">
+                        <a href="{{ route('tickets.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Билеты</div>
                         </a>
                     </li>
                     <li class="menu-header small text-uppercase"><span class="menu-header-text">Другое</span></li>
 
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item @if(in_array(Route::current()->getName(), [
+                        'settings.index',
+                        'setting.create',
+                        'settings.search',
+                        'setting.show',
+                        'setting.edit',
+                    ])) active @endif">
+                        <a href="{{ route('settings.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Настройки</div>
                         </a>

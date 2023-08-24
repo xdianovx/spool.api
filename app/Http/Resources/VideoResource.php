@@ -34,7 +34,7 @@ class VideoResource extends JsonResource
             "event_date" => $this->event_date,
             "minimum_age" => $this->minimum_age,
             "display_slider" => $this->display_slider,
-            "category" => $this->category->name,
+            "category" => $this->category->name ?? null,
             "partners_company" => $this->partner_company->name,
             "tags" => $tags
         ];

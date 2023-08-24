@@ -1,6 +1,6 @@
 @extends('template.main')
 @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y">
+    {{-- <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Теги /</span></h4>
         <div class="card">
             <h5 class="card-header">Список</h5>
@@ -32,6 +32,7 @@
             <hr class="m-0">
             <div class="card-body">
                 <form class="d-flex" action="{{ route('tags.search') }}" method="get">
+                    @csrf
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
                   </form>
@@ -117,6 +118,6 @@
         </div>
     </div>
 
-
+ --}}
 
 @endsection

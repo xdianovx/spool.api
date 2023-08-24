@@ -1,6 +1,6 @@
 @extends('template.main')
 @section('content')
-    <div class="container-xxl flegrow-1 container-p-y">
+    {{-- <div class="container-xxl flegrow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="{{ route('videos.index',) }}">
             Видеоролики</a> / {{$video->name}} / Теги / {{$tag->name}} / </span>Редактировать</h4>
 
@@ -36,5 +36,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
