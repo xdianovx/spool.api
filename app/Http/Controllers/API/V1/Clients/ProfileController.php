@@ -28,9 +28,10 @@ class ProfileController extends Controller
 
     public function userProfile(Request $request)
     {
-  
+
         $avatar = null;
         $client = Client::find(auth('api')->user('api')->id);
+
         if (!empty($client->avatar_image)) :
             $avatar = null;
             elase:
@@ -43,6 +44,7 @@ class ProfileController extends Controller
             'age' => $client->value('age'),
             'gender' => $client->value('gender'),
             'avatar' => $avatar,
+            'flag' => 'asd',
             'blocked_at' => $client->value('blocked_at'),
             'email' => $client->value('email'),
             'phone' => $client->value('phone_number'),
@@ -52,7 +54,8 @@ class ProfileController extends Controller
             'updated_at' => $client->value('updated_at'),
             'country' => [
                 'id' => $client->value('id'),
-                'country' => Client::find(auth('api')->user()->id)->country->name ?? "null"
+                'country' => Client::find(auth('api')->user()->id)->country->name ?? "null",
+                'flag' => Client::find(auth('api')->user()->id)->country->flag ?? "null",
             ]
 
         ], 200);
@@ -77,7 +80,7 @@ class ProfileController extends Controller
 
     public function profilePostCountry(Request $request)
     {
-  
+
         $validator = Validator::make($request->all(), [
             'country_id' => 'required|integer|min:1',
         ]);
@@ -95,7 +98,7 @@ class ProfileController extends Controller
 
     public function profileName(Request $request)
     {
-  
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
         ]);
@@ -179,7 +182,7 @@ class ProfileController extends Controller
             $filenameWithExt = $request->file('avatar_image')->getClientOriginalName();
             // Только оригинальное имя файла
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $filename = str_replace(' ','_',$filename);
+            $filename = str_replace(' ', '_', $filename);
             // Расширение
             $extention = $request->file('avatar_image')->getClientOriginalExtension();
             // Путь для сохранения
@@ -194,5 +197,4 @@ class ProfileController extends Controller
             'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
         ], 200);
     }
-
 }
