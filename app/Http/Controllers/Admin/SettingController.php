@@ -22,15 +22,13 @@ class SettingController extends Controller
         return view('settings.create');
     }
 
-    public function show($setting)
+    public function show(Setting $setting)
     {
-        $setting = Setting::whereId($setting)->firstOrFail();
         return view('settings.show', compact('setting'));
     }
     
-    public function edit($setting)
+    public function edit(Setting $setting)
     { 
-        $setting = Setting::whereId($setting)->firstOrFail();
         return view('settings.edit', compact('setting'));
     }
 
@@ -41,16 +39,15 @@ class SettingController extends Controller
         return redirect()->route('settings.index')->with('status', 'setting-created');
     }
 
-    public function update(SettingUpdateRequest $request, $setting)
+    public function update(SettingUpdateRequest $request, $setting_id)
     {
-        $setting = Setting::whereId($setting)->firstOrFail();
+        $setting = Setting::whereId($setting_id)->firstOrFail();
         $data = $request->validated();
         $setting->update($data);
         return redirect()->route('settings.index')->with('status', 'setting-updated');
     }
-    public function destroy($setting)
+    public function destroy(Setting $setting)
     {
-        $setting = Setting::whereId($setting)->firstOrFail();
         $setting->delete();
         return redirect()->route('settings.index')->with('status', 'setting-deleted');
     }

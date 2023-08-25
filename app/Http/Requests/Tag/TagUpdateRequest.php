@@ -22,7 +22,7 @@ class TagUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string',
+            'name' => 'required|string',
             'display' => 'nullable|string',
         ];
     }

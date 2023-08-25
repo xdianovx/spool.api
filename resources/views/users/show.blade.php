@@ -45,9 +45,9 @@
               <tr>
                 <td><small class="text-light fw-semibold">Роль:</small></td>
                 <td class="py-3">
-                  <p class="mb-0">@if ($user->role == 'partner')
+                  <p class="mb-0">@if ($user->role == 1)
                     Партнер
-                @elseif ($user->role == 'admin')
+                @elseif ($user->role == 0)
                     Администратор
                 @endif</p>
                 </td>

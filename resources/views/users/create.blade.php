@@ -44,10 +44,11 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Роль*</label>
                                     <select id="language" class="select2 form-select" name="role">
-                                        <option value="admin" @if (old('role') == 'admin') {{ 'selected' }} @endif>
-                                            Администратор</option>
-                                        <option value="partner"
-                                            @if (old('role') == 'partner') {{ 'selected' }} @endif>Партнер</option>
+                                        @foreach ($roles as $id => $role)
+                                            <option value="{{ $id }}"
+                                                {{ $id == old('role') ? 'selected' : '' }}>
+                                                {{ $role }}</option>
+                                        @endforeach
                                     </select>
                                     @error('role')
                                         <div class="text-danger">{{ $message }}</div>

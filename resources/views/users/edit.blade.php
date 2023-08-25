@@ -42,14 +42,16 @@
                                     @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Роль*</label>
                                     <select id="language" class="select2 form-select" name="role">
-                                        <option value="admin" @if ($user->role == 'admin') {{ 'selected' }} @endif>
-                                            Администратор</option>
-                                        <option value="partner"
-                                            @if ($user->role == 'partner') {{ 'selected' }} @endif>Партнер</option>
+                                        @foreach ($roles as $id => $role)
+                                        <option value="{{ $id }}"
+                                            {{ $id == $user->role ? 'selected' : '' }}>
+                                            {{ $role }}</option>
+                                        @endforeach
                                     </select>
                                     @error('role')
                                         <div class="text-danger">{{ $message }}</div>

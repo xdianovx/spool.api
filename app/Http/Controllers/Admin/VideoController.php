@@ -27,18 +27,16 @@ class VideoController extends Controller
         return view('videos.create',compact('partner_companies','categories'));
     }
 
-    public function show($video)
+    public function show(Video $video)
     {
-        $video = Video::whereId($video)->firstOrFail();
         return view('videos.show', compact('video'));
     }
     
-    public function edit($video)
+    public function edit(Video $video)
     { 
-        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video)->paginate(10);
+        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video->id)->paginate(10);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        $video = Video::whereId($video)->firstOrFail();
         return view('videos.edit', compact('video','partner_companies','categories','user_tags'));
     }
 
@@ -77,9 +75,9 @@ class VideoController extends Controller
         return redirect()->route('video.edit',$video->id)->with('status', 'video-created');
     }
 
-    public function update(VideoUpdateRequest $request, $video)
+    public function update(VideoUpdateRequest $request, $video_id)
     {
-        $video = Video::whereId($video)->firstOrFail();
+        $video = Video::whereId($video_id)->firstOrFail();
         $data = $request->validated();
         if ($request->hasFile('image')) {
             // Имя и расширение файла
@@ -110,13 +108,12 @@ class VideoController extends Controller
         $video->update($data);
         return redirect()->route('videos.index')->with('status', 'video-updated');
     }
-    public function destroy($video)
+    public function destroy(Video $video)
     {
-        $tags = Tag::where('video_id',$video)->get();
+        $tags = Tag::where('video_id',$video->id)->get();
         foreach($tags as $tag):
         $tag->delete();
         endforeach;
-        $video = Video::whereId($video)->firstOrFail();
         $video->delete();
         return redirect()->route('videos.index')->with('status', 'video-deleted');
     }

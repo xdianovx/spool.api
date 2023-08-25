@@ -22,17 +22,17 @@ class VideoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string',
+            'name' => 'required|string',
             'image' => 'nullable|image',
             'image_banner' => 'nullable|image',
             'video' => 'nullable|string',
-            'description' => 'nullable|string',
-            'duration' => 'nullable|numeric',
-            'event_date' =>'nullable|date',
-            'minimum_age' =>'nullable|numeric',
+            'description' => 'required|string',
+            'duration' => 'required|numeric',
+            'event_date' =>'required|date',
+            'minimum_age' =>'required|numeric',
             'display_slider' =>'nullable|string',
-            'partners_company_id' =>'nullable|string',
-            'category_id' =>'nullable|string',
+            'partners_company_id' =>'required|string',
+            'category_id' =>'required|string',
         ];
     }
 }

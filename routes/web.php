@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('users')->group(function () {
+    Route::middleware('admin')->prefix('users')->group(function () {
         Route::get('/all',  [UserController::class, 'index'])->name('users.index');
         Route::get('/search',  [UserController::class, 'search'])->name('users.search');
         Route::get('/create',  [UserController::class, 'create'])->name('user.create');
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{user}/destroy',  [UserController::class, 'destroy'])->name('user.destroy');
     });
 
-    Route::prefix('clients')->group(function () {
+    Route::middleware('admin')->prefix('clients')->group(function () {
         Route::get('/all',  [ClientController::class, 'index'])->name('clients.index');
         Route::get('/search',  [ClientController::class, 'search'])->name('clients.search');
         Route::get('/{client}/show',  [ClientController::class, 'show'])->name('client.show');
@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{client}/destroy',  [ClientController::class, 'destroy'])->name('client.destroy');
     });
 
-    Route::prefix('countries')->group(function () {
+    Route::middleware('admin')->prefix('countries')->group(function () {
         Route::get('/all',  [CountryController::class, 'index'])->name('countries.index');
         Route::get('/search',  [CountryController::class, 'search'])->name('countries.search');
         Route::get('/create',  [CountryController::class, 'create'])->name('country.create');
@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{country}/destroy',  [CountryController::class, 'destroy'])->name('country.destroy');
     });
 
-    Route::prefix('categories')->group(function () {
+    Route::middleware('admin')->prefix('categories')->group(function () {
         Route::get('/all',  [CategoryController::class, 'index'])->name('categories.index');
         Route::get('/create',  [CategoryController::class, 'create'])->name('category.create');
         Route::get('/{category_slug}/create-child-category',  [CategoryController::class, 'createChild'])->name('category.create_child');
@@ -79,7 +79,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{category_slug}/destroy',  [CategoryController::class, 'destroy'])->name('category.destroy');
     });
 
-    Route::prefix('videos')->group(function () {
+    Route::middleware('admin')->prefix('videos')->group(function () {
         Route::get('/all',  [VideoController::class, 'index'])->name('videos.index');
         Route::get('/search',  [VideoController::class, 'search'])->name('videos.search');
         Route::get('/create',  [VideoController::class, 'create'])->name('video.create');
@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{video}/destroy',  [VideoController::class, 'destroy'])->name('video.destroy');
     });
 
-    Route::prefix('partners_companies')->group(function () {
+    Route::middleware('admin')->prefix('partners_companies')->group(function () {
         Route::get('/all',  [PartnersCompanyController::class, 'index'])->name('partners_companies.index');
         Route::get('/search',  [PartnersCompanyController::class, 'search'])->name('partners_companies.search');
         Route::get('/create',  [PartnersCompanyController::class, 'create'])->name('partners_company.create');
@@ -100,7 +100,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/{partners_company}',  [PartnersCompanyController::class, 'update'])->name('partners_company.update');
         Route::delete('/{partners_company}/destroy',  [PartnersCompanyController::class, 'destroy'])->name('partners_company.destroy');
     });
-    Route::prefix('tags')->group(function () {
+    Route::middleware('admin')->prefix('tags')->group(function () {
         Route::get('/{video_id}', [TagController::class, 'getAll']);
         Route::post('/{video_id}',  [TagController::class, 'store'])->name('tag.store');
         Route::get('/{tag}/edit',  [TagController::class, 'edit'])->name('tag.edit');
@@ -108,7 +108,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/',  [TagController::class, 'display'])->name('tag.display');
         Route::delete('/destroy/{tag}',  [TagController::class, 'destroy'])->name('tag.destroy');
     });
-    Route::prefix('tickets')->group(function () {
+    Route::middleware('admin')->prefix('tickets')->group(function () {
         Route::get('/all',  [TicketController::class, 'index'])->name('tickets.index');
         Route::get('/search',  [TicketController::class, 'search'])->name('tickets.search');
         Route::get('/create',  [TicketController::class, 'create'])->name('ticket.create');
@@ -118,7 +118,7 @@ Route::middleware('auth')->group(function () {
         Route::patch('/{ticket}',  [TicketController::class, 'update'])->name('ticket.update');
         Route::delete('/{ticket}/destroy',  [TicketController::class, 'destroy'])->name('ticket.destroy');
     });
-    Route::prefix('settings')->group(function () {
+    Route::middleware('admin')->prefix('settings')->group(function () {
         Route::get('/all',  [SettingController::class, 'index'])->name('settings.index');
         Route::get('/search',  [SettingController::class, 'search'])->name('settings.search');
         Route::get('/create',  [SettingController::class, 'create'])->name('setting.create');

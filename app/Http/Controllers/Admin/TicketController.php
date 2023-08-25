@@ -23,9 +23,8 @@ class TicketController extends Controller
         return view('tickets.create',compact('videos'));
     }
 
-    public function show($ticket)
+    public function show(Ticket $ticket)
     {
-        $ticket = Ticket::whereId($ticket)->firstOrFail();
         return view('tickets.show', compact('ticket'));
     }
     
@@ -42,16 +41,15 @@ class TicketController extends Controller
         return redirect()->route('tickets.index')->with('status', 'ticket-created');
     }
 
-    public function update(TicketUpdateRequest $request, $ticket)
+    public function update(TicketUpdateRequest $request, $ticket_id)
     {
-        $ticket = Ticket::whereId($ticket)->firstOrFail();
+        $ticket = Ticket::whereId($ticket_id)->firstOrFail();
         $data = $request->validated();
         $ticket->update($data);
         return redirect()->route('tickets.index')->with('status', 'ticket-updated');
     }
-    public function destroy($ticket)
+    public function destroy(Ticket $ticket)
     {
-        $ticket = Ticket::whereId($ticket)->firstOrFail();
         $ticket->delete();
         return redirect()->route('tickets.index')->with('status', 'ticket-deleted');
     }

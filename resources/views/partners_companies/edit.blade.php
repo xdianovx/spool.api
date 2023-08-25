@@ -23,6 +23,7 @@
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                    <input type="hidden" name="partners_company_id" value="{{$partners_company->id}}">
                                 </div>
                             </div>
                             <div class="mt-2">

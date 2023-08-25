@@ -19,16 +19,12 @@ class TagController extends Controller
         $tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video_id)->paginate(10);
         return response()->json($tags);
     }
-
-
-    public function edit($tag)
+    public function edit(Tag $tag)
     {
-        $tag = Tag::whereId($tag)->firstOrFail();
         $video_id = $tag->video_id;
         $video = Video::whereId($video_id)->firstOrFail();
         return view('tags.edit', compact('tag', 'video_id', 'video'));
     }
-
     public function store(TagStoreRequest $request, $video_id)
     {
         $data = $request->validated();
@@ -40,30 +36,19 @@ class TagController extends Controller
         return redirect()->back()->with('status', 'tag-created');
     }
 
-    public function update(TagUpdateRequest $request, $tag)
+    public function update(TagUpdateRequest $request, $tag_id)
     {
-        $tag = Tag::whereId($tag)->firstOrFail();
+        $tag = Tag::whereId($tag_id)->firstOrFail();
         $data = $request->validated();
         $video_id = $tag->video_id;
         $tag->update($data);
         return redirect()->route('video.edit', $video_id)->with('status', 'tag-updated');
     }
-    public function destroy($tag)
+    public function destroy(Tag $tag)
     {
-        $tag = Tag::whereId($tag)->firstOrFail();
         $tag->delete();
         return response()->json($tag, 200);
     }
-    public function destroy_ajax(Request $request)
-    {
-        $bodyContent = $request->getContent();
-        $data = json_decode($bodyContent);
-        // $tag = Tag::whereId($tag)->firstOrFail();
-        // $tag->delete();
-        return response()->json($data, 200);
-    }
-
-
     public function display(Request $request)
     {
         $bodyContent = $request->getContent();

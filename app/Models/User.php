@@ -13,6 +13,16 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 0;
+    const ROLE_PARTNER = 1;
+
+    public static function getRoles()
+    {
+        return [
+            self::ROLE_ADMIN => 'Администратор',
+            self::ROLE_PARTNER => 'Партнер'
+        ];
+    }
     /**
      * The attributes that are mass assignable.
      *

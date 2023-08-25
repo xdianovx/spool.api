@@ -23,6 +23,7 @@
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                    <input type="hidden" name="country_id" value="{{$country->id}}">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label  class="form-label">ISO 3166-2</label>

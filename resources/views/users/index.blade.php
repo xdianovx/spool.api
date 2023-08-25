@@ -62,11 +62,11 @@
                                     </td>
                                     <td>{{ $user->name }}</td>
                                     <td>
-                                        {{ $user->email }}
+                                        {{ $user->email}}
                                     </td>
-                                    <td><span class="badge bg-label-primary me-1">@if ($user->role == 'partner')
+                                    <td><span class="badge bg-label-primary me-1">@if ($user->role == 1)
                                         Партнер
-                                    @elseif ($user->role == 'admin')
+                                    @elseif ($user->role == 0)
                                         Администратор
                                     @endif</span></td>
                                     <td>

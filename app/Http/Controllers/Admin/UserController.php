@@ -21,21 +21,21 @@ class UserController extends Controller
 
     public function create()
     {
+        $roles = User::getRoles();
         $partner_companies = Partners_company::all();
-        return view('users.create',compact('partner_companies'));
+        return view('users.create',compact('partner_companies','roles'));
     }
 
-    public function show($user)
+    public function show(User $user)
     {
-        $user = User::whereId($user)->firstOrFail();
         return view('users.show', compact('user'));
     }
     
-    public function edit($user)
+    public function edit(User $user)
     { 
-        $user = User::whereId($user)->firstOrFail();
+        $roles = User::getRoles();
         $partner_companies = Partners_company::all();
-        return view('users.edit', compact('user', 'partner_companies'));
+        return view('users.edit', compact('user', 'partner_companies','roles'));
     }
 
     public function store(UserStoreRequest $request)
@@ -51,9 +51,9 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('status', 'account-created');
     }
 
-    public function update(UserUpdateRequest $request, $user)
+    public function update(UserUpdateRequest $request, $user_id)
     {
-        $user = User::whereId($user)->firstOrFail();
+        $user = User::whereId($user_id)->firstOrFail();
         $data = $request->validated();
         $user->update($data);
         return redirect()->route('users.index')->with('status', 'account-updated');
@@ -65,9 +65,8 @@ class UserController extends Controller
         $user->update($data);
         return redirect()->route('users.index')->with('status', 'account-password-updated');
     }
-    public function destroy($user)
+    public function destroy(User $user)
     {
-        $user = User::whereId($user)->firstOrFail();
         $user->delete();
         return redirect()->route('users.index')->with('status', 'account-deleted');
     }

@@ -16,15 +16,13 @@ class ClientController extends Controller
     }
 
 
-    public function show($client)
+    public function show(Client $client)
     {
-        $client = Client::whereId($client)->firstOrFail();
         return view('clients.show', compact('client'));
     }
 
-    public function send_ban($client)
+    public function send_ban(Client $client)
     {
-        $client = Client::whereId($client)->firstOrFail();
         if(!empty($client->blocked_at)){
             $data = ['blocked_at'=> NULL];
             $client->update($data);
@@ -36,9 +34,8 @@ class ClientController extends Controller
             return redirect()->route('clients.index')->with('status', 'account-banned');
         }
     }
-    public function destroy($client)
+    public function destroy(Client $client)
     {
-        $client = Client::whereId($client)->firstOrFail();
         $client->delete();
         return redirect()->route('clients.index')->with('status', 'account-deleted');
     }

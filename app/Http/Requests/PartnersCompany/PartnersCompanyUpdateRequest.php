@@ -22,7 +22,8 @@ class PartnersCompanyUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|unique:partners_companies',
+            'name' => 'required|string|unique:partners_companies,name,' . $this->partners_company_id,
+            'partners_company_id' => 'required|integer|exists:partners_companies,id'
         ];
     }
 }

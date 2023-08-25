@@ -23,11 +23,12 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string',
-            'surname' => 'nullable|string',
-            'role' => 'nullable|string',
-            'email' => 'nullable|string|email',
-            'phone_number' => 'nullable|string',
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'role' => 'required|integer',
+            'email' => 'required|string|email|unique:users,email,' . $this->user_id,
+            'user_id' => 'required|integer|exists:users,id',
+            'phone_number' => 'required|string',
             'partner_company_id' =>'nullable|string'
         ];
     }

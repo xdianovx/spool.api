@@ -71,7 +71,7 @@
               <td class="align-middle"><small class="text-light fw-semibold">Kатегория:</small></td>
               <td class="py-3">
                 <p class="mb-0">
-                    {{ $video->category->name }}
+                    {{ $video->category->name ?? 'Без категории'}}
                 </p>
               </td>
             </tr>
@@ -90,7 +90,7 @@
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Партнерская компания:</small></td>
               <td class="py-3">
-                <p class="mb-0">{{$video->partner_company->name}}</p>
+                <p class="mb-0">{{$video->partner_company->name ?? 'Без партнерской компании'}}</p>
               </td>
             </tr>
             <tr>

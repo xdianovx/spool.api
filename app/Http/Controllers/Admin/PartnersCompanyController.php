@@ -22,15 +22,13 @@ class PartnersCompanyController extends Controller
         return view('partners_companies.create');
     }
 
-    public function show($partners_company)
+    public function show(Partners_company $partners_company)
     {
-        $partners_company = Partners_company::whereId($partners_company)->firstOrFail();
         return view('partners_companies.show', compact('partners_company'));
     }
     
     public function edit(Partners_company $partners_company)
     { 
-        $partners_company = Partners_company::whereId($partners_company)->firstOrFail();
         return view('partners_companies.edit', compact('partners_company'));
     }
 
@@ -44,16 +42,15 @@ class PartnersCompanyController extends Controller
         return redirect()->route('partners_companies.index')->with('status', 'partners_company-created');
     }
 
-    public function update(PartnersCompanyUpdateRequest $request, $partners_company)
+    public function update(PartnersCompanyUpdateRequest $request, $partners_company_id)
     {
-        $partners_company = Partners_company::whereId($partners_company)->firstOrFail();
+        $partners_company = Partners_company::whereId($partners_company_id)->firstOrFail();
         $data = $request->validated();
         $partners_company->update($data);
         return redirect()->route('partners_companies.index')->with('status', 'partners_company-updated');
     }
-    public function destroy($partners_company)
+    public function destroy(Partners_company $partners_company)
     {
-        $partners_company = Partners_company::whereId($partners_company)->firstOrFail();
         $partners_company->delete();
         return redirect()->route('partners_companies.index')->with('status', 'partners_company-deleted');
     }

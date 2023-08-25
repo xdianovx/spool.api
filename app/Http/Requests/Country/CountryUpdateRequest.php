@@ -22,7 +22,8 @@ class CountryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|string|unique:countries',
+            'name' => 'required|string|unique:countries,name,' . $this->country_id,
+            'country_id' => 'required|integer|exists:countries,id'
         ];
     }
 }

@@ -22,8 +22,8 @@ class SettingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'key' => 'nullable|string',
-            'value' => 'nullable|string'
+            'key' => 'required|string',
+            'value' => 'required|string'
         ];
     }
 }

@@ -22,9 +22,9 @@ class TicketUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => 'nullable|string',
+            'price' => 'required|string',
             'discounted_price' => 'nullable|string',
-            'video_id' => 'nullable|string',
+            'video_id' => 'required|string',
         ];
     }
 }
