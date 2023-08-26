@@ -16,7 +16,7 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Ключь*</label>
+                                    <label class="form-label">Ключ*</label>
                                     <input class="form-control" type="text" name="key"
                                         placeholder="Введите ключь" value="{{ old('key') }}" required>
                                     @error('key')

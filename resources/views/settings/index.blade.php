@@ -44,7 +44,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Ключь</th>
+                                <th>Ключ</th>
                                 <th>Значение</th>
                                 <th></th>
                             </tr>

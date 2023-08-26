@@ -19,7 +19,7 @@
               </td>
             </tr>
             <tr>
-              <td class="align-middle"><small class="text-light fw-semibold">Ключь:</small></td>
+              <td class="align-middle"><small class="text-light fw-semibold">Ключ:</small></td>
               <td class="py-3">
                 <p class="mb-0">{{$setting->key}}</p>
               </td>

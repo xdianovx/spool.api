@@ -17,7 +17,7 @@
                             @method('patch')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label">Ключь*</label>
+                                    <label class="form-label">Ключ*</label>
                                     <input class="form-control" type="text" name="key"
                                         value="{{ $setting->key }}" autofocus autocomplete="key" required>
                                     @error('key')
