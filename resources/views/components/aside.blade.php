@@ -59,14 +59,20 @@
                 </div>
 
                 <div class="menu-inner-shadow"></div>
-
+                
                 <ul class="menu-inner py-1">
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
+                    @if (Auth::user()->role == 1)
+                    <li class="menu-item @if (in_array(Route::current()->getName(), [
+                        'partner_videos.index',
+                        'partner_videos.search',
+                        'partner_videos.show',
+                    ])) active @endif">
+                        <a href="{{ route('partner_videos.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Просмотры</div>
                         </a>
                     </li>
+                    @endif
                     @if (Auth::user()->role == 0)
                         <li class="menu-header small text-uppercase"><span class="menu-header-text">Пользователи</span>
                         </li>

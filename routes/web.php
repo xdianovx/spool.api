@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Partner\VideoController as PartnerVideoController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Partners_company;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -34,6 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware('partner')->prefix('partner_videos')->group(function () {
+        Route::get('/all',  [PartnerVideoController::class, 'index'])->name('partner_videos.index');
+        Route::get('/search',  [PartnerVideoController::class, 'search'])->name('partner_videos.search');
+        Route::get('/{video}/show',  [PartnerVideoController::class, 'show'])->name('partner_video.show');
+    });
 
     Route::middleware('admin')->prefix('users')->group(function () {
         Route::get('/all',  [UserController::class, 'index'])->name('users.index');

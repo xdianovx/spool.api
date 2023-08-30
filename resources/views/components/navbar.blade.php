@@ -15,8 +15,15 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
-                                        <small class="text-muted">{{ Auth::user()->role }}</small>
+                                        <span class="fw-semibold d-block">{{ Auth::user()->name }} @if (Auth::user()->role == 1)
+                                            <small class="badge bg-label-dark me-1">
+                                                Партнер
+                                            </small>
+                                            @elseif (Auth::user()->role == 0)
+                                            <small class="badge bg-label-primary me-1">
+                                                Администратор
+                                            </small>@endif</span>
+                                           
                                     </div>
                                 </div>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\API\V1\Clients\ProfileController;
 use App\Http\Controllers\API\V1\Countries\CountryController;
 use App\Http\Controllers\API\V1\Settings\SettingController;
 use App\Http\Controllers\API\V1\Tags\TagController;
+use App\Http\Controllers\API\V1\Tickets\ClientTicketController;
 use App\Http\Controllers\API\V1\Tickets\TicketController;
 use App\Http\Controllers\API\V1\Videos\VideoController;
 use Illuminate\Http\Request;
@@ -57,6 +58,9 @@ Route::group([
     Route::get('settings', [SettingController::class, 'getSettings']);
     //tickets
     Route::get('tickets', [TicketController::class, 'getTickets']);
+    //buying a ticket
+    Route::post('buy', [ClientTicketController::class, 'storeClientTicket']);
+    Route::get('purchased', [ClientTicketController::class, 'getClientTicket']);
 });
 
 Route::get('/v1/ping', function () {

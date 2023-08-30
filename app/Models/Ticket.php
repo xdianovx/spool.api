@@ -10,6 +10,7 @@ class Ticket extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'price',
         'discounted_price',
         'video_id'
@@ -21,7 +22,11 @@ class Ticket extends Model
     }
     public function tickets_store()
     {
-        return $this->hasOne(ClientTicket::class);
+        return $this->hasMany(ClientTicket::class);
         
+    }
+    public function client_ticket()
+    {
+        return $this->belongsTo(ClientTicket::class,'id');
     }
 }

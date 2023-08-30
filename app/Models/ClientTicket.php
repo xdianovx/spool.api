@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class ClientTicket extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'price',
+        'client_id',
+        'ticket_id',
+        'video_id'
+    ];
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class,'ticket_id');
+    }
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
 }

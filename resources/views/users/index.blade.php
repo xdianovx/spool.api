@@ -64,11 +64,14 @@
                                     <td>
                                         {{ $user->email}}
                                     </td>
-                                    <td><span class="badge bg-label-primary me-1">@if ($user->role == 1)
+                                    <td>@if ($user->role == 1)
+                                    <span class="badge bg-label-dark me-1">
                                         Партнер
+                                    </span>
                                     @elseif ($user->role == 0)
+                                    <span class="badge bg-label-primary me-1">
                                         Администратор
-                                    @endif</span></td>
+                                    </span>@endif</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

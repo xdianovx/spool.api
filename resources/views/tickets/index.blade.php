@@ -44,7 +44,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>Название</th>
                                 <th>Цена</th>
                                 <th>Видео</th>
                                 <th></th>
@@ -53,7 +53,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($tickets as $ticket)
                                 <tr>
-                                    <td>{{ $ticket->id }}</td>
+                                    <td>{{ $ticket->name }}</td>
                                     <td>{{ $ticket->price }}</td>
                                     <td>{{ $ticket->video->name ?? 'Без видео' }}</td>
                                     <td>
