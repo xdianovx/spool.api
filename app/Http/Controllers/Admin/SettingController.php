@@ -57,8 +57,8 @@ class SettingController extends Controller
         if (request('search') == null):
             $settings = Setting::orderBy('id', 'DESC')->paginate(10);
         else:
-            $settings = Setting::where('key', 'like', '%' . request('search') . '%')->
-            orWhere('value', 'like', '%' . request('search') . '%')->paginate(10);
+            $settings = Setting::where('key', 'ilike', '%' . request('search') . '%')->
+            orWhere('value', 'ilike', '%' . request('search') . '%')->paginate(10);
         endif;
         return view('settings.index', compact('settings'));
     }

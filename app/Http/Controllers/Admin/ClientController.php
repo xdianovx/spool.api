@@ -46,10 +46,10 @@ class ClientController extends Controller
         if (request('search') == null):
             $clients = Client::orderBy('id', 'DESC')->paginate(10);
          else:
-            $clients = Client::where('name', 'like', '%' . request('search') . '%')->
+            $clients = Client::where('name', 'ilike', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
-            orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('name', 'like', '%' . request('search') . '%')->paginate(10);
+            orWhere('email', 'ilike', '%' . request('search') . '%')->
+            orWhere('name', 'ilike', '%' . request('search') . '%')->paginate(10);
          endif;
 
         return view('clients.index', compact('clients'));

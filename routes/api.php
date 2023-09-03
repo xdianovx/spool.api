@@ -60,10 +60,10 @@ Route::group([
     //tickets
     Route::get('tickets', [TicketController::class, 'getTickets']);
     //buying a ticket
-    Route::post('buy', [ClientTicketController::class, 'storeClientTicket']);
-    Route::get('purchased', [ClientTicketController::class, 'getClientTicket']);
+    Route::post('tickets/buy', [ClientTicketController::class, 'storeClientTicket']);
+    Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
     //views create
-    Route::post('view_store', [ViewController::class, 'storeView']);
+    Route::post('videos/view_store', [ViewController::class, 'storeView']);
 });
 
 Route::get('/v1/ping', function () {

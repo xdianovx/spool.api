@@ -60,8 +60,8 @@ class PartnersCompanyController extends Controller
         if (request('search') == null):
             $partners_companies = Partners_company::orderBy('id', 'DESC')->paginate(10);
         else:
-            $partners_companies = Partners_company::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('id', 'like', '%' . request('search') . '%')->paginate(10);
+            $partners_companies = Partners_company::where('name', 'ilike', '%' . request('search') . '%')->
+            orWhere('id', 'ilike', '%' . request('search') . '%')->paginate(10);
         endif;
         return view('partners_companies.index', compact('partners_companies'));
     }

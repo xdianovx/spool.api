@@ -58,7 +58,7 @@ class CountryController extends Controller
         if (request('search') == null) :
             $countries = Country::orderBy('id', 'DESC')->paginate(10);
         else :
-            $countries = Country::where('name', 'like', '%' . request('search') . '%')->orWhere('flag', 'like', '%' . request('search') . '%')->paginate(10);
+            $countries = Country::where('name', 'ilike', '%' . request('search') . '%')->orWhere('flag', 'ilike', '%' . request('search') . '%')->paginate(10);
         endif;
         return view('countries.index', compact('countries'));
     }

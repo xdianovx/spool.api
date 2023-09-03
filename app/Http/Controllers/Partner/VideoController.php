@@ -35,11 +35,11 @@ class VideoController extends Controller
         if (request('search') == null):
             $videos = Video::orderBy('id', 'DESC')->paginate(10);
         else:
-            $videos = Video::where('name', 'like', '%' . request('search') . '%')->
-            orWhere('category_id', 'like', '%' . (Category::where('name',request('search'))->first()->id ?? request('search')) . '%')->
+            $videos = Video::where('name', 'ilike', '%' . request('search') . '%')->
+            orWhere('category_id', 'ilike', '%' . (Category::where('name',request('search'))->first()->id ?? request('search')) . '%')->
             orWhere('event_date', 'like', '%' . request('search') . '%')->paginate(10);
         endif;
 
-        return view('videos.index', compact('videos'));
+        return view('partners_views.index', compact('videos'));
     }
 }

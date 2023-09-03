@@ -77,10 +77,10 @@ class UserController extends Controller
             $users = User::orderBy('id', 'DESC')->paginate(10);
 
         else:
-            $users = User::where('name', 'like', '%' . request('search') . '%')->
+            $users = User::where('name', 'ilike', '%' . request('search') . '%')->
             orWhere('id', 'like', '%' . request('search') . '%')->
-            orWhere('email', 'like', '%' . request('search') . '%')->
-            orWhere('role', 'like', '%' . request('search') . '%')->paginate(10);
+            orWhere('email', 'ilike', '%' . request('search') . '%')->
+            orWhere('role', 'ilike', '%' . request('search') . '%')->paginate(10);
         endif;
         return view('users.index', compact('users'));
     }

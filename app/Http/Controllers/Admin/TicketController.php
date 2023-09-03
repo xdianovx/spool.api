@@ -61,7 +61,7 @@ class TicketController extends Controller
         else:
             $tickets = Ticket::where('id', 'like', '%' . request('search') . '%')->
             orWhere('price', 'like', '%' . request('search') . '%')->
-            orWhere('video_id', 'like', '%' . (Video::where('name',request('search'))->first()->id ?? request('search')) . '%')->paginate(10);
+            orWhere('video_id', 'ilike', '%' . (Video::where('name',request('search'))->first()->id ?? request('search')) . '%')->paginate(10);
         endif;
         return view('tickets.index', compact('tickets'));
     }
