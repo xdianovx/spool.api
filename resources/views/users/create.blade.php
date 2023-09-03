@@ -55,7 +55,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label class="form-label" for="phoneNumber">Phone Number*</label>
+                                    <label class="form-label" for="phoneNumber">НОМЕР ТЕЛЕФОНА*</label>
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="phoneNumber" name="phone_number" class="form-control"
                                             placeholder="John" value="{{ old('phone_number') }}" required>

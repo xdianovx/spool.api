@@ -9,8 +9,11 @@ use App\Models\Category;
 use App\Models\Partners_company;
 use App\Models\Tag;
 use App\Models\Video;
+use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class VideoController extends Controller
 {
@@ -22,9 +25,13 @@ class VideoController extends Controller
 
     public function create()
     { 
+        $url = 'https://cdn.spoolapp.ru/secret/';
+        $client = Http::get($url)->body();
+        $res = json_decode($client);
+        // return response()->json($res);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.create',compact('partner_companies','categories'));
+        return view('videos.create',compact('partner_companies','categories','res'));
     }
 
     public function show(Video $video)
@@ -34,10 +41,13 @@ class VideoController extends Controller
     
     public function edit(Video $video)
     { 
+        $url = 'https://cdn.spoolapp.ru/secret/';
+        $client = Http::get($url)->body();
+        $res = json_decode($client);
         $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video->id)->paginate(10);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.edit', compact('video','partner_companies','categories','user_tags'));
+        return view('videos.edit', compact('video','partner_companies','categories','user_tags','res'));
     }
 
     public function store(VideoStoreRequest $request)

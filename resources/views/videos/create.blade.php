@@ -24,6 +24,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3 col-md-6">
                                     <label for="category" class="form-label">Категория*</label>
                                     @if (!count($categories) == 0)
@@ -81,18 +82,31 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+
+                                
                                 <div class="mb-3 col-md-6">
                                     <label for="video" class="form-label">Видео</label>
-                                    <input class="form-control" type="text" id="video" name="video"
-                                        placeholder="Введите ссылку на видео" value="{{ old('video') }}" required>
-                                    @error('video')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @if (!count($res) == 0)
+                                        <select id="category" class="select2 form-select" name="video">
+                                            @foreach ($res as $video)
+                                                <option value="{{ $video }}"
+                                                    {{ $video == old('video') ? 'selected' : '' }}>
+                                                    {{ $video }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('video')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    @else
+                                        <div class="text-danger">Записей не существует
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-message">Описание*</label>
-                                    <textarea id="basic-default-message" class="form-control" name="description" placeholder="Текст"
-                                         style="height: 234px;" required>{{ old('description') }}</textarea>
+                                    <textarea id="basic-default-message" class="form-control" name="description" placeholder="Текст" style="height: 234px;"
+                                        required>{{ old('description') }}</textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

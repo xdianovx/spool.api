@@ -30,7 +30,7 @@ class VideoResource extends JsonResource
             "name" => $this->name,
             "image" => env('API_URL') . Storage::url($this->image),
             "image_banner" => $image_banner,
-            "video" => $this->video,
+            "video" => 'https://cdn.spoolapp.ru/videos/' . $this->video,
             "description" => $this->description,
             "duration" => $this->duration,
             "event_date" => $this->event_date,
