@@ -37,7 +37,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:clients',
         ]);
         if ($validator->fails()) :
-            if ($validator->messages()->first('email', ':message') == "The email has already been taken.") :
+            if ($validator->messages()->first('email', ':message') == "Такое значение поля email уже существует.") :
                 $client = Client::where('email', $request->email);
                 $client_id = $client->value('id');
                 $password = $this->password_generate();
