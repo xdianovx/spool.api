@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Tag;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +23,7 @@ class VideoResource extends JsonResource
             $image_banner = $this->value('image_banner');
         endif;
         $tags = TagResource::collection(Tag::orderBy('id', 'ASC')->where('video_id', $this->id)->get());
+        $tickets = Ticket::where('video_id', $this->id)->exists();
 
         return [
             'id' => $this->id,
@@ -36,6 +38,7 @@ class VideoResource extends JsonResource
             "display_slider" => $this->display_slider,
             "category" => $this->category->name ?? null,
             "partners_company" => $this->partner_company->name,
+            "tickets" => $tickets,
             "tags" => $tags
         ];
     }

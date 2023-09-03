@@ -118,7 +118,7 @@
                                     <td class="align-middle"><small class="text-light fw-semibold">Сумма проданных
                                             билетов:</small></td>
                                     <td class="py-3">
-                                        <p class="mb-0">{{$sum_tickets}}р.</p>
+                                        <p class="mb-0">{{ $sum_tickets }}р.</p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -610,46 +610,38 @@
 
                         <hr class="m-0">
                         <h5 class="card-header">Список просмотров</h5>
-                        {{-- <table class="table">
-          <thead>
-              <tr>
-                  <th>Название</th>
-                  <th>Категория</th>
-                  <th>Дата события</th>
-              </tr>
-          </thead>
-          <tbody class="table-border-bottom-0">
-              @forelse ($videos as $video)
-                  <tr>
-                      <td>{{ $video->name }}</td>
-                      <td>{{ $video->category->name ?? 'Без категории'}}</td>
-                      <td>{{$video->event_date}}</td>
-                      <td>
-                          <div class="dropdown">
-                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                  data-bs-toggle="dropdown">
-                                  <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="{{ route('partner_video.show', $video->id) }}">
-                                      <i class="menu-icon tf-icons bx bx-detail"></i> Детали</a>
-                              </div>
-                          </div>
-                      </td>
-                  </tr>
-              @empty
-                  <tr>
-                      <td class="text-danger">По вашему запросу ничего не найдено.</td>
-                  </tr>
-              @endforelse
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Секунд просмотрено</th>
+                                    <th>Клиент(Имя)</th>
+                                    <th>Клиент(Почта)</th>
+                                    <th>Страна</th>
+                                    <th>Дата</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @forelse ($views as $view)
+                                    <tr>
+                                        <td>{{ $view->seconds_viewed }}</td>
+                                        <td>{{ $view->client->name ?? 'Данные отсутствуют' }}</td>
+                                        <td>{{ $view->client->email ?? 'Данные отсутствуют'}}</td>
+                                        <td>{{ $view->country->name ?? 'Данные отсутствуют' }}</td>
+                                        <td>{{ $view->created_at }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="text-danger">По вашему запросу ничего не найдено.</td>
+                                    </tr>
+                                @endforelse
 
-          </tbody>
-      </table>
-      @if ($videos->links()->paginator->hasPages())
-          <div class="demo-inline-spacing">
-              {{ $videos->links() }}
-          </div>
-      @endif --}}
+                            </tbody>
+                        </table>
+                        @if ($views->links()->paginator->hasPages())
+                            <div class="demo-inline-spacing">
+                                {{ $views->links() }}
+                            </div>
+                        @endif
 
 
 

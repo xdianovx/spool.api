@@ -94,6 +94,11 @@ class Client extends Authenticatable implements JWTSubject
         return $this->hasMany(ClientTicket::class);
         
     }
+    public function views_store()
+    {
+        return $this->hasMany(View::class);
+        
+    }
     public function client_temporary_password()
     {
         return $this->hasOne(ClientsTemporaryPassword::class);

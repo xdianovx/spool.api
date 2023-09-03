@@ -9,6 +9,7 @@ use App\Http\Controllers\API\V1\Tags\TagController;
 use App\Http\Controllers\API\V1\Tickets\ClientTicketController;
 use App\Http\Controllers\API\V1\Tickets\TicketController;
 use App\Http\Controllers\API\V1\Videos\VideoController;
+use App\Http\Controllers\API\V1\Views\ViewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,8 @@ Route::group([
     //buying a ticket
     Route::post('buy', [ClientTicketController::class, 'storeClientTicket']);
     Route::get('purchased', [ClientTicketController::class, 'getClientTicket']);
+    //views create
+    Route::post('view_store', [ViewController::class, 'storeView']);
 });
 
 Route::get('/v1/ping', function () {

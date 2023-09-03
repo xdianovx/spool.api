@@ -23,6 +23,7 @@
                             <tr>
                                 <th>Название</th>
                                 <th>Категория</th>
+                                <th>Количество просмотров</th>
                                 <th>Дата события</th>
                             </tr>
                         </thead>
@@ -31,6 +32,7 @@
                                 <tr>
                                     <td>{{ $video->name }}</td>
                                     <td>{{ $video->category->name ?? 'Без категории'}}</td>
+                                    <td>{{ $video->views->count() }}</td>
                                     <td>{{$video->event_date}}</td>
                                     <td>
                                         <div class="dropdown">
