@@ -9,10 +9,9 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VideoController;
-use App\Http\Controllers\Partner\VideoController as PartnerVideoController;
+use App\Http\Controllers\Admin\ViewController as AdminViewController;
+use App\Http\Controllers\Partner\ViewController as PartnerViewController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Partners_company;
-use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,10 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware('partner')->prefix('partner_videos')->group(function () {
-        Route::get('/all',  [PartnerVideoController::class, 'index'])->name('partner_videos.index');
-        Route::get('/search',  [PartnerVideoController::class, 'search'])->name('partner_videos.search');
-        Route::get('/{video}/show',  [PartnerVideoController::class, 'show'])->name('partner_video.show');
+    Route::middleware('partner')->prefix('partner_views')->group(function () {
+        Route::get('/all',  [PartnerViewController::class, 'index'])->name('partner_views.index');
+        Route::get('/search',  [PartnerViewController::class, 'search'])->name('partner_views.search');
+        Route::get('/{video}/show',  [PartnerViewController::class, 'show'])->name('partner_view.show');
+    });
+
+    Route::middleware('admin')->prefix('admin_views')->group(function () {
+        Route::get('/all',  [AdminViewController::class, 'indexView'])->name('admin_views.index');
+        Route::get('/search',  [AdminViewController::class, 'searchView'])->name('admin_views.search');
+        Route::get('/{video}/show',  [AdminViewController::class, 'showView'])->name('admin_view.show');
     });
 
     Route::middleware('admin')->prefix('users')->group(function () {

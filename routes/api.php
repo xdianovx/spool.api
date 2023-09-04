@@ -36,6 +36,7 @@ Route::group([
     //auth
     Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
     Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
+    Route::middleware('jwt.verify')->group(function () {
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
     Route::post('account/refresh', [AuthController::class, 'refresh']);
@@ -64,6 +65,7 @@ Route::group([
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
     //views create
     Route::post('videos/view_store', [ViewController::class, 'storeView']);
+});
 });
 
 Route::get('/v1/ping', function () {

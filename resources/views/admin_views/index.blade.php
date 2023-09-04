@@ -8,7 +8,7 @@
 
             <hr class="m-0">
             <div class="card-body">
-                <form class="d-flex" action="{{ route('partner_views.search') }}" method="get">
+                <form class="d-flex" action="{{ route('admin_views.search') }}" method="get">
                     @csrf
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
@@ -41,7 +41,7 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('partner_view.show', $video->id) }}">
+                                                <a class="dropdown-item" href="{{ route('admin_view.show', $video->id) }}">
                                                     <i class="menu-icon tf-icons bx bx-detail"></i> Детали</a>
                                             </div>
                                         </div>

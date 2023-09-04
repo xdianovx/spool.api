@@ -63,17 +63,27 @@
                 <ul class="menu-inner py-1">
                     @if (Auth::user()->role == 1)
                     <li class="menu-item @if (in_array(Route::current()->getName(), [
-                        'partner_videos.index',
-                        'partner_videos.search',
-                        'partner_videos.show',
+                        'partner_views.index',
+                        'partner_views.search',
+                        'partner_view.show',
                     ])) active @endif">
-                        <a href="{{ route('partner_videos.index') }}" class="menu-link">
+                        <a href="{{ route('partner_views.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Просмотры</div>
                         </a>
                     </li>
                     @endif
                     @if (Auth::user()->role == 0)
+                    <li class="menu-item @if (in_array(Route::current()->getName(), [
+                        'admin_views.index',
+                        'admin_views.search',
+                        'admin_view.show',
+                    ])) active @endif">
+                        <a href="{{ route('admin_views.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Просмотры</div>
+                        </a>
+                    </li>
                         <li class="menu-header small text-uppercase"><span class="menu-header-text">Пользователи</span>
                         </li>
                         <li class="menu-item @if (in_array(Route::current()->getName(), ['users.index', 'user.create', 'users.search', 'user.show', 'user.edit'])) active @endif">

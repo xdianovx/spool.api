@@ -10,7 +10,7 @@ use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VideoController extends Controller
+class ViewController extends Controller
 {
     public function index()
     {

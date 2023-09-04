@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Video\VideoStoreRequest;
 use App\Http\Requests\Video\VideoUpdateRequest;
 use App\Models\Category;
+use App\Models\ClientTicket;
 use App\Models\Partners_company;
 use App\Models\Tag;
 use App\Models\Video;
+use App\Models\View;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
@@ -140,4 +142,5 @@ class VideoController extends Controller
 
         return view('videos.index', compact('videos'));
     }
+
 }
