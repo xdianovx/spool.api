@@ -23,8 +23,8 @@ class VideoResource extends JsonResource
             $image_banner = $this->value('image_banner');
         endif;
         $tags = TagResource::collection(Tag::orderBy('id', 'ASC')->where('video_id', $this->id)->get());
-        $tickets = Ticket::where('video_id', $this->id)->exists();
-
+        $ticket = Ticket::where('video_id', $this->id)->get();
+        
         return [
             'id' => $this->id,
             "name" => $this->name,
@@ -38,7 +38,7 @@ class VideoResource extends JsonResource
             "display_slider" => $this->display_slider,
             "category" => $this->category->name ?? null,
             "partners_company" => $this->partner_company->name,
-            "tickets" => $tickets,
+            "ticket" => $ticket,
             "tags" => $tags
         ];
     }

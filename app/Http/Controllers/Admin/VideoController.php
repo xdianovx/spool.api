@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\ClientTicket;
 use App\Models\Partners_company;
 use App\Models\Tag;
+use App\Models\Ticket;
 use App\Models\Video;
 use App\Models\View;
 use GuzzleHttp\Exception\TransferException;
@@ -125,6 +126,14 @@ class VideoController extends Controller
         $tags = Tag::where('video_id',$video->id)->get();
         foreach($tags as $tag):
         $tag->delete();
+        endforeach;
+        $views = View::where('video_id',$video->id)->get();
+        foreach($views as $view):
+        $view->delete();
+        endforeach;
+        $tickets = Ticket::where('video_id',$video->id)->get();
+        foreach($tickets as $ticket):
+        $ticket->delete();
         endforeach;
         $video->delete();
         return redirect()->route('videos.index')->with('status', 'video-deleted');

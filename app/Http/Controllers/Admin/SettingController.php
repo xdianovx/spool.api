@@ -47,7 +47,7 @@ class SettingController extends Controller
         return redirect()->route('settings.index')->with('status', 'setting-updated');
     }
     public function destroy(Setting $setting)
-    {
+    { 
         $setting->delete();
         return redirect()->route('settings.index')->with('status', 'setting-deleted');
     }

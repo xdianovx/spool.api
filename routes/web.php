@@ -135,10 +135,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/search',  [SettingController::class, 'search'])->name('settings.search');
         Route::get('/create',  [SettingController::class, 'create'])->name('setting.create');
         Route::post('/',  [SettingController::class, 'store'])->name('setting.store');
-        Route::get('/{ticket}/show',  [SettingController::class, 'show'])->name('setting.show');
-        Route::get('/{ticket}/edit',  [SettingController::class, 'edit'])->name('setting.edit');
-        Route::patch('/{ticket}',  [SettingController::class, 'update'])->name('setting.update');
-        Route::delete('/{ticket}/destroy',  [SettingController::class, 'destroy'])->name('setting.destroy');
+        Route::get('/{setting}/show',  [SettingController::class, 'show'])->name('setting.show');
+        Route::get('/{setting}/edit',  [SettingController::class, 'edit'])->name('setting.edit');
+        Route::patch('/{setting}',  [SettingController::class, 'update'])->name('setting.update');
+        Route::delete('/{setting}/destroy',  [SettingController::class, 'destroy'])->name('setting.destroy');
     });
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Views;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Video;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Validator;
@@ -27,6 +28,7 @@ class ViewController extends Controller
                 'video_id' => $validator->validated()['video_id'], 
                 'country_id' => $client->country_id,
             ],$validator->validated());
+            Video::where('id',$validator->validated()['video_id'])->increment('views_count');
             return response()->json([
                 'message' => 'created'
             ], 200);

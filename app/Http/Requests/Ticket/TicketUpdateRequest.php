@@ -26,7 +26,13 @@ class TicketUpdateRequest extends FormRequest
             'ticket_id' => 'required|integer|exists:tickets,id',
             'price' => 'required|string',
             'discounted_price' => 'nullable|string',
-            'video_id' => 'required|string',
+            'video_id' => 'required|string|unique:tickets,video_id,' . $this->ticket_id,
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'video_id.unique' => 'Билет к данной записи уже существует',
         ];
     }
 }

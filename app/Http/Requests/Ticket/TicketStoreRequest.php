@@ -25,7 +25,13 @@ class TicketStoreRequest extends FormRequest
             'name' => 'required|string|unique:tickets',
             'price' => 'required|string',
             'discounted_price' => 'nullable|string',
-            'video_id' => 'required|string',
+            'video_id' => 'required|string|unique:tickets',
+        ];
+    }
+        public function messages()
+    {
+        return [
+            'video_id.unique' => 'Билет к данной записи уже существует',
         ];
     }
 }

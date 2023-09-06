@@ -7,6 +7,7 @@ use App\Http\Resources\ClientTicketResource;
 use App\Models\Client;
 use App\Models\ClientTicket;
 use App\Models\Ticket;
+use App\Models\Video;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,24 +25,26 @@ class ClientTicketController extends Controller
     {
         $client = Client::find(auth('api')->user('api')->id);
         $validator = Validator::make($request->all(), [
-            'price'=> 'required|integer',
             'ticket_id'=> 'required|integer'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $purchased_tickets = ClientTicket::where('client_id',$client->id)->where('ticket_id',$validator->validated()['ticket_id'])->exists();
-        if($purchased_tickets == false):
+        $purchased_ticket = ClientTicket::where('client_id',$client->id)->where('ticket_id',$validator->validated()['ticket_id'])->exists();
+        $ticket = Ticket::find($validator->validated()['ticket_id']);
+        if($purchased_ticket == false):
             $client->tickets_store()->firstOrCreate([
-                'video_id' => Ticket::find($validator->validated()['ticket_id'])->video_id
+                'video_id' => $ticket->video_id,
+                'price'=>  $ticket->price
             ],$validator->validated());
+            Video::where('id',$ticket->video_id)->increment('tickets_count');
             return response()->json([
                 'message' => 'success',
                 'date_purchase' => $client->value('created_at'),
             ], 200);
         else:
             return response()->json([
-                'message' => 'record already exists!'
+                'message' => 'Запись уже существует.'
             ], 200);
         endif;
         

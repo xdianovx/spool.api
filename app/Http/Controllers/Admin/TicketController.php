@@ -37,19 +37,43 @@ class TicketController extends Controller
     public function store(TicketStoreRequest $request)
     {
         $data = $request->validated();
-        Ticket::firstOrCreate($data);
+        $ticket = Ticket::firstOrCreate($data);
+        $video = Video::where('id', $ticket->video_id)->first();
+        if($video->ticket_availability == false):
+        Video::where('id',$ticket->video_id)->update([
+            'ticket_availability'=> true
+        ]);
+        endif;
         return redirect()->route('tickets.index')->with('status', 'ticket-created');
     }
 
     public function update(TicketUpdateRequest $request, $ticket_id)
     {
         $ticket = Ticket::whereId($ticket_id)->firstOrFail();
+        $video_old = Video::where('id', $ticket->video_id)->first();
+        if($video_old->ticket_availability == true):
+            Video::where('id',$ticket->video_id)->update([
+                'ticket_availability'=> false
+            ]);
+            endif;
         $data = $request->validated();
         $ticket->update($data);
+        $video_new = Video::where('id', $ticket->video_id)->first();
+        if($video_new->ticket_availability == false):
+            Video::where('id',$ticket->video_id)->update([
+                'ticket_availability'=> true
+            ]);
+            endif;
         return redirect()->route('tickets.index')->with('status', 'ticket-updated');
     }
     public function destroy(Ticket $ticket)
     {
+        $video_old = Video::where('id', $ticket->video_id)->first();
+        if($video_old->ticket_availability == true):
+            Video::where('id',$ticket->video_id)->update([
+                'ticket_availability'=> false
+            ]);
+        endif;
         $ticket->delete();
         return redirect()->route('tickets.index')->with('status', 'ticket-deleted');
     }

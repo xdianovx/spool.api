@@ -36,10 +36,11 @@ Route::group([
     //auth
     Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
     Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
+    Route::post('account/refresh', [AuthController::class, 'refresh']);
     Route::middleware('jwt.verify')->group(function () {
     Route::post('account/login/profile', [AuthController::class, 'login_profile']);
     Route::post('account/logout', [AuthController::class, 'logout']);
-    Route::post('account/refresh', [AuthController::class, 'refresh']);
+
     //profile
     Route::get('profile', [ProfileController::class, 'userProfile']);
     Route::post('profile/email', [ProfileController::class, 'profileEmail']);

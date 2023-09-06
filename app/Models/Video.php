@@ -20,7 +20,10 @@ class Video extends Model
         'minimum_age',
         'display_slider',
         'partners_company_id',
-        'category_id' 
+        'category_id',
+        'tickets_count',
+        'views_count',
+        'ticket_availability',
     ];
 
     public function partner_company()
@@ -36,9 +39,9 @@ class Video extends Model
     {
         return $this->hasMany(Tag::class);
     }
-    public function tickets()
+    public function ticket()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasOne(Ticket::class);
         
     }
     public function views()
