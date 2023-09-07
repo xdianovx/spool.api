@@ -23,6 +23,7 @@ class PartnersCompanyStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|unique:partners_companies',
+            'commission' => 'required|integer',
         ];
     }
 }

@@ -45,6 +45,7 @@
                         <thead>
                             <tr>
                                 <th>Название</th>
+                                <th>Комиссия</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -52,6 +53,7 @@
                             @forelse ($partners_companies as $partners_company)
                                 <tr>
                                     <td>{{ $partners_company->name }}</td>
+                                    <td>{{ $partners_company->commission }}%</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

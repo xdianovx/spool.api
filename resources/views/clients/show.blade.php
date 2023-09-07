@@ -31,7 +31,7 @@
                         <div class="d-flex align-items-start me-4 mt-3 gap-3">
                             <span class="badge bg-label-primary p-2 rounded"><i class="bx bx-check bx-sm"></i></span>
                             <div>
-                                <h5 class="mb-0">1.23k</h5>
+                                <h5 class="mb-0">{{$client->tickets_store->count()}}</h5>
                                 <span>Билетов куплено</span>
                             </div>
                         </div>

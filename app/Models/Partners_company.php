@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Partners_company extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'commission'
+    ];
     
     public function clients()
     {

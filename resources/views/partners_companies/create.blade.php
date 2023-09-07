@@ -23,6 +23,14 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="firstCommission" class="form-label">Комиссия(%)*</label>
+                                    <input class="form-control" type="text" id="firstCommission" name="commission"
+                                        placeholder="Введите число" value="{{ old('commission') }}" required>
+                                    @error('commission')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Создать</button>

@@ -56,6 +56,7 @@ Route::group([
     Route::get('categories', [CategoryController::class, 'getCategories']);
     //videos
     Route::get('videos', [VideoController::class, 'getVideos']);
+    Route::get('videos/{category_slag}', [VideoController::class, 'getVideosBySlag']);
     //settings
     Route::get('settings', [SettingController::class, 'getSettings']);
     //tickets
@@ -65,6 +66,8 @@ Route::group([
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
     //views create
     Route::post('videos/view_store', [ViewController::class, 'storeView']);
+     //search
+    Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
 // });
 });
 

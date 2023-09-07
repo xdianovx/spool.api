@@ -25,6 +25,14 @@
                                     @enderror
                                     <input type="hidden" name="partners_company_id" value="{{$partners_company->id}}">
                                 </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="firstCommission" class="form-label">Комиссия(%)*</label>
+                                    <input class="form-control" type="text" id="firstCommission" name="commission"
+                                    value="{{ $partners_company->commission }}" autofocus autocomplete="commission" required>
+                                    @error('commission')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="mt-2">
                                 <button type="submit" class="btn btn-primary">Сохранить</button>

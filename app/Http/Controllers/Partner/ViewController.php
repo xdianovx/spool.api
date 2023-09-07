@@ -27,7 +27,9 @@ class ViewController extends Controller
         foreach($tickets as $ticket):
             $sum_tickets = $sum_tickets + $ticket->price;
         endforeach;
-        return view('partners_views.show', compact('video','sum_tickets','views'));
+        $comission = ($sum_tickets / 100) * $video->partner_company->commission;
+        $ticket_without_comission = $sum_tickets - $comission;
+        return view('partners_views.show', compact('video','sum_tickets','views','ticket_without_comission'));
     }
 
     public function search(Request $request) 
