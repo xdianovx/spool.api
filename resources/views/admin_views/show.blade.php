@@ -135,7 +135,7 @@
 
                         <hr class="m-0">
                         <h5 class="card-header">График</h5>
-                        <div class="card-body">
+                        <div class="card-body" id="stats" data-stats="{{$statsArr}}">
                             <div id="chart">
                             </div>
                         </div>
@@ -192,15 +192,8 @@
 
         <script>
             // Даты по порядку
-            const viewsByDate = [
-                ['2023-07', 63],
-                ['2023-08', 23],
-                ['2023-09-07 09:04:31', 190],
-                ['2023-09-10', 16],
-                ['2023-09-11', 56],
-                ['2023-09-12', 66],
-                ['2023-09-13', 16],
-            ]
+            const viewsByDate = document.querySelector('#stats').getAttribute('stats')
+            console.log(viewsByDate);
 
 
             const options = {
