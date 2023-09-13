@@ -135,7 +135,7 @@
 
                         <hr class="m-0">
                         <h5 class="card-header">График</h5>
-                        <div class="card-body" id="stats" data-stats="{{$statsArr}}">
+                        <div class="card-body">
                             <div id="chart">
                             </div>
                         </div>
@@ -192,7 +192,7 @@
 
         <script>
             // Даты по порядку
-            const viewsByDate = document.querySelector('#stats').getAttribute('stats')
+            const viewsByDate [] = $statsArr
             console.log(viewsByDate);
 
 

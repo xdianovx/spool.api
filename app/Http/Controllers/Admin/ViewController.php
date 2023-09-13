@@ -28,6 +28,7 @@ class ViewController extends Controller
             DB::raw('DATE(created_at) AS date'),
             DB::raw('COUNT(*) AS count')
         )
+        ->where('video_id', $video->id)
         ->where('created_at', '>=', Carbon::now()->subDays(30))
         ->groupBy(
             DB::raw('DATE(created_at)')
@@ -40,7 +41,6 @@ class ViewController extends Controller
         foreach ($stats as $value) {
             $statsArr[] = $value->date .','. $value->count; 
         }
-
         $sum_tickets = 0;
         $views = View::where('video_id', $video->id)->orderBy('created_at', 'DESC')->paginate(10);
         $tickets = ClientTicket::where('video_id', $video->id)->get();
