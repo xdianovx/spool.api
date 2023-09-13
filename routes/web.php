@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/all',  [AdminViewController::class, 'indexView'])->name('admin_views.index');
         Route::get('/search',  [AdminViewController::class, 'searchView'])->name('admin_views.search');
         Route::get('/{video}/show',  [AdminViewController::class, 'showView'])->name('admin_view.show');
+        Route::get('/{video}/showviews',  [AdminViewController::class, 'getVideoViews']);
     });
 
     Route::middleware('admin')->prefix('users')->group(function () {

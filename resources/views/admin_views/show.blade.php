@@ -185,62 +185,74 @@
                                 <a class="btn btn-primary text-nowrap" href="{{ route('admin_views.index') }}">Назад</a>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
-            // Даты по порядку
-            const viewsByDate [] = $statsArr
-            console.log(viewsByDate);
+            let test = []
+            const getStat = async () => {
+
+                const data = await fetch('/admin_views/4/showviews')
+                const ch = await data.json()
 
 
-            const options = {
-                chart: {
-                    type: 'line',
-                    height: 350,
-                    locales: [{
-                        "name": "en",
-                        "options": {
-                            "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август",
-                                "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-                            ],
-                            "shortMonths": ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт",
-                                "Ноя", "Дек"
-                            ],
-                            "days": ["Воскресение", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница",
-                                "Суббота"
-                            ],
-                            "shortDays": ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-                            "toolbar": {
-                                "exportToSVG": "Скачать SVG",
-                                "exportToPNG": "Скачать PNG",
-                                "menu": "Меню",
-                                "selection": "Selection",
-                                "selectionZoom": "Selection Zoom",
-                                "zoomIn": "Zoom In",
-                                "zoomOut": "Zoom Out",
-                                "pan": "Panning",
-                                "reset": "Reset Zoom"
+
+
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 350,
+                        locales: [{
+                            "name": "en",
+                            "options": {
+                                "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                                    "Август",
+                                    "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+                                ],
+                                "shortMonths": ["Янв", "Фев", "Мар", "Апр", "Май", "Июнь", "Июль", "Авг",
+                                    "Сен", "Окт",
+                                    "Ноя", "Дек"
+                                ],
+                                "days": ["Воскресение", "Понедельник", "Вторник", "Среда", "Четверг",
+                                    "Пятница",
+                                    "Суббота"
+                                ],
+                                "shortDays": ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+                                "toolbar": {
+                                    "exportToSVG": "Скачать SVG",
+                                    "exportToPNG": "Скачать PNG",
+                                    "menu": "Меню",
+                                    "selection": "Selection",
+                                    "selectionZoom": "Selection Zoom",
+                                    "zoomIn": "Zoom In",
+                                    "zoomOut": "Zoom Out",
+                                    "pan": "Panning",
+                                    "reset": "Reset Zoom"
+                                }
                             }
-                        }
+                        }],
+
+                    },
+                    series: [{
+                        name: 'Просмотры',
+                        data: ch
                     }],
+                    xaxis: {
+                        type: "datetime",
 
-                },
-                series: [{
-                    name: 'Просмотры',
-                    data: viewsByDate
-                }],
-                xaxis: {
-                    type: "datetime",
-
+                    }
                 }
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+                chart.render();
             }
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-            chart.render();
+            getStat()
         </script>
     </div>
 @endsection
