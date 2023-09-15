@@ -72,6 +72,7 @@ Route::group([
 
     // Pay
     Route::post('pay', [PayController::class, 'pay']);
+    Route::get('pay', [PayController::class, 'all']);
     Route::post('pay/store', [PayController::class, 'getPayData']);
     // });
 });

@@ -60,6 +60,10 @@ class PayController extends Controller
         return response()->json(json_decode($res->getBody()->getContents()));
     }
 
+    public function all()
+    {
+        return Card::all();
+    }
 
     public function getPayData(Request $req)
     {
