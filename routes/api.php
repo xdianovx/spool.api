@@ -71,11 +71,12 @@ Route::group([
     Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
 
     // Pay
-    Route::post('pay', [PayController::class, 'pay']);
-    Route::get('pay', [PayController::class, 'all']);
-    Route::post('pay/store', [PayController::class, 'getPayData']);
-    // });
+
 });
+
+Route::post('pay', [PayController::class, 'pay']);
+Route::get('pay', [PayController::class, 'all']);
+Route::post('pay/store', [PayController::class, 'getPayData']);
 
 Route::get('/v1/ping', function () {
     return response()->json([
