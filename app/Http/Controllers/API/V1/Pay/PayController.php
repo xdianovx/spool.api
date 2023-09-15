@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Pay;
 
 use App\Http\Controllers\Controller;
+use App\Models\Card;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
@@ -57,5 +58,28 @@ class PayController extends Controller
         );
 
         return response()->json(json_decode($res->getBody()->getContents()));
+    }
+
+
+    public function getPayData(Request $req)
+    {
+        $card = json_encode($req);
+        return Card::create([
+            'TransactionId' => $req->TransactionId,
+            'OrderId' => $req->OrderId,
+            'Amount' => $req->Amount,
+            'Currency' => $req->Currency,
+            'DateTime' => $req->DateTime,
+            'Email' => $req->Email,
+            'Phone' => $req->Phone,
+            'Service_Id' => $req->Service_Id,
+            'Description' => $req->Description,
+            'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
+            'CardMasked' => $req->CardMasked,
+            'CardHolder' => $req->CardHolder,
+            'Brand' => $req->Brand,
+            'Bank' => $req->Bank,
+        ]);
+        return $req;
     }
 }
