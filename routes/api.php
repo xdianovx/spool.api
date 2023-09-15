@@ -4,6 +4,7 @@ use App\Http\Controllers\API\V1\Categories\CategoryController;
 use App\Http\Controllers\API\V1\Clients\AuthController;
 use App\Http\Controllers\API\V1\Clients\ProfileController;
 use App\Http\Controllers\API\V1\Countries\CountryController;
+use App\Http\Controllers\API\V1\Pay\PayController;
 use App\Http\Controllers\API\V1\Settings\SettingController;
 use App\Http\Controllers\API\V1\Tags\TagController;
 use App\Http\Controllers\API\V1\Tickets\ClientTicketController;
@@ -66,9 +67,15 @@ Route::group([
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
     //views create
     Route::post('videos/view_store', [ViewController::class, 'storeView']);
-     //search
+    //search
     Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
-// });
+
+    // Pay
+    Route::post(
+        'pay',
+        [PayController::class, 'pay']
+    );
+    // });
 });
 
 Route::get('/v1/ping', function () {

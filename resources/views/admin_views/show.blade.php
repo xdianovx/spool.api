@@ -195,11 +195,12 @@
         <script>
             let test = []
             const getStat = async () => {
-
-                const data = await fetch('/admin_views/4/showviews')
+                const id = "{{ $video->id }}"
+                const data = await fetch(`/admin_views/${id}/showviews`)
                 const ch = await data.json()
 
 
+                console.log(ch)
 
 
                 const options = {
