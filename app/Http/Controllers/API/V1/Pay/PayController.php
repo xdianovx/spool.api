@@ -69,6 +69,7 @@ class PayController extends Controller
     {
         $card = json_encode($req);
         return Card::create([
+            'Event' => $req->Event,
             'TransactionId' => $req->TransactionId,
             'OrderId' => $req->OrderId,
             'Amount' => $req->Amount,
