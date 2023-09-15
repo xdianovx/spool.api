@@ -13,20 +13,20 @@ return new class extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->string('TransactionId');
-            $table->string('OrderId');
-            $table->string('Amount');
-            $table->string('Currency');
-            $table->string('DateTime');
-            $table->string('Email');
-            $table->string('Phone');
-            $table->string('Service_Id');
-            $table->string('Description');
-            $table->string('Bank');
-            $table->string('Country_Code_Alpha2');
-            $table->string('CardMasked');
-            $table->string('CardHolder');
-            $table->string('Brand');
+            $table->string('TransactionId')->nullable();
+            $table->string('OrderId')->nullable();
+            $table->string('Amount')->nullable();
+            $table->string('Currency')->nullable();
+            $table->string('DateTime')->nullable();
+            $table->string('Email')->nullable();
+            $table->string('Phone')->nullable();
+            $table->string('Service_Id')->nullable();
+            $table->string('Description')->nullable();
+            $table->string('Bank')->nullable();
+            $table->string('Country_Code_Alpha2')->nullable();
+            $table->string('CardMasked')->nullable();
+            $table->string('CardHolder')->nullable();
+            $table->string('Brand')->nullable();
             $table->timestamps();
         });
     }
