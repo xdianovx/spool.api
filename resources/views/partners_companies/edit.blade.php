@@ -27,9 +27,9 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="firstCommission" class="form-label">Комиссия(%)*</label>
-                                    <input class="form-control" type="text" id="firstCommission" name="commission"
-                                    value="{{ $partners_company->commission }}" autofocus autocomplete="commission" required>
-                                    @error('commission')
+                                    <input class="form-control" type="text" id="firstCommission" name="commission_percent"
+                                    value="{{ $partners_company->commission_percent }}" autofocus autocomplete="commission_percent" required>
+                                    @error('commission_percent')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

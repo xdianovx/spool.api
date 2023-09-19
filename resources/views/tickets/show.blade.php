@@ -37,6 +37,12 @@
               </td>
             </tr>
             <tr>
+              <td class="align-middle"><small class="text-light fw-semibold">Комиссия:</small></td>
+              <td class="py-3">
+                <p class="mb-0">{{$ticket->commission_percent}}%</p>
+              </td>
+            </tr>
+            <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Видео:</small></td>
               <td class="py-3">
                 <p class="mb-0">{{$ticket->video->name}}</p>

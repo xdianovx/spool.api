@@ -53,7 +53,7 @@
                             @forelse ($partners_companies as $partners_company)
                                 <tr>
                                     <td>{{ $partners_company->name }}</td>
-                                    <td>{{ $partners_company->commission }}%</td>
+                                    <td>{{ $partners_company->commission_percent }}%</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

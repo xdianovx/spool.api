@@ -11,6 +11,7 @@ class ClientTicket extends Model
 
     protected $fillable = [
         'price',
+        'price_without_commission',
         'client_id',
         'ticket_id',
         'video_id'

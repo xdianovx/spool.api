@@ -25,9 +25,9 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="firstCommission" class="form-label">Комиссия(%)*</label>
-                                    <input class="form-control" type="text" id="firstCommission" name="commission"
-                                        placeholder="Введите число" value="{{ old('commission') }}" required>
-                                    @error('commission')
+                                    <input class="form-control" type="text" id="firstCommission" name="commission_percent"
+                                        placeholder="Введите число" value="{{ old('commission_percent') }}" required>
+                                    @error('commission_percent')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

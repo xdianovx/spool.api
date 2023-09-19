@@ -35,7 +35,8 @@ class ClientTicketController extends Controller
         if($purchased_ticket == false):
             $client->tickets_store()->firstOrCreate([
                 'video_id' => $ticket->video_id,
-                'price'=>  $ticket->price
+                'price'=>  $ticket->price,
+                'price_without_commission'=> $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
             ],$validator->validated());
             Video::where('id',$ticket->video_id)->increment('tickets_count');
             return response()->json([

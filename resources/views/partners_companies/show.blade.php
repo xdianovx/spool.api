@@ -21,7 +21,7 @@
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Комиссия:</small></td>
               <td class="py-3">
-                <p class="mb-0">{{ $partners_company->commission }}%</p>
+                <p class="mb-0">{{ $partners_company->commission_percent }}%</p>
               </td>
             </tr>
             <tr>

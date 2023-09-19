@@ -80,7 +80,7 @@
                         'admin_view.show',
                     ])) active @endif">
                         <a href="{{ route('admin_views.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <i class="menu-icon tf-icons bx bx-show-alt"></i>
                             <div data-i18n="Basic">Просмотры</div>
                         </a>
                     </li>
@@ -88,13 +88,13 @@
                         </li>
                         <li class="menu-item @if (in_array(Route::current()->getName(), ['users.index', 'user.create', 'users.search', 'user.show', 'user.edit'])) active @endif">
                             <a href="{{ route('users.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-user-check"></i>
                                 <div data-i18n="Basic">Администраторы</div>
                             </a>
                         </li>
                         <li class="menu-item @if (in_array(Route::current()->getName(), ['clients.index', 'clients.search', 'client.show'])) active @endif">
                             <a href="{{ route('clients.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-group"></i>
                                 <div data-i18n="Basic">Клиенты</div>
                             </a>
                         </li>
@@ -107,7 +107,7 @@
                                 'category.edit',
                             ])) active @endif">
                             <a href="{{ route('categories.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-sitemap"></i>
                                 <div data-i18n="Basic">Категории</div>
                             </a>
                         </li>
@@ -120,7 +120,7 @@
                                 'video.edit',
                             ])) active @endif">
                             <a href="{{ route('videos.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-video-recording"></i>
                                 <div data-i18n="Basic">Видеоролики</div>
                             </a>
                         </li>
@@ -140,7 +140,7 @@
                                 'country.edit',
                             ])) active @endif">
                             <a href="{{ route('countries.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-world"></i>
                                 <div data-i18n="Basic">Страны</div>
                             </a>
                         </li>
@@ -152,7 +152,7 @@
                                 'partners_company.edit',
                             ])) active @endif">
                             <a href="{{ route('partners_companies.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bxs-user-badge"></i>
                                 <div data-i18n="Basic">Партнерские компании</div>
                             </a>
                         </li>
@@ -164,7 +164,7 @@
                                 'ticket.edit',
                             ])) active @endif">
                             <a href="{{ route('tickets.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-bookmark-alt"></i>
                                 <div data-i18n="Basic">Билеты</div>
                             </a>
                         </li>
@@ -178,7 +178,7 @@
                                 'setting.edit',
                             ])) active @endif">
                             <a href="{{ route('settings.index') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-collection"></i>
+                                <i class="menu-icon tf-icons bx bx-cog"></i>
                                 <div data-i18n="Basic">Настройки</div>
                             </a>
                         </li>       

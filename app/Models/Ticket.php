@@ -13,7 +13,8 @@ class Ticket extends Model
         'name',
         'price',
         'discounted_price',
-        'video_id'
+        'video_id',
+        'commission_percent'
     ];
 
     public function video()

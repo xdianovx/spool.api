@@ -49,14 +49,15 @@ class ViewController extends Controller
     public function showView(Video $video)
     {
         $sum_tickets = 0;
+        $sum_without_commission = 0;
         $views = View::where('video_id', $video->id)->orderBy('created_at', 'DESC')->paginate(10);
         $tickets = ClientTicket::where('video_id', $video->id)->get();
         foreach ($tickets as $ticket) :
             $sum_tickets = $sum_tickets + $ticket->price;
+            $sum_without_commission = $sum_without_commission + $ticket->price_without_commission;
         endforeach;
-        $comission = ($sum_tickets / 100) * $video->partner_company->commission;
-        $ticket_without_comission = $sum_tickets - $comission;
-        return view('admin_views.show', compact('video', 'sum_tickets', 'views', 'ticket_without_comission'));
+
+        return view('admin_views.show', compact('video', 'sum_tickets', 'views', 'sum_without_commission'));
     }
 
     public function searchView(Request $request)

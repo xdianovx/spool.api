@@ -24,7 +24,7 @@ class PartnersCompanyUpdateRequest extends FormRequest
         return [
             'name' => 'required|string|unique:partners_companies,name,' . $this->partners_company_id,
             'partners_company_id' => 'required|integer|exists:partners_companies,id',
-            'commission' => 'required|integer',
+            'commission_percent' => 'required|integer',
         ];
     }
 }

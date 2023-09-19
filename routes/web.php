@@ -129,6 +129,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{ticket}/show',  [TicketController::class, 'show'])->name('ticket.show');
         Route::get('/{ticket}/edit',  [TicketController::class, 'edit'])->name('ticket.edit');
         Route::patch('/{ticket}',  [TicketController::class, 'update'])->name('ticket.update');
+        Route::patch('/{ticket}/update_commission',  [TicketController::class, 'updateCommission'])->name('ticket.update_commission');
         Route::delete('/{ticket}/destroy',  [TicketController::class, 'destroy'])->name('ticket.destroy');
     });
     Route::middleware('admin')->prefix('settings')->group(function () {

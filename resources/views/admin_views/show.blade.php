@@ -125,7 +125,7 @@
                                     <td class="align-middle"><small class="text-light fw-semibold">Сумма проданных
                                             билетов:</small></td>
                                     <td class="py-3">
-                                        <p class="mb-0">{{ $ticket_without_comission }}р.</p>
+                                        <p class="mb-0">{{ $sum_without_commission }}р.</p>
                                     </td>
                                 </tr>
                             </tbody>

@@ -14,6 +14,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+                    @if (session('status') === 'ticket-commission-updated')
+                        <div class="alert alert-primary" role="alert">{{ __('Комиссия изменина успешно.') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     @if (session('status') === 'ticket-created')
                         <div class="alert alert-success alert-dismissible" role="alert">
                             {{ __('Создано успешно.') }}
@@ -26,6 +31,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
+
                 </div>
             </div>
 
@@ -35,7 +41,7 @@
                     @csrf
                     <input class="form-control me-2" type="search" name="search" placeholder="Поиск" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit">Поиск</button>
-                  </form>
+                </form>
             </div>
 
             <hr class="m-0">
@@ -44,18 +50,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Цена</th>
                                 <th>Видео</th>
+                                <th>Цена</th>
+                                <th>Комиссия</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($tickets as $ticket)
                                 <tr>
-                                    <td>{{ $ticket->name }}</td>
-                                    <td>{{ $ticket->price }}</td>
                                     <td>{{ $ticket->video->name ?? 'Без видео' }}</td>
+                                    <td>{{ $ticket->price }}</td>
+                                    <td>{{ $ticket->commission_percent }}%</td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -68,29 +74,37 @@
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
                                                 <a class="dropdown-item" href="{{ route('ticket.edit', $ticket->id) }}"><i
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
-
+                                                <button type="submit" class="dropdown-item" data-bs-toggle="modal"
+                                                    data-bs-target="#modalScrollableCommission{{ $ticket->id }}">
+                                                    <i class='bx bxs-offer' ></i> Изменить комиссию</button>
                                                 <button type="submit" class="dropdown-item text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#modalScrollable{{ $ticket->id}}"><i
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalScrollable{{ $ticket->id }}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
                                                     Удалить</button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalScrollable{{ $ticket->id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal fade" id="modalScrollable{{ $ticket->id }}" tabindex="-1"
+                                    style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите удалить?</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="modalScrollableTitle">Вы уверены, что хотите
+                                                    удалить?</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning text-wrap">
+                                                <p
+                                                    class="mt-1 text-sm text-gray-600 dark:text-gray-400  alert alert-warning text-wrap">
                                                     {{ __('После удаления записи все ее ресурсы и данные будут безвозвратно удалены.') }}
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-dismiss="modal">
                                                     Закрыть
                                                 </button>
                                                 <form action="{{ route('ticket.destroy', $ticket->id) }}" method="POST">
@@ -100,6 +114,50 @@
                                                         data-bs-target="#modalScrollableConfirm">Подтвердить</button>
                                                 </form>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="modal fade" id="modalScrollableCommission{{ $ticket->id }}" tabindex="-1"
+                                    style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalScrollableTitle">Редактирование комиссии
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{ route('ticket.update_commission', $ticket->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('patch')
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col mb-3">
+                                                            <label for="nameWithTitle" class="form-label">Комиссия</label>
+                                                            <input type="text" class="form-control" id="nameWithTitle"
+                                                                placeholder="Введите комиссию" name="commission_percent"
+                                                                required>
+                                                            @error('commission_percent')
+                                                                <div class="text-danger">{{ $message }}</div>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        data-bs-dismiss="modal">
+                                                        Закрыть
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +179,4 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection

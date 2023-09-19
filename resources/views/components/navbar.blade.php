@@ -35,7 +35,7 @@
                     </li>
                     <li>
                         <x-dropdown-link :href="route('profile.edit')">
-                            <i class="bx bx-user me-2"></i>
+                            <i class="bx bxs-user-account"></i>
                             {{ __('Профиль') }}
                         </x-dropdown-link>
                     </li>

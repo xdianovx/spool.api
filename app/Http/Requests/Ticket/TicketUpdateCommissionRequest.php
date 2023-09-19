@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\PartnersCompany;
+namespace App\Http\Requests\Ticket;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PartnersCompanyStoreRequest extends FormRequest
+class TicketUpdateCommissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,6 @@ class PartnersCompanyStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:partners_companies',
             'commission_percent' => 'required|integer',
         ];
     }

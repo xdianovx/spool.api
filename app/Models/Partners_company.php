@@ -10,7 +10,7 @@ class Partners_company extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'commission'
+        'commission_percent'
     ];
     
     public function clients()
