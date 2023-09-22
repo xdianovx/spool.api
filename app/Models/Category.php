@@ -14,7 +14,8 @@ class Category extends Model
         'image',
         'sort',
         'slug',
-        'parent_id'
+        'parent_id',
+        'video_availability'
     ];
     public function sluggable(): array { 
         return [ 'slug' => [ 'source' => 'name' ] ];

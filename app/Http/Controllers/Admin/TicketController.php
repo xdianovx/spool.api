@@ -83,13 +83,13 @@ class TicketController extends Controller
 
     public function destroy(Ticket $ticket)
     {
-        $video_old = Video::where('id', $ticket->video_id)->first();
-        if($video_old->ticket_availability == true):
-            Video::where('id',$ticket->video_id)->update([
+        $video = Video::where('id', $ticket->video_id)->first();
+        $ticket->delete();
+        if($video->ticket_availability == true):
+            $video->update([
                 'ticket_availability'=> false
             ]);
         endif;
-        $ticket->delete();
         return redirect()->route('tickets.index')->with('status', 'ticket-deleted');
     }
 

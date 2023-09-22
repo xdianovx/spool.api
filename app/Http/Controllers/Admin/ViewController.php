@@ -25,29 +25,21 @@ class ViewController extends Controller
     public function getVideoViews(Video $video)
     {
         $statsArr = [];
-        $stats = View::select(
-            DB::raw('DATE(created_at) AS date'),
-            DB::raw('COUNT(*) AS count')
-        )
+        $stats = View::select(DB::raw('MAX(created_at) AS date'),DB::raw('COUNT(id) AS count'))
             ->where('video_id', $video->id)
-            ->where('created_at', '>=', Carbon::now()->subDays(30))
             ->groupBy(
-                DB::raw('DATE(created_at)')
-            )
-            ->orderBy(
-                DB::raw('DATE(created_at)')
-            )
-            ->get();
-
+                DB::raw("DATE_TRUNC('HOUR', created_at)"),
+            )->get();
+            
         foreach ($stats as $value) {
             $statsArr[] =  [$value->date, $value->count];
         }
-
         return $statsArr;
     }
 
     public function showView(Video $video)
-    {
+    {  
+
         $sum_tickets = 0;
         $sum_without_commission = 0;
         $views = View::where('video_id', $video->id)->orderBy('created_at', 'DESC')->paginate(10);

@@ -44,7 +44,7 @@ class AuthController extends Controller
                 $password_hashe = Hash::make($password);
                 ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
                 Client::where('id', $client_id)->update(['password' => $password_hashe]);
-                event(new ClientRegistered(Client::find($client->value('id')), $password));  // Sending password
+                event(new ClientRegistered(Client::find($client_id), $password));  // Sending password
                 return response()->json([
                     'message' => 'The password has been sent to your email.',
                     'password' => $password,

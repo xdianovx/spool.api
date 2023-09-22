@@ -9,13 +9,15 @@ use App\Http\Requests\User\UserUpdatePasswordRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Partners_company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'DESC')->paginate(10);
+
+        $users = User::where('id','<>',Auth::user()->id)->orderBy('id', 'DESC')->paginate(10);
         return view('users.index', compact('users'));
     }
 

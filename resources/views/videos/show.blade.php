@@ -7,7 +7,9 @@
   <!-- Inline text elements -->
   <div class="col">
     <div class="card mb-4">
-      <h5 class="card-header">Информация</h5>
+      <h5 class="card-header">Информация @if ($video->ticket_availability == false)<span class="badge badge-center rounded-pill bg-label-danger" 
+        data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="bottom"data-bs-html="true" title="" 
+        data-bs-original-title="<span>К данному видео не привязан билет! Видео без билетов не будут опублекованы.</span>"><i class='bx bx-bulb'></span></i>@endif</h5>
       <div class="card-body">
         <hr class="m-0">
         <div class="user-avatar-section">

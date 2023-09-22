@@ -85,6 +85,12 @@ class VideoController extends Controller
         }
 
        $video = Video::firstOrCreate($data);
+       $category = Category::where('id',$video->category_id)->first();
+       if($category->video_availability == false):
+           $category->update([
+               'video_availability'=> true
+           ]);
+       endif;
         return redirect()->route('video.edit',$video->id)->with('status', 'video-created');
     }
 
@@ -119,10 +125,17 @@ class VideoController extends Controller
             $data['image_banner'] = $request->file('image_banner')->storeAs('public', $fileNameToStore);
         }
         $video->update($data);
+        $category = Category::where('id',$video->category_id)->first();
+        if($category->video_availability == false):
+            $category->update([
+                'video_availability'=> true
+            ]);
+        endif;
         return redirect()->route('videos.index')->with('status', 'video-updated');
     }
     public function destroy(Video $video)
     {
+        $category = Category::where('id',$video->category_id)->first();
         $tags = Tag::where('video_id',$video->id)->get();
         foreach($tags as $tag):
         $tag->delete();
@@ -136,6 +149,14 @@ class VideoController extends Controller
         $ticket->delete();
         endforeach;
         $video->delete();
+        if (is_null($category)):
+        else:
+            if($category->videos->count()==0):
+                $category->update([
+                    'video_availability'=> false
+                ]);
+            endif;
+        endif;
         return redirect()->route('videos.index')->with('status', 'video-deleted');
     }
 
