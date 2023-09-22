@@ -137,10 +137,16 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-        dd($req->CustomFields);
+   
         if(!ClientCard::where('rebill_id', $req->RebillId)->exists()):
+            $variable = explode(';',$req->CustomFields);
+            $result = [];
+            foreach ($variable as $item) {
+                list($key, $val) = explode('=', $item);
+                $result[$key] = $val;
+            }
             ClientCard::firstOrCreate([
-                'user_id' => $req->CustomFields,
+                'user_id' => $result['user_id'],
                 'card_mask' => $card_exist->CardMasked,
                 'bank' => $card_exist->Bank,
                 'rebill_id' => $card_exist->RebillId,

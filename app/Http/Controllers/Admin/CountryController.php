@@ -13,6 +13,7 @@ class CountryController extends Controller
 {
     public function index()
     {
+ 
         $countries = Country::orderBy('id', 'DESC')->paginate(10);
         return view('countries.index', compact('countries'));
     }

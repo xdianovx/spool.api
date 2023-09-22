@@ -11,6 +11,7 @@ class CountryController extends Controller
 {
     public function getCountries()
     {
+    
         $countries = CountryResource::collection(Country::all());
         return response()->json($countries);
     }
