@@ -24,8 +24,6 @@ class ClientTicketController extends Controller
         return response()->json($client_tickets);
     }
 
-
-
     public function storeClientTicket(Request $request)
     {
         $client = Client::find(auth('api')->user('api')->id);
@@ -43,9 +41,6 @@ class ClientTicketController extends Controller
         $ticket = Ticket::find($validator->validated()['ticket_id']);
 
         if ($purchased_ticket === false) :
-
-
-            // Блок покупки
             function random_str($length = 32)
             {
                 return bin2hex(random_bytes($length / 2));
@@ -64,9 +59,11 @@ class ClientTicketController extends Controller
                 'Description' => $request->description,
                 'RebillFlag' => true,
                 "PaymentMethod" => "Cryptogram",
+                "ExtraData" => ['user_id' => auth('api')->user('api')->id],
                 "CustomerInfo" => [
-                    "IP" => $request->ip
+                    "IP" => $request->ip,
                 ],
+                // "ExtraData" => [Auth::user()],
                 "PaymentDetails" => [
                     "Value" =>  $request->token
                 ]
@@ -89,18 +86,11 @@ class ClientTicketController extends Controller
                 ]
             );
 
-
-
-
-
             $client->tickets_store()->firstOrCreate([
                 'video_id' => $ticket->video_id,
                 'price' =>  $ticket->price,
                 'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
-
-
             ], $validator->validated());
-
 
             Video::where('id', $ticket->video_id)->increment('tickets_count');
 
