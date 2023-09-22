@@ -89,23 +89,26 @@ class ClientTicketController extends Controller
                 ]
             );
 
-            return response()->json(json_decode($res->getBody()->getContents()));
 
 
 
-        // $client->tickets_store()->firstOrCreate([
-        //     'video_id' => $ticket->video_id,
-        //     'price' =>  $ticket->price,
-        //     'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
-        // ], $validator->validated());
+
+            $client->tickets_store()->firstOrCreate([
+                'video_id' => $ticket->video_id,
+                'price' =>  $ticket->price,
+                'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
 
 
-        // Video::where('id', $ticket->video_id)->increment('tickets_count');
+            ], $validator->validated());
 
-        // return response()->json([
-        //     'message' => 'success',
-        //     'date_purchase' => $client->value('created_at'),
-        // ], 200);
+
+            Video::where('id', $ticket->video_id)->increment('tickets_count');
+
+            return response()->json([
+                'message' => 'success',
+                'date_purchase' => $client->value('created_at'),
+                'pay_data' => json_decode($res->getBody()->getContents())
+            ], 200);
 
         else :
             return response()->json([

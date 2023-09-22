@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class PayController extends Controller
 {
@@ -73,20 +74,13 @@ class PayController extends Controller
         $orderId = Str::uuid();
         $req_id =  $rand_str;
         $method = 'POST';
-        $url = '/payments/requests/single';
+        $url = '/payments/requests/rebill';
         $body = [
             'OrderId' => $orderId,
+            "RebillId" => $req->rebill_id,
             'Amount' => $req->amount,
             'Currency' => $req->currency,
             'Description' => $req->description,
-            'RebillFlag' => false,
-            "PaymentMethod" => "Cryptogram",
-            "CustomerInfo" => [
-                "IP" => $req->ip
-            ],
-            "PaymentDetails" => [
-                "Value" =>  $req->token
-            ]
         ];
 
         $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
@@ -95,7 +89,7 @@ class PayController extends Controller
         $client = new Client();
         $res = $client->request(
             'POST',
-            'https://gw.payselection.com/payments/requests/single',
+            'https://gw.payselection.com/payments/requests/rebill',
             [
                 'headers' => [
                     'X-SITE-ID' => env('PAY_SITE_ID'),
