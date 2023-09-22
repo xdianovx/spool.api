@@ -117,62 +117,32 @@ class PayController extends Controller
     public function getPayData(Request $req)
     {
 
-        $card = json_encode($req);
-        $card_exist = Card::where('TransactionId', $req->TransactionId)->first();
+        $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
+            'IsTest' => $req->IsTest,
+            'CustomFields' => $req->CustomFields,
+            'PayoutToken' => $req->PayoutToken,
+            'RebillId' => $req->RebillId,
+            'ExpirationDate' => $req->ExpirationDate,
+            'RRN' => $req->RRN,
+            'RecurringId' => $req->RecurringId,
+            'Subtype' => $req->Subtype,
+            'Event' => $req->Event,
+            'TransactionId' => $req->TransactionId,
+            'OrderId' => $req->OrderId,
+            'Amount' => $req->Amount,
+            'Currency' => $req->Currency,
+            'DateTime' => $req->DateTime,
+            'Email' => $req->Email,
+            'Phone' => $req->Phone,
+            'Service_Id' => $req->Service_Id,
+            'Description' => $req->Description,
+            'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
+            'CardMasked' => $req->CardMasked,
+            'CardHolder' => $req->CardHolder,
+            'Brand' => $req->Brand,
+            'Bank' => $req->Bank,
+        ]);
 
-        if ($card_exist->exists()) {
-            $card_exist->update([
-                'IsTest' => $req->IsTest,
-                'CustomFields' => $req->CustomFields,
-                'PayoutToken' => $req->PayoutToken,
-                'RebillId' => $req->RebillId,
-                'ExpirationDate' => $req->ExpirationDate,
-                'RRN' => $req->RRN,
-                'RecurringId' => $req->RecurringId,
-                'Subtype' => $req->Subtype,
-                'Event' => $req->Event,
-                'TransactionId' => $req->TransactionId,
-                'OrderId' => $req->OrderId,
-                'Amount' => $req->Amount,
-                'Currency' => $req->Currency,
-                'DateTime' => $req->DateTime,
-                'Email' => $req->Email,
-                'Phone' => $req->Phone,
-                'Service_Id' => $req->Service_Id,
-                'Description' => $req->Description,
-                'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
-                'CardMasked' => $req->CardMasked,
-                'CardHolder' => $req->CardHolder,
-                'Brand' => $req->Brand,
-                'Bank' => $req->Bank,
-            ]);
-        } else {
-            return Card::create([
-                'IsTest' => $req->IsTest,
-                'CustomFields' => $req->CustomFields,
-                'PayoutToken' => $req->PayoutToken,
-                'RebillId' => $req->RebillId,
-                'ExpirationDate' => $req->ExpirationDate,
-                'RRN' => $req->RRN,
-                'RecurringId' => $req->RecurringId,
-                'Subtype' => $req->Subtype,
-                'Event' => $req->Event,
-                'TransactionId' => $req->TransactionId,
-                'OrderId' => $req->OrderId,
-                'Amount' => $req->Amount,
-                'Currency' => $req->Currency,
-                'DateTime' => $req->DateTime,
-                'Email' => $req->Email,
-                'Phone' => $req->Phone,
-                'Service_Id' => $req->Service_Id,
-                'Description' => $req->Description,
-                'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
-                'CardMasked' => $req->CardMasked,
-                'CardHolder' => $req->CardHolder,
-                'Brand' => $req->Brand,
-                'Bank' => $req->Bank,
-            ]);
-        }
 
 
         return $req;
