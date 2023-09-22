@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Pay;
 
 use App\Http\Controllers\Controller;
 use App\Models\Card;
+use App\Models\ClientCard;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
@@ -136,7 +137,16 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-
+        dd($req->CustomFields);
+        if(!ClientCard::where('rebill_id', $req->RebillId)->exists()):
+            ClientCard::firstOrCreate([
+                'user_id' => $req->CustomFields,
+                'card_mask' => $card_exist->CardMasked,
+                'bank' => $card_exist->Bank,
+                'rebill_id' => $card_exist->RebillId,
+                'expiration_date' => $card_exist->ExpirationDate,
+            ]);
+        endif;
 
         return $req;
     }

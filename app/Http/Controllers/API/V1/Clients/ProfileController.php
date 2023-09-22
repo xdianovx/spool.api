@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\ClientCard;
 use App\Models\Country;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -196,5 +197,11 @@ class ProfileController extends Controller
             'message' => 'success',
             'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
         ], 200);
+    }
+
+    public function profileCards(Request $request)
+    {
+        $client_cards = ClientCard::all();
+        return response()->json($client_cards);
     }
 }

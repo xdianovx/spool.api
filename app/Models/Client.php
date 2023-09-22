@@ -104,5 +104,9 @@ class Client extends Authenticatable implements JWTSubject
         return $this->hasOne(ClientsTemporaryPassword::class);
         
     }
+    public function cards()
+    {
+        return $this->hasMany(ClientCard::class);
+    }
     
 }
