@@ -51,7 +51,7 @@ Route::group([
     Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
     Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
     Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
-    Route::post('profile/cards', [ProfileController::class, 'profileCards']);
+    Route::get('profile/cards', [ProfileController::class, 'profileCards']);
     //countries
     Route::get('countries', [CountryController::class, 'getCountries']);
     //categories
