@@ -72,8 +72,7 @@ Route::group([
     //search
     Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
     // Pay
-    Route::post('pay', [PayController::class, 'pay']);
-    Route::post('pay/rebill', [PayController::class, 'rebill']);
+
     Route::get('pay', [PayController::class, 'all']);
     Route::post('pay/store', [PayController::class, 'getPayData']);
 });
