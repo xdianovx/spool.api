@@ -62,7 +62,7 @@ class ClientTicketController extends Controller
                 'Amount' => $request->amount,
                 'Currency' => $request->currency,
                 'Description' => $request->description,
-                'RebillFlag' => false,
+                'RebillFlag' => true,
                 "PaymentMethod" => "Cryptogram",
                 "CustomerInfo" => [
                     "IP" => $request->ip
@@ -89,20 +89,23 @@ class ClientTicketController extends Controller
                 ]
             );
 
-
-            $client->tickets_store()->firstOrCreate([
-                'video_id' => $ticket->video_id,
-                'price' =>  $ticket->price,
-                'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
-            ], $validator->validated());
+            return response()->json(json_decode($res->getBody()->getContents()));
 
 
-            Video::where('id', $ticket->video_id)->increment('tickets_count');
 
-            return response()->json([
-                'message' => 'success',
-                'date_purchase' => $client->value('created_at'),
-            ], 200);
+        // $client->tickets_store()->firstOrCreate([
+        //     'video_id' => $ticket->video_id,
+        //     'price' =>  $ticket->price,
+        //     'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
+        // ], $validator->validated());
+
+
+        // Video::where('id', $ticket->video_id)->increment('tickets_count');
+
+        // return response()->json([
+        //     'message' => 'success',
+        //     'date_purchase' => $client->value('created_at'),
+        // ], 200);
 
         else :
             return response()->json([
