@@ -135,7 +135,6 @@ class PayController extends Controller
             'CardHolder' => $req->CardHolder,
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
-            'user_id' => $req->CustomFields
         ]);
 
 
