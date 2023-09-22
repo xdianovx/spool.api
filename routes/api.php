@@ -65,6 +65,7 @@ Route::group([
     Route::get('tickets', [TicketController::class, 'getTickets']);
     //buying a ticket
     Route::post('tickets/buy', [ClientTicketController::class, 'storeClientTicket']);
+    Route::post('tickets/rebill', [ClientTicketController::class, 'rebillClientTicket']);
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
     //views create
     Route::post('videos/view_store', [ViewController::class, 'storeView']);

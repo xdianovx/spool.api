@@ -24,6 +24,49 @@ class ClientTicketController extends Controller
         return response()->json($client_tickets);
     }
 
+    public function rebillClientTicket(Request $req)
+    {
+
+        function random_str($length = 32)
+        {
+            return bin2hex(random_bytes($length / 2));
+        }
+
+        $length = 20;
+        $rand_str = random_str($length);
+        $orderId = Str::uuid();
+        $req_id =  $rand_str;
+        $method = 'POST';
+        $url = '/payments/requests/rebill';
+        $body = [
+            'OrderId' => $orderId,
+            "RebillId" => $req->rebill_id,
+            'Amount' => $req->amount,
+            'Currency' => $req->currency,
+            'Description' => $req->description,
+        ];
+
+        $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
+        $data = $method . PHP_EOL . $url  . PHP_EOL . env('PAY_SITE_ID') . PHP_EOL . $req_id . PHP_EOL . $bodyToJson;
+        $signature = hash_hmac('sha256', $data, env('PAY_SECRET'), false);
+        $client = new GuzzleClient();
+        $res = $client->request(
+            'POST',
+            'https://gw.payselection.com/payments/requests/rebill',
+            [
+                'headers' => [
+                    'X-SITE-ID' => env('PAY_SITE_ID'),
+                    'X-REQUEST-ID' => $req_id,
+                    'X-REQUEST-SIGNATURE' => $signature
+                ],
+                'body' => $bodyToJson,
+            ]
+        );
+
+        return response()->json(json_decode($res->getBody()->getContents()));
+    }
+
+
     public function storeClientTicket(Request $request)
     {
         $client = Client::find(auth('api')->user('api')->id);
