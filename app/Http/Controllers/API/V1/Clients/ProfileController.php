@@ -202,7 +202,7 @@ class ProfileController extends Controller
     public function profileCards(Request $request)
     {
        
-        $client_cards = ClientCard::where();
+        $client_cards = ClientCard::where('user_id', auth('api')->user()->id)->get();
         return response()->json($client_cards);
     }
 }
