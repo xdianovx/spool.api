@@ -14,7 +14,8 @@ class ClientTicket extends Model
         'price_without_commission',
         'client_id',
         'ticket_id',
-        'video_id'
+        'video_id',
+        'payment_status'
     ];
     public function ticket()
     {
