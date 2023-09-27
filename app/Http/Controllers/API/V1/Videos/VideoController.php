@@ -40,6 +40,9 @@ class VideoController extends Controller
         else:
             $videos = VideoResource::collection(Video::where('name', 'ilike', '%' . request('s') . '%')->get());
         endif;
-        return response()->json([$category,$videos]);
+        return response()->json([
+            'categories'=>$category,
+            'videos' => $videos
+        ]);
     }
 }
