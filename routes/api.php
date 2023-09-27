@@ -34,6 +34,9 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'v1'
 ], function ($router) {
+    Route::group([
+        'middleware' => 'headers'
+    ], function ($router) {
     //auth
     Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
     Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
@@ -56,25 +59,29 @@ Route::group([
     Route::get('countries', [CountryController::class, 'getCountries']);
     //categories
     Route::get('categories', [CategoryController::class, 'getCategories']);
+    Route::get('categories/{category_slag}', [CategoryController::class, 'getCategory']);
     //videos
-    Route::get('videos', [VideoController::class, 'getVideos']);
-    Route::get('videos/{category_slag}', [VideoController::class, 'getVideosBySlag']);
+    Route::get('videos', [VideoController::class, 'getVideosAndCategories']);
+    Route::get('videos/category/{category_slag}', [VideoController::class, 'getVideosAndCategoriesBySlag']);
+    Route::get('videos/{video_id}', [VideoController::class, 'getVideoById']);
+    Route::get('videos/{video_id}/load', [VideoController::class, 'getVideoLoad']);
+    //search
+    Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
     //settings
     Route::get('settings', [SettingController::class, 'getSettings']);
     //tickets
     Route::get('tickets', [TicketController::class, 'getTickets']);
+
+    //views create
+    Route::post('videos/view_store', [ViewController::class, 'storeView']);
+    // Pay
+    Route::get('pay', [PayController::class, 'all']);
+    Route::post('pay/store', [PayController::class, 'getPayData']);
+});
     //buying a ticket
     Route::post('tickets/buy', [ClientTicketController::class, 'storeClientTicket']);
     Route::post('tickets/rebill', [ClientTicketController::class, 'rebillClientTicket']);
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
-    //views create
-    Route::post('videos/view_store', [ViewController::class, 'storeView']);
-    //search
-    Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
-    // Pay
-
-    Route::get('pay', [PayController::class, 'all']);
-    Route::post('pay/store', [PayController::class, 'getPayData']);
 });
 
 Route::get('/v1/ping', function () {

@@ -45,6 +45,9 @@ class Kernel extends HttpKernel
             // \App\Http\Middleware\HeaderMiddleware::class,
 
         ],
+        'headers' => [
+            \App\Http\Middleware\HeaderMiddleware::class,
+        ],
     ];
 
     /**

@@ -16,13 +16,13 @@ class HeaderMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!$request->header('language')) :
-            return response()->json(['error' => 'missing required headers'],500);
+            return response()->json(['error' => 'отсутствуют необходимые заголовки(language)'],500);
         endif;
         if (!$request->header('system')) :
-            return response()->json(['error' => 'missing required headers'],500);
+            return response()->json(['error' => 'отсутствуют необходимые заголовки(system)'],500);
         endif;
         if (!$request->header('version')) :
-            return response()->json(['error' => 'missing required headers'],500);
+            return response()->json(['error' => 'отсутствуют необходимые заголовки(version)'],500);
         endif;
         return $next($request);
     }
