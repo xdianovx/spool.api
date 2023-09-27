@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function getCategories()
     {
-        $categories = Category::where('video_availability', true)->orderBy('sort', 'ASC')->get();
+        $categories = Category::where('video_availability', true)->where('parent_id' , 0)->orderBy('sort', 'ASC')->get();
         return response()->json($categories);
     }
 }
