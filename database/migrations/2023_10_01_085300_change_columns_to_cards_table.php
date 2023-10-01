@@ -15,7 +15,7 @@ return new class extends Migration
             $table->dropColumn('CustomFields');
         });
         Schema::table('cards', function (Blueprint $table) {
-            $table->longText('CustomFields')->nullable();
+            $table->text('CustomFields')->nullable();
         });
     }
 
