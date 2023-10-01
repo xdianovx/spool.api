@@ -37,48 +37,48 @@ Route::group([
     Route::group([
         'middleware' => 'headers'
     ], function ($router) {
-    //auth
-    Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
-    Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
-    // Route::middleware('jwt.verify')->group(function () {
-    Route::post('account/login/profile', [AuthController::class, 'login_profile']);
-    Route::post('account/logout', [AuthController::class, 'logout']);
-    Route::post('account/refresh', [AuthController::class, 'refresh']);
-    //profile
-    Route::get('profile', [ProfileController::class, 'userProfile']);
-    Route::post('profile/email', [ProfileController::class, 'profileEmail']);
-    Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);
-    Route::post('profile/name', [ProfileController::class, 'profileName']);
-    Route::post('profile/age', [ProfileController::class, 'profileAge']);
-    Route::post('profile/gender', [ProfileController::class, 'profileGender']);
-    Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
-    Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
-    Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
-    Route::get('profile/cards', [ProfileController::class, 'profileCards']);
-    //countries
-    Route::get('countries', [CountryController::class, 'getCountries']);
-    //categories
-    Route::get('categories', [CategoryController::class, 'getCategories']);
-    Route::get('categories/{category_slag}', [CategoryController::class, 'getCategory']);
-    //videos
-    Route::get('videos', [VideoController::class, 'getVideosAndCategories']);
-    Route::get('videos/category/{category_slag}', [VideoController::class, 'getVideosAndCategoriesBySlag']);
-    Route::get('videos/{video_id}', [VideoController::class, 'getVideoById']);
-    Route::get('videos/{video_id}/load', [VideoController::class, 'getVideoLoad']);
-    //search
-    Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
-    //settings
-    Route::get('settings', [SettingController::class, 'getSettings']);
-    //tickets
-    Route::get('tickets', [TicketController::class, 'getTickets']);
+        //auth
+        Route::post('account/login', [AuthController::class, 'login'])->middleware('apiThrottle:30,1440');
+        Route::post('account/login/confirm', [AuthController::class, 'login_confirm']);
+        // Route::middleware('jwt.verify')->group(function () {
+        Route::post('account/login/profile', [AuthController::class, 'login_profile']);
+        Route::post('account/logout', [AuthController::class, 'logout']);
+        Route::post('account/refresh', [AuthController::class, 'refresh']);
+        //profile
+        Route::get('profile', [ProfileController::class, 'userProfile']);
+        Route::post('profile/email', [ProfileController::class, 'profileEmail']);
+        Route::post('profile/country', [ProfileController::class, 'profilePostCountry']);
+        Route::post('profile/name', [ProfileController::class, 'profileName']);
+        Route::post('profile/age', [ProfileController::class, 'profileAge']);
+        Route::post('profile/gender', [ProfileController::class, 'profileGender']);
+        Route::post('profile/phone', [ProfileController::class, 'profilePhone']);
+        Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
+        Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
+        Route::get('profile/cards', [ProfileController::class, 'profileCards']);
+        //countries
+        Route::get('countries', [CountryController::class, 'getCountries']);
+        //categories
+        Route::get('categories', [CategoryController::class, 'getCategories']);
+        Route::get('categories/{category_slag}', [CategoryController::class, 'getCategory']);
+        //videos
+        Route::get('videos', [VideoController::class, 'getVideosAndCategories']);
+        Route::get('videos/category/{category_slag}', [VideoController::class, 'getVideosAndCategoriesBySlag']);
+        Route::get('videos/{video_id}', [VideoController::class, 'getVideoById']);
+        Route::get('videos/{video_id}/load', [VideoController::class, 'getVideoLoad']);
+        //search
+        Route::get('search', [VideoController::class, 'getVideosAndCategoriesBySearch']);
+        //settings
+        Route::get('settings', [SettingController::class, 'getSettings']);
+        //tickets
+        Route::get('tickets', [TicketController::class, 'getTickets']);
 
-    //views create
-    Route::post('videos/view_store', [ViewController::class, 'storeView']);
-    // Pay
-    Route::get('pay', [PayController::class, 'all']);
-    Route::post('pay/store', [PayController::class, 'getPayData']);
-});
+        //views create
+        Route::post('videos/view_store', [ViewController::class, 'storeView']);
+        // Pay
+        Route::get('pay', [PayController::class, 'all']);
+    });
     //buying a ticket
+    Route::post('pay/store', [PayController::class, 'getPayData']);
     Route::post('tickets/buy', [ClientTicketController::class, 'storeClientTicket']);
     Route::post('tickets/rebill', [ClientTicketController::class, 'rebillClientTicket']);
     Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
