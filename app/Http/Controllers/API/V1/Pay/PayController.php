@@ -21,6 +21,7 @@ class PayController extends Controller
 
     public function getPayData(Request $req)
     {
+        Log::info('test');
 
         $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
             'IsTest' => $req->IsTest,
@@ -47,7 +48,6 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-        Log::info('test');
         if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
             $variable = explode(';', $req->CustomFields);
             $result = [];
