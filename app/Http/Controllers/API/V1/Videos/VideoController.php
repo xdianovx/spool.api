@@ -45,9 +45,10 @@ class VideoController extends Controller
         $category = Category::find($cat->id);
         $category_ids = $category->getDescendants($category);
         if(empty($request->all()) == false):
+            $views_sort = $request->all()['views'] ?? "ASC";
             $videos = VideoResource::collection(Video::where('ticket_availability', true)
             ->whereIn('category_id', $category_ids)
-            ->orderBy('views_count', $request->all()['views'])->paginate(10));
+            ->orderBy('views_count', $views_sort)->paginate(10));
         else:
             $videos = VideoResource::collection(Video::where('ticket_availability', true)
             ->whereIn('category_id', $category_ids)
@@ -56,7 +57,23 @@ class VideoController extends Controller
 
         return response()->json([
             'categories'=>$categories,
-            'videos' => $videos
+             'videos' =>  [
+                'data'=> $videos,
+                'meta'=>  [
+                    'current_page' => $videos->currentPage(),
+                    'first_page_url' => $videos->url(1),
+                    'from' => $videos->firstItem(),
+                    'last_page' => $videos->lastPage(),
+                    'last_page_url' => $videos->url($videos->lastPage()),
+                    'next_page_url' => $videos->nextPageUrl(),
+                    'path' => $videos->path(),
+                    'per_page' => $videos->perPage(),
+                    'prev_page_url' => $videos->previousPageUrl(),
+                    'to' => $videos->lastItem(),
+                    'total' => $videos->total(),
+                ]
+             ],
+
         ]);
     }
     public function getVideosAndCategoriesBySearch(Request $request)

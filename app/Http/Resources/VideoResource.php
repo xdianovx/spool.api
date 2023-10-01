@@ -39,8 +39,10 @@ class VideoResource extends JsonResource
             "display_slider" => $this->display_slider,
             "category" => $this->category->name ?? null,
             "partners_company" => $this->partner_company->name,
+            'views_count' => $this->views_count,
             "ticket" => $ticket,
-            "tags" => $tags
+            "tags" => $tags,
+
         ];
     }
 }
