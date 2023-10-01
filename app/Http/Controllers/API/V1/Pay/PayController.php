@@ -21,7 +21,7 @@ class PayController extends Controller
 
     public function getPayData(Request $req)
     {
-        Log::info($req);
+        Log::info('asd');
 
         $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
             'IsTest' => $req->IsTest,
