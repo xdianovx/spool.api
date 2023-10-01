@@ -66,10 +66,12 @@ class ClientTicketController extends Controller
         return response()->json(json_decode($res->getBody()->getContents()));
     }
 
+    // Покупка
 
     public function storeClientTicket(Request $request)
     {
         $client = Client::find(auth('api')->user('api')->id);
+        $pay_status = '';
 
         $validator = Validator::make($request->all(), [
             'ticket_id' => 'required|integer'
@@ -106,7 +108,6 @@ class ClientTicketController extends Controller
                 "CustomerInfo" => [
                     "IP" => $request->ip,
                 ],
-                // "ExtraData" => [Auth::user()],
                 "PaymentDetails" => [
                     "Value" =>  $request->token
                 ]

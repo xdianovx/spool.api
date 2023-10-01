@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Log;
 
 class PayController extends Controller
 {
@@ -47,7 +47,7 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-
+        Log::debug($req);
         if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
             $variable = explode(';', $req->CustomFields);
             $result = [];
@@ -63,8 +63,8 @@ class PayController extends Controller
                 'expiration_date' => $card_exist->ExpirationDate,
             ]);
         endif;
-         
-        
+
+
         return $req;
     }
 }
