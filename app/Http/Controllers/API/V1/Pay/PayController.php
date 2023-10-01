@@ -47,7 +47,7 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-        Log::debug($req);
+        Log::info($req);
         if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
             $variable = explode(';', $req->CustomFields);
             $result = [];
