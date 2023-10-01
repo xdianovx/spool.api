@@ -21,7 +21,7 @@ class PayController extends Controller
 
     public function getPayData(Request $req)
     {
-        Log::info('test');
+        Log::info($req);
 
         $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
             'IsTest' => $req->IsTest,
@@ -48,21 +48,21 @@ class PayController extends Controller
             'Brand' => $req->Brand,
             'Bank' => $req->Bank,
         ]);
-        // if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
-        //     $variable = explode(';', $req->CustomFields);
-        //     $result = [];
-        //     foreach ($variable as $item) {
-        //         list($key, $val) = explode('=', $item);
-        //         $result[$key] = $val;
-        //     }
-        //     ClientCard::firstOrCreate([
-        //         'user_id' => $result['user_id'],
-        //         'card_mask' => $card_exist->CardMasked,
-        //         'bank' => $card_exist->Bank,
-        //         'rebill_id' => $card_exist->RebillId,
-        //         'expiration_date' => $card_exist->ExpirationDate,
-        //     ]);
-        // endif;
+        if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
+            $variable = explode(';', $req->CustomFields);
+            $result = [];
+            foreach ($variable as $item) {
+                list($key, $val) = explode('=', $item);
+                $result[$key] = $val;
+            }
+            ClientCard::firstOrCreate([
+                'user_id' => $result['user_id'],
+                'card_mask' => $card_exist->CardMasked,
+                'bank' => $card_exist->Bank,
+                'rebill_id' => $card_exist->RebillId,
+                'expiration_date' => $card_exist->ExpirationDate,
+            ]);
+        endif;
 
 
         return $req;
