@@ -22,10 +22,8 @@ class TicketUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:tickets,name,' . $this->ticket_id,
-            'ticket_id' => 'required|integer|exists:tickets,id',
-            'price' => 'required|string',
-            'discounted_price' => 'nullable|string',
+            'price' => 'required|integer',
+            'discounted_price' => 'nullable|integer',
             'video_id' => 'required|string|unique:tickets,video_id,' . $this->ticket_id,
         ];
     }

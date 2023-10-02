@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+        /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
     public function getCategories()
     {
         $categories = CategoryResource::collection(Category::where('video_availability', true)->where('parent_id', '0')->orderBy('sort', 'ASC')->get());
@@ -16,7 +25,7 @@ class CategoryController extends Controller
     }
     public function getCategory($category_slag)
     {
-        $parent_category = Category::where('slug', $category_slag)->first();
+        $parent_category = Category::where('slug', $category_slag)->firstOrFail();
         $categories =CategoryResource::collection($parent_category->childrenCategories);
         return response()->json($categories);
     }

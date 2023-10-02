@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+        /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
     public function getTickets()
     {
         $tickets = TicketResource::collection(Ticket::all());

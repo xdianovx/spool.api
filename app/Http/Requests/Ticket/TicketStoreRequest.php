@@ -22,9 +22,8 @@ class TicketStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:tickets',
-            'price' => 'required|string',
-            'discounted_price' => 'nullable|string',
+            'price' => 'required|integer',
+            'discounted_price' => 'nullable|integer',
             'video_id' => 'required|string|unique:tickets',
         ];
     }

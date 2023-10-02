@@ -15,7 +15,8 @@ class ClientTicket extends Model
         'client_id',
         'ticket_id',
         'video_id',
-        'payment_status'
+        'payment_status',
+        'transaction_id'
     ];
     public function ticket()
     {

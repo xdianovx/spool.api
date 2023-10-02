@@ -55,6 +55,7 @@ class TicketController extends Controller
 
     public function update(TicketUpdateRequest $request, $ticket_id)
     {
+
         $ticket = Ticket::whereId($ticket_id)->firstOrFail();
         $video_old = Video::where('id', $ticket->video_id)->first();
         if($video_old->ticket_availability == true):

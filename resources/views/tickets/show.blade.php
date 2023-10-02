@@ -18,12 +18,7 @@
                 <p class="mb-0">{{$ticket->id}}</p>
               </td>
             </tr>
-            <tr>
-              <td class="align-middle"><small class="text-light fw-semibold">Название:</small></td>
-              <td class="py-3">
-                <p class="mb-0">{{$ticket->name}}</p>
-              </td>
-            </tr>
+
             <tr>
               <td class="align-middle"><small class="text-light fw-semibold">Цена:</small></td>
               <td class="py-3">

@@ -13,36 +13,50 @@ use Illuminate\Http\Request;
 
 class VideoController extends Controller
 {
+        /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
     public function getVideosAndCategories()
     {
-            $categories = CategoryResource::collection(Category::where('video_availability', true)->orderBy('sort', 'ASC')->get());
+            $categories = CategoryResource::collection(Category::where('video_availability', true)->where('parent_id', 0)->orderBy('sort', 'ASC')->get());
             $videos = VideoResource::collection(Video::where('ticket_availability', true)->orderBy('event_date', 'DESC')->get());
 
             return response()->json([
-                'categories'=>$categories,
+                'categories'=>$categories, 
                 'videos' => $videos
             ]);
     }
     public function getVideoById($video_id)
     {
-            $video = new VideoResource(Video::find($video_id));
+
+            $video = new VideoResource(Video::findOrFail($video_id));
 
             return response()->json($video);
     }
 
     public function getVideoLoad($video_id)
     {
-            $video = new VideoLoadResource(Video::find($video_id));
+        // статус платежа только тогда даем доступ
+            $video = new VideoLoadResource(Video::findOrFail($video_id));
 
             return response()->json($video);
     }
 
     public function getVideosAndCategoriesBySlag(Request $request,$category_slag)
     {
-        $cat = Category::where('slug', $category_slag)->first();
+ // ошибка выберите категорию
+ // 2 вложенность категорий
+ 
+        $cat = Category::where('slug', $category_slag)->firstOrFail();
         $child_categories = Category::where('video_availability', true)->where('parent_id', $cat->id)->orderBy('sort', 'ASC')->get();
         $categories = CategoryResource::collection($child_categories);
-        $category = Category::find($cat->id);
+        $category = Category::findOrFail($cat->id);
         $category_ids = $category->getDescendants($category);
         if(empty($request->all()) == false):
             $views_sort = $request->all()['views'] ?? "ASC";

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Client;
 use App\Models\Tag;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -19,19 +20,26 @@ class VideoResource extends JsonResource
     {
         if ($this->image_banner) :
             $image_banner = env('API_URL') . Storage::url($this->image_banner);
-        else:
+        else :
             $image_banner = $this->value('image_banner');
         endif;
-        
+
         $tags = TagResource::collection(Tag::orderBy('id', 'ASC')->where('video_id', $this->id)->get());
-        $ticket = Ticket::where('video_id', $this->id)->get();
-        
+
+        $client = Client::find(auth('api')->user('api')->id);
+        $ticket = [];
+        if (Ticket::where('video_id', $this->id)->exists()) :
+            if ($client->tickets_store->where('ticket_id', Ticket::where('video_id', $this->id)->first()->id)->isEmpty()) :
+                $ticket = new TicketResource(Ticket::where('video_id', $this->id)->first());
+            else :
+                $ticket = ['isByued' => true];
+            endif;
+        endif;
         return [
             'id' => $this->id,
             "name" => $this->name,
             "image" => env('API_URL') . Storage::url($this->image),
             "image_banner" => $image_banner,
-            "video" => 'https://cdn.spoolapp.ru/videos/' . $this->video,
             "description" => $this->description,
             "duration" => $this->duration,
             "event_date" => $this->event_date,
