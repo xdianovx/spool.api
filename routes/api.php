@@ -62,7 +62,7 @@ Route::group([
         Route::get('categories/{category_slag}', [CategoryController::class, 'getCategory']);
         //videos
         Route::get('videos', [VideoController::class, 'getVideosAndCategories']);
-        Route::get('videos/category/{category_slag}', [VideoController::class, 'getVideosAndCategoriesBySlag']);
+        Route::get('videos/category/{category_slag?}/{cild_category_slag?}', [VideoController::class, 'getVideosAndCategoriesBySlag']);
         Route::get('videos/{video_id}', [VideoController::class, 'getVideoById']);
         Route::get('videos/{video_id}/load', [VideoController::class, 'getVideoLoad']);
         //search
@@ -71,17 +71,20 @@ Route::group([
         Route::get('settings', [SettingController::class, 'getSettings']);
         //tickets
         Route::get('tickets', [TicketController::class, 'getTickets']);
-    });
+        Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
         //views create
         Route::post('videos/view_store', [ViewController::class, 'storeView']);
-        // Pay
-        Route::get('pay', [PayController::class, 'all']);
-        Route::post('pays', [PayController::class, 'getPayData']);
+        
+    });
+
+    // Pay
+    Route::get('pay', [PayController::class, 'all']);
+    Route::post('pays', [PayController::class, 'getPayData']);
 
     //buying a ticket
     Route::post('pay/store', [PayController::class, 'getPayData']);
     Route::post('tickets/rebill', [ClientTicketController::class, 'rebillClientTicket']);
-    Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
+
 });
 
 Route::get('/v1/ping', function () {

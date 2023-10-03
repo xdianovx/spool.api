@@ -28,13 +28,13 @@ class JwtMiddleware extends BaseMiddleware
 		   $user = FacadesJWTAuth::parseToken()->authenticate();
  		} catch (Exception $e) {
         	  if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-		    return response()->json(['status' => 'Токен недействителен'], 403);
+		    return response()->json(['status' => 'Token is invalid.'], 403);
 		  }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-			return response()->json(['status' => 'Срок действия токена истек'], 401);
+			return response()->json(['status' => 'Token has expired.'], 401);
 		  }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException){
-			return response()->json(['status' => 'Токен занесен в черный список'], 400);
+			return response()->json(['status' => 'The token is blacklisted.'], 400);
 		  }else{
-		        return response()->json(['status' => 'Токен авторизации не найден'], 404);
+		        return response()->json(['status' => 'Authorization token not found'], 404);
 		  }
 		}
             return $next($request);

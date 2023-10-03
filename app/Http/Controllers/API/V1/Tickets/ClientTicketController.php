@@ -28,7 +28,7 @@ class ClientTicketController extends Controller
     }
     public function getClientTicket(Request $request)
     {
-        $client = Client::firstOrFail(auth('api')->user('api')->id);
+        $client = Client::findOrFail(auth('api')->user('api')->id);
         $client_tickets = ClientTicketResource::collection(ClientTicket::where('client_id', $client->id)->orderBy('created_at', 'ASC')->get());
         return response()->json($client_tickets);
     }

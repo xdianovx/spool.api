@@ -47,7 +47,7 @@ class VideoController extends Controller
         $url = 'https://cdn.spoolapp.ru/secret/';
         $client = Http::get($url)->body();
         $res = json_decode($client);
-        $user_tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video->id)->paginate(10);
+        $user_tags = $video->tags()->where('user_id', Auth::user()->id)->paginate(1000);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
         return view('videos.edit', compact('video','partner_companies','categories','user_tags','res'));
@@ -85,9 +85,8 @@ class VideoController extends Controller
         }
 
        $video = Video::firstOrCreate($data);
-       $category = Category::where('id',$video->category_id)->first();
-       if($category->video_availability == false):
-           $category->update([
+       if($video->category->video_availability == false):
+            $video->category->update([
                'video_availability'=> true
            ]);
        endif;
@@ -125,9 +124,9 @@ class VideoController extends Controller
             $data['image_banner'] = $request->file('image_banner')->storeAs('public', $fileNameToStore);
         }
         $video->update($data);
-        $category = Category::where('id',$video->category_id)->first();
-        if($category->video_availability == false):
-            $category->update([
+
+        if($video->category->video_availability == false):
+            $video->category->update([
                 'video_availability'=> true
             ]);
         endif;

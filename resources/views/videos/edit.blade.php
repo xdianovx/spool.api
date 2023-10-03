@@ -240,7 +240,7 @@
                                 </table>
                                 @if ($user_tags->links()->paginator->hasPages())
                                     <div class="demo-inline-spacing">
-                                        {{ $user_tags->links() }}
+                                        {{ $user_tags->links() }} 
                                     </div>
                                 @endif
                             @else

@@ -11,32 +11,62 @@ use Validator;
 
 class ViewController extends Controller
 {
+            /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
     public function storeView(Request $request)
     {
-        $client = Client::find(auth('api')->user('api')->id);
+        $client = Client::findOrFail(auth('api')->user('api')->id);
+        
         $validator = Validator::make($request->all(), [
             'seconds_viewed'=> 'required|integer',
             'video_id'=> 'required|integer'
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $view = View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->exists();
-       
-        if($view == false):
+
+        if(!Video::where('id',$validator->validated()['video_id'])->exists()):
+            return response()->json([
+                'status' => 'failed',
+                'error' => 'There is no video with this ID',
+            ], 404);
+        endif;
+
+        if(!View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->exists()):
+
+            if(is_null($client->country_id)):
+                return response()->json([
+                    'status' => 'failed',
+                    'error' => 'The client did not fill in the Country field.',
+                ], 404);
+               endif;
+
             $client->views_store()->firstOrCreate([
                 'video_id' => $validator->validated()['video_id'], 
                 'country_id' => $client->country_id,
             ],$validator->validated());
+
             Video::where('id',$validator->validated()['video_id'])->increment('views_count');
+
             return response()->json([
                 'message' => 'created'
             ], 200);
+
         else:
+
             View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->update($validator->validated());
             return response()->json([
                 'message' => 'updated'
             ], 200);
+
         endif;
         
       

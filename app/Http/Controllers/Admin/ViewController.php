@@ -34,6 +34,7 @@ class ViewController extends Controller
         foreach ($stats as $value) {
             $statsArr[] =  [$value->date, $value->count];
         }
+
         return $statsArr;
     }
 
@@ -42,24 +43,14 @@ class ViewController extends Controller
 
         $sum_tickets = 0;
         $sum_without_commission = 0;
-        $views = View::where('video_id', $video->id)->orderBy('created_at', 'DESC')->paginate(10);
-        $tickets = ClientTicket::where('video_id', $video->id)->get();
+        $views = $video->views()->orderBy('created_at', 'DESC')->paginate(10);
+        $tickets = $video->clientTickets()->where('video_id', $video->id)->where('payment_status', 'Payment')->get();
+
         foreach ($tickets as $ticket) :
             $sum_tickets = $sum_tickets + $ticket->price;
             $sum_without_commission = $sum_without_commission + $ticket->price_without_commission;
         endforeach;
 
         return view('admin_views.show', compact('video', 'sum_tickets', 'views', 'sum_without_commission'));
-    }
-
-    public function searchView(Request $request)
-    {
-        if (request('search') == null) :
-            $videos = Video::orderBy('id', 'DESC')->paginate(10);
-        else :
-            $videos = Video::where('name', 'ilike', '%' . request('search') . '%')->orWhere('category_id', 'ilike', '%' . (Category::where('name', request('search'))->first()->id ?? request('search')) . '%')->orWhere('event_date', 'like', '%' . request('search') . '%')->paginate(10);
-        endif;
-
-        return view('admin_views.index', compact('videos'));
     }
 }

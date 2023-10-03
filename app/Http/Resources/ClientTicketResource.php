@@ -17,7 +17,8 @@ class ClientTicketResource extends JsonResource
         return [
             "id" => $this->id,
             "ticket_id" => $this->ticket_id,
-            'ticket_name' => $this->ticket->name ?? null,
+            "payment_status" => $this->payment_status,
+            "transaction_id" => $this->transaction_id,
             "price" => $this->price
         ];
     }

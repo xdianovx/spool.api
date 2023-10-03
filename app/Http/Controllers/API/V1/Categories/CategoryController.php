@@ -25,7 +25,15 @@ class CategoryController extends Controller
     }
     public function getCategory($category_slag)
     {
-        $parent_category = Category::where('slug', $category_slag)->firstOrFail();
+        try {
+            $parent_category = Category::where('slug', $category_slag)->firstOrFail();
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response([
+                'status' => 'failed',
+                'error' => 'Category not found'
+            ], 404);
+        }
+        
         $categories =CategoryResource::collection($parent_category->childrenCategories);
         return response()->json($categories);
     }

@@ -44,6 +44,11 @@ class Video extends Model
         return $this->hasOne(Ticket::class);
         
     }
+    public function clientTickets()
+    {
+        return $this->hasMany(ClientTicket::class);
+        
+    }
     public function views()
     {
         return $this->hasMany(View::class);

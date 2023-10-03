@@ -38,7 +38,7 @@ class ProfileController extends Controller
             elase:
             $avatar = env('API_URL') . Storage::url($client->avatar_image);
         endif;
-        $client = Client::where('id', auth('api')->user('api')->id);
+
         return response()->json([
             'id' => $client->value('id'),
             'name' => $client->value('name'),
@@ -71,8 +71,8 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'email' => $client->value('email'),
@@ -81,16 +81,17 @@ class ProfileController extends Controller
 
     public function profilePostCountry(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'country_id' => 'required|integer|min:1',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'country' => Client::find(auth('api')->user()->id)->country->name ?? "null"
@@ -103,12 +104,13 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'name' => $client->value('name'),
@@ -125,8 +127,8 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'age' => $client->value('age'),
@@ -138,12 +140,14 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'gender' => 'required|string',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'gender' => $client->value('gender'),
@@ -156,12 +160,14 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'phone_number' => ['min:10', 'required', 'numeric', 'unique:clients']
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
         $client = Client::where('id', auth('api')->user()->id);
-        $client_id = $client->value('id');
-        Client::where('id', $client_id)->update($validator->validated());
+        Client::where('id', $client->value('id'))->update($validator->validated());
+
         return response()->json([
             'message' => 'success',
             'phone_number' => $client->value('phone_number'),
@@ -173,6 +179,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'avatar_image' => 'image|required|max:1999',
         ]);
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -191,8 +198,10 @@ class ProfileController extends Controller
             // Сохраняем файл
             $path = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
         }
+
         $client = Client::where('id', auth('api')->user()->id);
         $client->update(['avatar_image' => $path]);
+
         return response()->json([
             'message' => 'success',
             'avatar_image' => env('API_URL') . Storage::url($client->value('avatar_image')),
@@ -201,7 +210,6 @@ class ProfileController extends Controller
 
     public function profileCards(Request $request)
     {
-       
         $client_cards = ClientCard::where('user_id', auth('api')->user()->id)->get();
         return response()->json($client_cards);
     }

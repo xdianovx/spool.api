@@ -75,6 +75,7 @@ class PayController extends Controller
                 list($key, $val) = explode('=', $item);
                 $result[$key] = $val;
             }
+
             ClientCard::firstOrCreate([
                 'user_id' => $result['user_id'],
                 'card_mask' => $req->CardMasked,

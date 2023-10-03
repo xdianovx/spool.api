@@ -37,23 +37,26 @@ class AuthController extends Controller
             'email' => 'required|email|unique:clients',
         ]);
         if ($validator->fails()) :
-            if ($validator->messages()->first('email', ':message') == "Такое значение поля email уже существует.") :
-                $client = Client::where('email', $request->email);
-                $client_id = $client->value('id');
-                $password = $this->password_generate();
-                $password_hashe = Hash::make($password);
-                ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
-                Client::where('id', $client_id)->update(['password' => $password_hashe]);
-                event(new ClientRegistered(Client::find($client_id), $password));  // Sending password
-                return response()->json([
-                    'message' => 'The password has been sent to your email.',
-                    'password' => $password,
-                    'email' => $client->value('email')
-                ], 200);
 
+            if ($validator->messages()->first('email', ':message') == "Такое значение поля email уже существует.") :
+                $client = Client::where('email', $request->email)->firstOrFail();
+                    $client_id = $client->id;
+                    $password = $this->password_generate();
+                    $password_hashe = Hash::make($password);
+                    ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
+                    Client::where('id', $client_id)->update(['password' => $password_hashe]);
+                    event(new ClientRegistered(Client::find($client_id), $password));  // Sending password
+                    return response()->json([
+                        'message' => 'The password has been sent to your email.',
+                        'password' => $password,
+                        'email' => $client->email
+                    ], 200);
             endif;
+
             return response()->json($validator->errors(), 422);
+
         endif;
+
         $client = Client::create(array_merge(
             $validator->validated()
         ));
@@ -79,24 +82,37 @@ class AuthController extends Controller
     public function login_confirm(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string|min:17|',
-        ]);
-        $client_id = Client::where('email', $request->email)->value('id');
-        if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
+    $validator = Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required|string|min:17|',
+    ]);
+        
+    $client = Client::where('email', $request->email)->firstOrFail();
+
+    if(is_null($client->blocked_at)):
+
+        if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client->id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
             return response()->json(['message' => 'Your password has expired']);
         endif;
-        if ($validator->fails()) {
+
+        if ($validator->fails()):
             return response()->json($validator->errors(), 422);
-        }
-        if (!$token = auth('api')->attempt($validator->validated())) {
+        endif;
+
+        if (!$token = auth('api')->attempt($validator->validated())):
             return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        Client::where('id', $client_id)->update([
+        endif;
+
+            Client::where('id', $client->id)->update([
             'last_login_date'=>Carbon::now()
-        ]);
-        return $this->createNewToken($token);
+            ]);
+            return $this->createNewToken($token);
+    else:
+        return response([
+            'status' => 'failed',
+            'error' => 'client is blocked'
+        ], 404);
+    endif;
     }
 
 

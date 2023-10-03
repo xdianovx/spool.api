@@ -24,7 +24,7 @@ class VideoResource extends JsonResource
             $image_banner = $this->value('image_banner');
         endif;
 
-        $tags = TagResource::collection(Tag::orderBy('id', 'ASC')->where('video_id', $this->id)->get());
+        $tags = TagResource::collection(Tag::orderBy('id', 'ASC')->where('video_id', $this->id)->where('display', 1)->get());
 
         $client = Client::find(auth('api')->user('api')->id);
         $ticket = [];

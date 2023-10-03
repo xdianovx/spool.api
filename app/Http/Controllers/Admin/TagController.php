@@ -15,8 +15,8 @@ class TagController extends Controller
 
     public function getAll($video_id)
     {
-        // // Ключевая часть этого запроса where('video_id', 'id видео записи который мы должны получить')
-        $tags = Tag::where('user_id', Auth::user()->id)->where('video_id', $video_id)->paginate(10);
+        $video = Video::findOrFail($video_id);
+        $tags = $video->tags()->where('user_id', Auth::user()->id)->paginate(1000);
         return response()->json($tags);
     }
     public function edit(Tag $tag)
