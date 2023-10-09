@@ -213,4 +213,12 @@ class ProfileController extends Controller
         $client_cards = ClientCard::where('user_id', auth('api')->user()->id)->get();
         return response()->json($client_cards);
     }
+    public function destroy($card_id)
+    {
+        $card = ClientCard::find($card_id);
+        $card->delete();
+        return response()->json([
+            'message' => 'card deleted',
+        ], 200);
+    }
 }
