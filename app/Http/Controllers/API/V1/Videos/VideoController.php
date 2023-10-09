@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Videos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\VideoBannersResource;
 use App\Http\Resources\VideoByIdResource;
 use App\Http\Resources\VideoLoadResource;
 use App\Http\Resources\VideoResource;
@@ -27,10 +28,12 @@ class VideoController extends Controller
     public function getVideosAndCategories()
     {
         $categories = CategoryResource::collection(Category::where('video_availability', true)->where('parent_id', 0)->orderBy('sort', 'ASC')->get());
+        $banners = VideoBannersResource::collection(Video::where('ticket_availability', true)->whereNotNull('image_banner')->orderBy('event_date', 'DESC')->get());
         $videos = VideoResource::collection(Video::where('ticket_availability', true)->orderBy('event_date', 'DESC')->get());
 
         return response()->json([
             'categories' => $categories,
+            'banners' => $banners,
             'videos' => $videos
         ]);
     }
