@@ -92,7 +92,7 @@ class AuthController extends Controller
     if(is_null($client->blocked_at)):
 
         if (Carbon::parse(ClientsTemporaryPassword::where('clients_temporary_password_id', $client->id)->value('updated_at'))->lt(Carbon::now()->subMinutes(1440))) :
-            return response()->json(['message' => 'Your password has expired']);
+            return response()->json(['message' => 'Your password has expired'], 401);
         endif;
 
         if ($validator->fails()):
@@ -111,7 +111,7 @@ class AuthController extends Controller
         return response([
             'status' => 'failed',
             'error' => 'client is blocked'
-        ], 404);
+        ], 403);
     endif;
     }
 
@@ -141,7 +141,7 @@ class AuthController extends Controller
     {
 
         Auth::guard('api')->logout();
-        return response()->json(['message' => 'client successfully signed out']);
+        return response()->json(['message' => 'client successfully signed out'], 200);
     }
 
     public function refresh()

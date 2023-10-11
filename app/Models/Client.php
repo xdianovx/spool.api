@@ -87,7 +87,7 @@ class Client extends Authenticatable implements JWTSubject
 
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class,'country_id');
     }
     public function tickets_store()
     {
@@ -106,7 +106,7 @@ class Client extends Authenticatable implements JWTSubject
     }
     public function cards()
     {
-        return $this->hasMany(ClientCard::class);
+        return $this->hasMany(ClientCard::class,'user_id');
     }
     
 }

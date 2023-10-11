@@ -25,7 +25,7 @@ class RegistrationEmail extends Mailable
     public function build()
     {
         return $this->markdown('emails.auth.registration_login')
-            ->subject(config('app.name') . ": Registration Notification")
+            ->subject("Временный пароль")
             ->from(config('mail.from.address'));
     }
 }

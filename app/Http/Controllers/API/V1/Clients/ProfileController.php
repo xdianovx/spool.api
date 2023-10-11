@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1\Clients;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CountryResource;
 use App\Models\Client;
 use App\Models\ClientCard;
 use App\Models\Country;
@@ -31,8 +32,7 @@ class ProfileController extends Controller
     {
 
         $avatar = null;
-        $client = Client::find(auth('api')->user('api')->id);
-
+        $client = Client::where('id', auth('api')->user()->id)->first();
         if (!empty($client->avatar_image)) :
             $avatar = null;
             elase:
@@ -40,23 +40,19 @@ class ProfileController extends Controller
         endif;
 
         return response()->json([
-            'id' => $client->value('id'),
-            'name' => $client->value('name'),
-            'age' => $client->value('age'),
-            'gender' => $client->value('gender'),
+            'id' => $client->id,
+            'name' => $client->name,
+            'age' => $client->age,
+            'gender' => $client->gender,
             'avatar' => $avatar,
-            'flag' => 'asd',
-            'blocked_at' => $client->value('blocked_at'),
-            'email' => $client->value('email'),
-            'phone' => $client->value('phone_number'),
-            'last_login_date' => $client->value('last_login_date'),
-            'email_verified_at' => $client->value('email_verified_at'),
-            'created_at' => $client->value('created_at'),
-            'updated_at' => $client->value('updated_at'),
+            'email' => $client->email,
+            'phone' => $client->phone_number,
+            'created_at' => $client->created_at,
+            'updated_at' => $client->updated_at,
             'country' => [
-                'id' => $client->value('id'),
-                'country' => Client::find(auth('api')->user()->id)->country->name ?? "null",
-                'flag' => Client::find(auth('api')->user()->id)->country->flag ?? "null",
+                'id' => $client->country->id,
+                'country' => $client->country->name,
+                'flag' => $client->country->flag,
             ]
 
         ], 200);
@@ -70,12 +66,12 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'email' => $client->value('email'),
+            'email' => $client->email,
         ], 200);
     }
 
@@ -89,12 +85,16 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'country' => Client::find(auth('api')->user()->id)->country->name ?? "null"
+            'country' => [
+                'id' => $client->country->id,
+                'country' => $client->country->name,
+                'flag' => $client->country->flag,
+            ]
         ], 200);
     }
 
@@ -108,12 +108,12 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'name' => $client->value('name'),
+            'name' => $client->name,
         ], 200);
     }
 
@@ -126,12 +126,12 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'age' => $client->value('age'),
+            'age' => $client->age,
         ], 200);
     }
     public function profileGender(Request $request)
@@ -145,12 +145,12 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'gender' => $client->value('gender'),
+            'gender' => $client->gender,
         ], 200);
     }
 
@@ -165,12 +165,12 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id);
-        Client::where('id', $client->value('id'))->update($validator->validated());
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client->update($validator->validated());
 
         return response()->json([
             'message' => 'success',
-            'phone_number' => $client->value('phone_number'),
+            'phone_number' => $client->phone_number,
         ], 200);
     }
 
@@ -210,8 +210,8 @@ class ProfileController extends Controller
 
     public function profileCards(Request $request)
     {
-        $client_cards = ClientCard::where('user_id', auth('api')->user()->id)->get();
-        return response()->json($client_cards);
+        $client = Client::where('id', auth('api')->user()->id)->first();
+        return response()->json($client->cards);
     }
     public function destroy($card_id)
     {
