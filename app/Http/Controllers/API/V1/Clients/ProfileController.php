@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 
+use function PHPUnit\Framework\isNull;
+
 class ProfileController extends Controller
 {
     /**
@@ -32,13 +34,17 @@ class ProfileController extends Controller
     {
 
         $avatar = null;
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::findOrFail(auth('api')->user('api')->id);
         if (!empty($client->avatar_image)) :
             $avatar = null;
             elase:
             $avatar = env('API_URL') . Storage::url($client->avatar_image);
         endif;
-
+        if (!is_null($client->country()->first())) :
+            $country = new CountryResource($client->country()->first());
+        else :
+            $country = null;
+        endif;
         return response()->json([
             'id' => $client->id,
             'name' => $client->name,
@@ -49,12 +55,7 @@ class ProfileController extends Controller
             'phone' => $client->phone_number,
             'created_at' => $client->created_at,
             'updated_at' => $client->updated_at,
-            'country' => [
-                'id' => $client->country->id,
-                'country' => $client->country->name,
-                'flag' => $client->country->flag,
-            ]
-
+            'country' => $country
         ], 200);
     }
 
@@ -85,16 +86,16 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         $client->update($validator->validated());
-
+        if (!is_null($client->country()->first())) :
+            $country = new CountryResource($client->country()->first());
+        else :
+            $country = null;
+        endif;
         return response()->json([
             'message' => 'success',
-            'country' => [
-                'id' => $client->country->id,
-                'country' => $client->country->name,
-                'flag' => $client->country->flag,
-            ]
+            'country' => $country
         ], 200);
     }
 
@@ -108,7 +109,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         $client->update($validator->validated());
 
         return response()->json([
@@ -126,7 +127,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         $client->update($validator->validated());
 
         return response()->json([
@@ -145,7 +146,7 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         $client->update($validator->validated());
 
         return response()->json([
@@ -165,7 +166,7 @@ class ProfileController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         $client->update($validator->validated());
 
         return response()->json([
@@ -199,7 +200,7 @@ class ProfileController extends Controller
             $path = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
         }
 
-        $client = Client::where('id', auth('api')->user()->id);
+        $client = Client::where('id', auth('api')->user('api')->id);
         $client->update(['avatar_image' => $path]);
 
         return response()->json([
@@ -210,7 +211,7 @@ class ProfileController extends Controller
 
     public function profileCards(Request $request)
     {
-        $client = Client::where('id', auth('api')->user()->id)->first();
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
         return response()->json($client->cards);
     }
     public function destroy($card_id)
