@@ -50,6 +50,9 @@ class PayController extends Controller
         //     'Brand' => $req->Brand,
         //     'Bank' => $req->Bank,
         // ]);
+
+        Log::info($req);
+
         $variable = explode(';', $req->CustomFields);
         $result = [];
         foreach ($variable as $item) {
