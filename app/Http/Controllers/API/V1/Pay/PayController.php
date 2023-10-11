@@ -25,31 +25,31 @@ class PayController extends Controller
     {
 
 
-        // $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
-        //     'IsTest' => $req->IsTest,
-        //     'CustomFields' => $req->CustomFields,
-        //     'PayoutToken' => $req->PayoutToken,
-        //     'RebillId' => $req->RebillId,
-        //     'ExpirationDate' => $req->ExpirationDate,
-        //     'RRN' => $req->RRN,
-        //     'RecurringId' => $req->RecurringId,
-        //     'Subtype' => $req->Subtype,
-        //     'Event' => $req->Event, // статус платежа падает в client tickets по айди транзакции 
-        //     'TransactionId' => $req->TransactionId, // iD транзакции падает в client tickets
-        //     'OrderId' => $req->OrderId, 
-        //     'Amount' => $req->Amount,
-        //     'Currency' => $req->Currency,
-        //     'DateTime' => $req->DateTime,
-        //     'Email' => $req->Email,
-        //     'Phone' => $req->Phone,
-        //     'Service_Id' => $req->Service_Id,
-        //     'Description' => $req->Description,
-        //     'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
-        //     'CardMasked' => $req->CardMasked,
-        //     'CardHolder' => $req->CardHolder,
-        //     'Brand' => $req->Brand,
-        //     'Bank' => $req->Bank,
-        // ]);
+        $card_exist = Card::updateOrCreate(['TransactionId' => $req->TransactionId], [
+            'IsTest' => $req->IsTest,
+            'CustomFields' => $req->CustomFields,
+            'PayoutToken' => $req->PayoutToken,
+            'RebillId' => $req->RebillId,
+            'ExpirationDate' => $req->ExpirationDate,
+            'RRN' => $req->RRN,
+            'RecurringId' => $req->RecurringId,
+            'Subtype' => $req->Subtype,
+            'Event' => $req->Event, // статус платежа падает в client tickets по айди транзакции 
+            'TransactionId' => $req->TransactionId, // iD транзакции падает в client tickets
+            'OrderId' => $req->OrderId, 
+            'Amount' => $req->Amount,
+            'Currency' => $req->Currency,
+            'DateTime' => $req->DateTime,
+            'Email' => $req->Email,
+            'Phone' => $req->Phone,
+            'Service_Id' => $req->Service_Id,
+            'Description' => $req->Description,
+            'Country_Code_Alpha2' => $req->Country_Code_Alpha2,
+            'CardMasked' => $req->CardMasked,
+            'CardHolder' => $req->CardHolder,
+            'Brand' => $req->Brand,
+            'Bank' => $req->Bank,
+        ]);
 
         Log::info($req);
 
