@@ -83,7 +83,7 @@ class PayController extends Controller
                 'user_id' => $result['user_id'],
                 'card_mask' => $req->CardMasked,
                 'bank' => $req->Bank,
-                'rebill_id' => $req->RebillId || 'null',
+                'rebill_id' => $req->RebillId,
                 'expiration_date' => $req->ExpirationDate,
             ]);
         endif;
