@@ -55,7 +55,7 @@ Route::group([
         Route::post('profile/avatar', [ProfileController::class, 'profileAvatar']);
         Route::post('profile/email/confirm', [ProfileController::class, 'profileEmailConfirm']);
         Route::get('profile/cards', [ProfileController::class, 'profileCards']);
-        Route::post('profile/cards/{card_id}/delete', [ProfileController::class, 'destroy']);
+        Route::delete('profile/cards/{card_id}', [ProfileController::class, 'destroy']);
         //countries
         Route::get('countries', [CountryController::class, 'getCountries']);
         //categories
