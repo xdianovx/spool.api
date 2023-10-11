@@ -225,7 +225,7 @@ class ProfileController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response([
                 'status' => 'failed',
-                'error' => 'Video not found'
+                'error' => 'Card not found'
             ], 404);
         }
     
