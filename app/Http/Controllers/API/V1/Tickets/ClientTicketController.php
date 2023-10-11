@@ -17,7 +17,7 @@ use Validator;
 
 class ClientTicketController extends Controller
 {
-        /**
+    /**
      * Create a new AuthController instance.
      *
      * @return void
@@ -53,9 +53,10 @@ class ClientTicketController extends Controller
             'Amount' => $req->amount,
             'Currency' => $req->currency,
             'Description' => $req->description,
-            "user_id" => $req->user_id,
-            "ticket_id" => $req->ticket_id
-            
+            "ExtraData" => [
+                "user_id" => $req->user_id,
+                "ticket_id" => $req->ticket_id
+            ]
         ];
 
         $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
@@ -77,6 +78,4 @@ class ClientTicketController extends Controller
 
         return response()->json(json_decode($res->getBody()->getContents()));
     }
-
-   
 }
