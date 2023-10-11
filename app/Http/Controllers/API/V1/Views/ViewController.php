@@ -41,17 +41,10 @@ class ViewController extends Controller
         endif;
 
         if(!View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->exists()):
-
-            if(is_null($client->country_id)):
-                return response()->json([
-                    'status' => 'failed',
-                    'error' => 'The client did not fill in the Country field.',
-                ], 404);
-               endif;
-
+            
             $client->views_store()->firstOrCreate([
                 'video_id' => $validator->validated()['video_id'], 
-                'country_id' => $client->country_id,
+                'country_id' => $client->country_id ?? 131,
             ],$validator->validated());
 
             Video::where('id',$validator->validated()['video_id'])->increment('views_count');
@@ -62,7 +55,9 @@ class ViewController extends Controller
 
         else:
 
-            View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->update($validator->validated());
+            View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->update([
+                'country_id' =>$client->country_id ?? 131,
+            ],$validator->validated());
             return response()->json([
                 'message' => 'updated'
             ], 200);

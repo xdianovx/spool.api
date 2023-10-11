@@ -68,7 +68,6 @@ class AuthController extends Controller
         ]));
         $client->update([
             'password' => $password_hashe,
-            'country_id' => 131
         ]);
 
         event(new ClientRegistered($client, $password)); // Sending password
@@ -107,6 +106,7 @@ class AuthController extends Controller
             Client::where('id', $client->id)->update([
             'last_login_date'=>Carbon::now()
             ]);
+
             return $this->createNewToken($token);
     else:
         return response([
