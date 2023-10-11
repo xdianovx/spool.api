@@ -216,10 +216,18 @@ class ProfileController extends Controller
     }
     public function destroy($card_id)
     {
-        $card = ClientCard::find($card_id);
-        $card->delete();
-        return response()->json([
-            'message' => 'card deleted',
-        ], 200);
+        try {
+            $card = ClientCard::findorfail($card_id);
+            $card->delete();
+            return response()->json([
+                'message' => 'card deleted',
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response([
+                'status' => 'failed',
+                'error' => 'Video not found'
+            ], 404);
+        }
+    
     }
 }

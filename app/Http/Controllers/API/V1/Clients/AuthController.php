@@ -68,6 +68,7 @@ class AuthController extends Controller
         ]));
         $client->update([
             'password' => $password_hashe,
+            'country_id' => 131
         ]);
 
         event(new ClientRegistered($client, $password)); // Sending password
