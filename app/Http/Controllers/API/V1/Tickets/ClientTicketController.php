@@ -53,7 +53,7 @@ class ClientTicketController extends Controller
             'Amount' => $req->amount,
             'Currency' => $req->currency,
             'Description' => $req->description,
-            "ExtraData" => ["user_id=" . $req->user_id]
+            "ExtraData" => ["user_id=" => $req->user_id]
         ];
 
         $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
