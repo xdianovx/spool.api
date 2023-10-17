@@ -75,7 +75,6 @@ Route::group([
         Route::get('tickets/purchased', [ClientTicketController::class, 'getClientTicket']);
         //views create
         Route::post('videos/view_store', [ViewController::class, 'storeView']);
-        //card delete
 
     });
 

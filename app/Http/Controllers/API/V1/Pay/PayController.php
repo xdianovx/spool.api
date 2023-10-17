@@ -71,7 +71,7 @@ class PayController extends Controller
             'payment_status' => $req->Event
         ]);
 
-        if (!ClientCard::where('rebill_id', $req->RebillId)->exists()) :
+        if (!ClientCard::where('bank', $req->Bank)->where('card_mask', $req->CardMasked)->where('expiration_date', $req->ExpirationDate)->exists()) :
             $variable = explode(';', $req->CustomFields);
             $result = [];
             foreach ($variable as $item) {
