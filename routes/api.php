@@ -78,7 +78,7 @@ Route::group([
 
     });
 
-    // Pay
+    // Pay  Временные роуты
     Route::get('pay', [PayController::class, 'all']);
     Route::post('pays', [PayController::class, 'getPayData']);
 

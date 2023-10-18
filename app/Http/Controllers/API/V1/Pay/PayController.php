@@ -53,12 +53,13 @@ class PayController extends Controller
 
         Log::info($req);
 
-        $variable = explode(';', $req->CustomFields);
+        $variable = explode(';', $req->Description);
         $result = [];
         foreach ($variable as $item) {
             list($key, $val) = explode('=', $item);
             $result[$key] = $val;
         }
+
         $ticket = Ticket::find($result['ticket_id']);
          ClientTicket::updateOrCreate(['client_id' => $result['user_id'],'ticket_id' => $result['ticket_id']], [
             'video_id'=> $ticket->video->id,
@@ -72,7 +73,7 @@ class PayController extends Controller
         ]);
 
         if (!ClientCard::where('bank', $req->Bank)->where('card_mask', $req->CardMasked)->where('expiration_date', $req->ExpirationDate)->exists()) :
-            $variable = explode(';', $req->CustomFields);
+            $variable = explode(';', $req->Description);
             $result = [];
             foreach ($variable as $item) {
                 list($key, $val) = explode('=', $item);
