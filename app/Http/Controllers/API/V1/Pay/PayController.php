@@ -36,7 +36,7 @@ class PayController extends Controller
             'Subtype' => $req->Subtype,
             'Event' => $req->Event, // статус платежа падает в client tickets по айди транзакции 
             'TransactionId' => $req->TransactionId, // iD транзакции падает в client tickets
-            'OrderId' => $req->OrderId, 
+            'OrderId' => $req->OrderId,
             'Amount' => $req->Amount,
             'Currency' => $req->Currency,
             'DateTime' => $req->DateTime,
@@ -59,35 +59,36 @@ class PayController extends Controller
             list($key, $val) = explode('=', $item);
             $result[$key] = $val;
         }
-
-        $ticket = Ticket::find($result['ticket_id']);
-         ClientTicket::updateOrCreate(['client_id' => $result['user_id'],'ticket_id' => $result['ticket_id']], [
-            'video_id'=> $ticket->video->id,
-            'client_id' => $result['user_id'],
-            'ticket_id' => $result['ticket_id'],
-            'price' => $ticket->price,
-            'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
-            'payment_status' => $req->Event,
-            'transaction_id' => $req->TransactionId,
-            'payment_status' => $req->Event
-        ]);
-
-        if (!ClientCard::where('bank', $req->Bank)->where('card_mask', $req->CardMasked)->where('expiration_date', $req->ExpirationDate)->exists()) :
-            $variable = explode(';', $req->Description);
-            $result = [];
-            foreach ($variable as $item) {
-                list($key, $val) = explode('=', $item);
-                $result[$key] = $val;
-            }
-
-            ClientCard::firstOrCreate([
-                'user_id' => $result['user_id'],
-                'card_mask' => $req->CardMasked,
-                'bank' => $req->Bank,
-                'rebill_id' => $req->RebillId,
-                'expiration_date' => $req->ExpirationDate,
+        if ($req->Event == 'Payment') :
+            $ticket = Ticket::find($result['ticket_id']);
+            ClientTicket::updateOrCreate(['client_id' => $result['user_id'], 'ticket_id' => $result['ticket_id']], [
+                'video_id' => $ticket->video->id,
+                'client_id' => $result['user_id'],
+                'ticket_id' => $result['ticket_id'],
+                'price' => $ticket->price,
+                'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
+                'payment_status' => $req->Event,
+                'transaction_id' => $req->TransactionId,
+                'payment_status' => $req->Event
             ]);
+            if (!ClientCard::where('bank', $req->Bank)->where('card_mask', $req->CardMasked)->where('expiration_date', $req->ExpirationDate)->exists()) :
+                $variable = explode(';', $req->Description);
+                $result = [];
+                foreach ($variable as $item) {
+                    list($key, $val) = explode('=', $item);
+                    $result[$key] = $val;
+                }
+
+                ClientCard::firstOrCreate([
+                    'user_id' => $result['user_id'],
+                    'card_mask' => $req->CardMasked,
+                    'bank' => $req->Bank,
+                    'rebill_id' => $req->RebillId,
+                    'expiration_date' => $req->ExpirationDate,
+                ]);
+            endif;
         endif;
+
         return $req;
     }
 }
