@@ -68,8 +68,7 @@ class PayController extends Controller
                 'price' => $ticket->price,
                 'price_without_commission' => $ticket->price - (($ticket->price / 100) * $ticket->commission_percent),
                 'payment_status' => $req->Event,
-                'transaction_id' => $req->TransactionId,
-                'payment_status' => $req->Event
+                'transaction_id' => $req->TransactionId
             ]);
             if (!ClientCard::where('bank', $req->Bank)->where('card_mask', $req->CardMasked)->where('expiration_date', $req->ExpirationDate)->exists()) :
                 $variable = explode(';', $req->Description);
