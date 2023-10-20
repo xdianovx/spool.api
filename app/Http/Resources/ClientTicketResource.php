@@ -22,7 +22,7 @@ class ClientTicketResource extends JsonResource
             "ticket_id" => $this->ticket_id,
             "transaction_id" => $this->transaction_id,
             "price" => $this->price,
-            "video" =>  VideoResource::collection(Video::where('id',$this->video->id)->get())
+            "video" => new VideoResource(Video::where('id',$this->video->id)->first())
         ];
     }
 }
