@@ -15,7 +15,7 @@ class VideoLoadResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "video" => 'https://cdn.spoolapp.ru/videos/' . $this->video,
+            "video" => $this->video,
         ];
     }
 }

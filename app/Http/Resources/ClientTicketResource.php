@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Ticket;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,12 +16,13 @@ class ClientTicketResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             "id" => $this->id,
             "ticket_id" => $this->ticket_id,
-            "payment_status" => $this->payment_status,
             "transaction_id" => $this->transaction_id,
-            "price" => $this->price
+            "price" => $this->price,
+            "video" =>  VideoResource::collection(Video::where('id',$this->video->id)->get())
         ];
     }
 }

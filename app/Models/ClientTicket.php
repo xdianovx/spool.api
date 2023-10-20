@@ -26,4 +26,8 @@ class ClientTicket extends Model
     {
         return $this->belongsTo(Client::class);
     }
+    public function video()
+    {
+        return $this->belongsTo(Video::class,'video_id');
+    }
 }

@@ -105,21 +105,11 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="video" class="form-label">Видео</label>
-                                    @if (!count($res) == 0)
-                                        <select id="category" class="select2 form-select" name="video">
-                                            @foreach ($res as $vid)
-                                                <option value="{{ $vid }}"
-                                                    {{ $vid == $video->video ? 'selected' : '' }}>
-                                                    {{ $vid }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input class="form-control" type="text" id="video" name="video"
+                                            placeholder="Введите ссылку" value="{{ $video->video }}" required>
                                         @error('video')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    @else
-                                        <div class="text-danger">Записей не существует
-                                        </div>
-                                    @endif
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="basic-default-message">Описание*</label>

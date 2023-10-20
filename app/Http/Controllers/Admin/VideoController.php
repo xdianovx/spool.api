@@ -28,13 +28,13 @@ class VideoController extends Controller
 
     public function create()
     { 
-        $url = 'https://cdn.spoolapp.ru/secret/';
-        $client = Http::get($url)->body();
-        $res = json_decode($client);
+        // $url = 'https://cdn.spoolapp.ru/secret/';
+        // $client = Http::get($url)->body();
+        // $res = json_decode($client);
         // return response()->json($res);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.create',compact('partner_companies','categories','res'));
+        return view('videos.create',compact('partner_companies','categories'));
     }
 
     public function show(Video $video)
@@ -44,13 +44,13 @@ class VideoController extends Controller
     
     public function edit(Video $video)
     { 
-        $url = 'https://cdn.spoolapp.ru/secret/';
-        $client = Http::get($url)->body();
-        $res = json_decode($client);
+        // $url = 'https://cdn.spoolapp.ru/secret/';
+        // $client = Http::get($url)->body();
+        // $res = json_decode($client);
         $user_tags = $video->tags()->where('user_id', Auth::user()->id)->paginate(1000);
         $partner_companies = Partners_company::all();
         $categories = Category::all();
-        return view('videos.edit', compact('video','partner_companies','categories','user_tags','res'));
+        return view('videos.edit', compact('video','partner_companies','categories','user_tags'));
     }
 
     public function store(VideoStoreRequest $request)
