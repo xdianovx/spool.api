@@ -17,7 +17,7 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label for="name" class="form-label">Название*</label>
+                                    <label for="name" class="form-label">Название *</label>
                                     <input class="form-control" type="text" id="name" name="name"
                                         placeholder="Введите название" value="{{ old('name') }}" required>
                                     @error('name')
@@ -26,7 +26,7 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="category" class="form-label">Категория*</label>
+                                    <label for="category" class="form-label">Категория *</label>
                                     @if (!count($categories) == 0)
                                         <select id="category" class="select2 form-select" name="category_id">
                                             @foreach ($categories as $category)
@@ -39,12 +39,12 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     @else
-                                        <div class="text-danger">Записей не существует, создайте запись в таблице(Категории)
+                                        <div class="text-danger">Записей не существует, создайте запись в таблице «Категории»
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="partner_company" class="form-label">Партнерская компания*</label>
+                                    <label for="partner_company" class="form-label">Партнерская компания *</label>
                                     @if (!count($partner_companies) == 0)
                                         <select id="partner_company" class="select2 form-select" name="partners_company_id">
 
@@ -59,11 +59,11 @@
                                         @enderror
                                     @else
                                         <div class="text-danger">Записей не существует, создайте запись в
-                                            таблице(Партнерские компани)</div>
+                                            таблице «Партнерские компании»</div>
                                     @endif
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="image" class="form-label">Изображение*</label>
+                                    <label for="image" class="form-label">Обложка *</label>
                                     <div class="input-group">
                                         <input type="file" class="form-control" id="image" name="image"
                                             value="{{ old('image') }}">
@@ -73,7 +73,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="image_banner" class="form-label">Изображение (баннер)</label>
+                                    <label for="image_banner" class="form-label">Баннер</label>
                                     <div class="input-group">
                                         <input type="file" class="form-control" id="image_banner" name="image_banner"
                                             value="{{ old('image_banner') }}">
@@ -83,7 +83,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="video" class="form-label">Видео</label>
+                                    <label for="video" class="form-label">Видео (ссылка на CDN)</label>
                                     <input class="form-control" type="text" id="video" name="video"
                                         placeholder="Введите ссылку" value="{{ old('video') }}" required>
                                         @error('video')
@@ -91,7 +91,7 @@
                                         @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="basic-default-message">Описание*</label>
+                                    <label class="form-label" for="basic-default-message">Описание *</label>
                                     <textarea id="basic-default-message" class="form-control" name="description" placeholder="Текст" style="height: 234px;"
                                         required>{{ old('description') }}</textarea>
                                     @error('description')
@@ -99,16 +99,16 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="duration" class="form-label">Длительность*</label>
+                                    <label for="duration" class="form-label">Длительность (в секундах) *</label>
                                     <input class="form-control" type="text" id="duration" name="duration"
-                                        placeholder="Ввидите длительность видео" value="{{ old('duration') }}" required>
+                                        placeholder="Введите длительность видео" value="{{ old('duration') }}" required>
                                     </input>
                                     @error('duration')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="event_date" class="form-label">Дата события*</label>
+                                    <label for="event_date" class="form-label">Дата события *</label>
                                     <input class="form-control" type="date" id="event_date" name="event_date"
                                         placeholder="Введите дату события" value="{{ old('event_date') }}" required>
                                     </input>
@@ -117,7 +117,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="minimum_age" class="form-label">Допустимый минимальный возраст*</label>
+                                    <label for="minimum_age" class="form-label">Допустимый минимальный возраст *</label>
                                     <input class="form-control" type="text" id="minimum_age" name="minimum_age"
                                         placeholder="Введите минимальный возраст" value="{{ old('minimum_age') }}"
                                         required>
@@ -127,14 +127,14 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="firstName" class="form-label">Отображение в слайдере</label>
-                                    <div class="form-check mt-3">
+                                    <label for="firstName" class="form-label">Отображение в слайдере баннеров</label>
+                                    <div class="form-check mt-2">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="false" id="defaultRadio1"
                                             @if (old('display_slider') == 'false') checked="checked" @else @endif>
                                         <label class="form-check-label" for="defaultRadio1"> Нет </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mt-1">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="true" id="defaultRadio2"
                                             @if (old('display_slider') == 'true') checked="checked" @else @endif>

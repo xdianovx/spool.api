@@ -33,6 +33,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
+        $request->merge(array('email' => mb_strtolower($request->input('email'))));
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:clients',
         ]);
@@ -81,6 +83,8 @@ class AuthController extends Controller
 
     public function login_confirm(Request $request)
     {
+
+        $request->merge(array('email' => mb_strtolower($request->input('email'))));
 
     $validator = Validator::make($request->all(), [
         'email' => 'required|email',

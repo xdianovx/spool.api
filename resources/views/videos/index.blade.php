@@ -47,15 +47,23 @@
                                 <th>Название</th>
                                 <th>Категория</th>
                                 <th>Дата события</th>
+                                <th>Слайдер</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                             @forelse ($videos as $video)
                                 <tr>
-                                    <td>{{ $video->name }}</td>
+                                    <td><a href="{{ route('video.edit', $video->id) }}">{{ $video->name }}</a></td>
                                     <td>{{ $video->category->name ?? 'Без категории'}}</td>
                                     <td>{{$video->event_date}}</td>
+                                    <td>
+                                        @if ($video->display_slider == 'true')
+                                            <span class="badge bg-label-primary me-1">Да</span>
+                                        @else
+                                            <span class="badge bg-label-secondary me-1">Нет</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

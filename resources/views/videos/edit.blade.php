@@ -26,7 +26,7 @@
                             @method('patch')
                             <div class="row">
                                 <div class="mb-3 col-md-6">
-                                    <label for="name" class="form-label">Название*</label>
+                                    <label for="name" class="form-label">Название *</label>
                                     <input class="form-control" type="text" id="name" name="name"
                                         placeholder="Введите название" value="{{ $video->name }}" required>
                                     @error('name')
@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="category" class="form-label">Категория*</label>
+                                    <label for="category" class="form-label">Категория *</label>
                                     @if (!count($categories) == 0)
                                         <select id="category" class="select2 form-select" name="category_id">
                                             @foreach ($categories as $category)
@@ -48,12 +48,12 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     @else
-                                        <div class="text-danger">Записей не существует, создайте запись в таблице(Категории)
+                                        <div class="text-danger">Записей не существует, создайте запись в таблице «Категории»
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="partner_company" class="form-label">Партнерская компания*</label>
+                                    <label for="partner_company" class="form-label">Партнерская компания *</label>
                                     @if (!count($partner_companies) == 0)
                                         <select id="partner_company" class="select2 form-select" name="partners_company_id">
                                             @foreach ($partner_companies as $partner_company)
@@ -68,11 +68,11 @@
                                         @enderror
                                     @else
                                         <div class="text-danger">Записей не существует, создайте запись в
-                                            таблице(Партнерские компани)</div>
+                                            таблице «Партнерские компании»</div>
                                     @endif
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="image" class="form-label">Изображение*</label>
+                                    <label for="image" class="form-label">Обложка *</label>
                                     @if (!empty($video->image))
                                         <div class="input-group">
                                             <img src="{{ Storage::url($video->image) }}" class="w-px-100">
@@ -88,7 +88,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="image_banner" class="form-label">Изображение (баннер)</label>
+                                    <label for="image_banner" class="form-label">Баннер</label>
                                     @if (!empty($video->image_banner))
                                         <div class="input-group">
                                             <img src="{{ Storage::url($video->image_banner) }}" class="w-px-100">
@@ -104,7 +104,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="video" class="form-label">Видео</label>
+                                    <label for="video" class="form-label">Видео (ссылка на CDN)</label>
                                         <input class="form-control" type="text" id="video" name="video"
                                             placeholder="Введите ссылку" value="{{ $video->video }}" required>
                                         @error('video')
@@ -112,7 +112,7 @@
                                         @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="basic-default-message">Описание*</label>
+                                    <label class="form-label" for="basic-default-message">Описание *</label>
                                     <textarea id="basic-default-message" class="form-control" name="description" placeholder="Текст" style="height: 234px;"
                                         required>{{ $video->description }}</textarea>
                                     @error('description')
@@ -121,16 +121,16 @@
                                 </div>
 
                                 <div class="mb-3 col-md-6">
-                                    <label for="duration" class="form-label">Длительность*</label>
+                                    <label for="duration" class="form-label">Длительность (в секундах) *</label>
                                     <input class="form-control" type="text" id="duration" name="duration"
-                                        placeholder="Ввидите длительность видео" value="{{ $video->duration }}" required>
+                                        placeholder="Введите длительность видео" value="{{ $video->duration }}" required>
                                     </input>
                                     @error('duration')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="event_date" class="form-label">Дата события*</label>
+                                    <label for="event_date" class="form-label">Дата события *</label>
                                     <input class="form-control" type="data" id="event_date" name="event_date"
                                         placeholder="Введите дату события" value="{{ $video->event_date }}" required>
                                     </input>
@@ -139,7 +139,7 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="minimum_age" class="form-label">Допустимый минимальный возраст*</label>
+                                    <label for="minimum_age" class="form-label">Допустимый минимальный возраст *</label>
                                     <input class="form-control" type="text" id="minimum_age" name="minimum_age"
                                         placeholder="Введите минимальный возраст" value="{{ $video->minimum_age }}"
                                         required>
@@ -149,15 +149,15 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                    <label for="firstName" class="form-label">Отображение в слайдере</label>
+                                    <label for="firstName" class="form-label">Отображение в слайдере баннеров</label>
 
-                                    <div class="form-check mt-3">
+                                    <div class="form-check mt-2">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="false" id="defaultRadio1"
                                             @if ($video->display_slider == 'false') checked="checked" @else @endif>
                                         <label class="form-check-label" for="defaultRadio1"> Нет </label>
                                     </div>
-                                    <div class="form-check">
+                                    <div class="form-check mt-1">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="true" id="defaultRadio2"
                                             @if ($video->display_slider == 'true') checked="checked" @else @endif>
@@ -202,7 +202,7 @@
                             <form id="formAccountSettings" method="POST" action="{{ route('tag.store', $video->id) }}">
                                 @csrf
                                 <div class="row">
-                                    <label for="firstName" class="form-label">Название*</label>
+                                    <label for="firstName" class="form-label">Название *</label>
                                     <div class="mb-3 col-md-6 d-flex gap-2">
 
                                         <input class="form-control" type="text" id="firstName" name="name"
