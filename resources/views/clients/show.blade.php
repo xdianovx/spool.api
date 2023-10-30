@@ -92,6 +92,7 @@
                                 <span>{{ $client->country->name ?? 'Страна не указана' }}</span>
                             </li>
                         </ul>
+                        
                         <div class="d-flex justify-content-center pt-3">
                             <a class="btn btn-primary text-nowrap me-3" href="{{ route('clients.index') }}">Назад</a>
                             @if (empty($client->blocked_at))
@@ -106,9 +107,43 @@
                             @endif
                         </div>
                     </div>
+                    
                 </div>
+                <hr class="m-0">
+                <h5 class="card-header">Список купленных билетов</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id транзакции</th>
+                            <th>Цена</th>
+                            <th>Видео</th>
+                            <th>Дата покупки</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @forelse ($client_tickets as $client_ticket)
+                            <tr>
+                                <td>{{ $client_ticket->transaction_id }}</td>
+                                <td>{{ $client_ticket->price}}</td>
+                                <td>{{ $client_ticket->video->name}}</td>
+                                <td>{{ $client_ticket->created_at}}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="text-danger">По вашему запросу ничего не найдено.</td>
+                            </tr>
+                        @endforelse
+        
+                    </tbody>
+                </table>
+                @if ($client_tickets->links()->paginator->hasPages())
+                    <div class="demo-inline-spacing">
+                        {{ $client_tickets->links() }}
+                    </div>
+                @endif
             </div>
         </div>
+
     </div>
 
     @if ($client ?? null)
@@ -139,4 +174,5 @@
             </div>
         </div>
     @endif
+
 @endsection

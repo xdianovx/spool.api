@@ -33,7 +33,7 @@
         </div>
 
         <div class="mt-2">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('Сохранить') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
                 <p
@@ -42,7 +42,7 @@
                     x-transition
                     x-init="setTimeout(() => show = false, 2000)"
                     class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
+                >{{ __('Сохранено.') }}</p>
             @endif
         </div>
     </div> 

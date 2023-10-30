@@ -82,7 +82,8 @@
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="{{ route('client.show', $client->id) }}"><i
                                                         class="menu-icon tf-icons bx bx-detail"></i> Показать</a>
-
+                                                        <a class="dropdown-item" href="{{ route('client.edit', $client->id) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> Редактировать</a>
                                                 <button type="submit" class="dropdown-item text-danger"
                                                     data-bs-toggle="modal" data-bs-target="#modalScrollable{{$client->id}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>

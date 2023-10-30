@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\ClientUpdateRequest;
 use App\Models\Client;
+use App\Models\Country;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -18,7 +20,8 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-        return view('clients.show', compact('client'));
+        $client_tickets = $client->tickets_store()->paginate(10);
+        return view('clients.show', compact('client','client_tickets'));
     }
 
     public function send_ban(Client $client)
@@ -34,6 +37,37 @@ class ClientController extends Controller
             return redirect()->route('clients.index')->with('status', 'account-banned');
         }
     }
+
+
+    public function edit(Client $client)
+    { 
+        $countries = Country::all();
+        return view('clients.edit', compact('client','countries'));
+    }
+
+    public function update(ClientUpdateRequest $request, $client_id)
+    {
+        
+        $data = $request->validated();
+        if ($request->hasFile('avatar_image')) {
+            // Имя и расширение файла
+            $filenameWithExt = $request->file('avatar_image')->getClientOriginalName();
+            // Только оригинальное имя файла
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename = str_replace(' ','_',$filename);
+            // Расширение
+            $extention = $request->file('avatar_image')->getClientOriginalExtension();
+            // Путь для сохранения
+            $fileNameToStore = "avatar_image/" . $filename . "_" . time() . "." . $extention;
+            // Сохраняем файл
+            $data['avatar_image'] = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
+        }
+        $client = Client::whereId($client_id)->firstOrFail();
+        $client->update($data);
+        return redirect()->route('clients.index')->with('status', 'account-updated');
+    }
+
+
     public function destroy(Client $client)
     {
         $client->delete();

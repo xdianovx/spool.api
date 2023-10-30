@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/all',  [ClientController::class, 'index'])->name('clients.index');
         Route::get('/search',  [ClientController::class, 'search'])->name('clients.search');
         Route::get('/{client}/show',  [ClientController::class, 'show'])->name('client.show');
+        Route::get('/{client}/edit',  [ClientController::class, 'edit'])->name('client.edit');
+        Route::patch('/{client}/update',  [ClientController::class, 'update'])->name('client.update');
         Route::patch('/{client}',  [ClientController::class, 'send_ban'])->name('client.send_ban');
         Route::delete('/{client}/destroy',  [ClientController::class, 'destroy'])->name('client.destroy');
     });

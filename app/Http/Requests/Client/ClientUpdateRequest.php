@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Client;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UserUpdateRequest extends FormRequest
+class ClientUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**
@@ -24,12 +23,13 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'surname' => 'required|string',
-            'role' => 'required|integer',
-            'email' => 'required|string|email|unique:users,email,' . $this->user_id,
-            'user_id' => 'required|integer|exists:users,id',
+            'gender' => 'required|string',
+            'age' => 'required|integer',
+            'email' => 'required|string|email|unique:clients,email,' . $this->client_id,
+            'client_id' => 'required|integer|exists:clients,id',
             'phone_number' => 'required|numeric',
-            'partner_company_id' =>'nullable|string'
+            'country_id' =>'nullable|string',
+            'avatar_image' => 'nullable|image',
         ];
     }
 }

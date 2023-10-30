@@ -7,6 +7,7 @@ use App\Http\Resources\CountryResource;
 use App\Models\Client;
 use App\Models\ClientCard;
 use App\Models\Country;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -226,6 +227,24 @@ class ProfileController extends Controller
             return response([
                 'status' => 'failed',
                 'error' => 'Card not found'
+            ], 404);
+        }
+    
+    }
+    public function user_activity()
+    {
+
+        try {
+            Client::where('id', auth('api')->user('api')->id)->update([
+                'last_login_date'=>Carbon::now()
+                ]);
+            return response()->json([
+                'message' => 'date updated',
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response([
+                'status' => 'failed',
+                'error' => 'Client not found'
             ], 404);
         }
     

@@ -5,16 +5,29 @@
         <!-- Name -->
         <div class="mb-3 col-md-6">
             <x-input-label class="form-label" for="name" :value="__('Имя')" />
+            @if ($user->role == 1)
+            <x-text-input id="name" name="name" type="text" class="form-control" :value="old('name', $user->name)" disabled
+                autofocus autocomplete="name" />
+            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            @else
             <x-text-input id="name" name="name" type="text" class="form-control" :value="old('name', $user->name)" required
                 autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            @endif
+
         </div> 
         <!-- Surname -->
         <div class="mb-3 col-md-6">
             <x-input-label class="form-label" for="surname" :value="__('Фамилия')" />
+            @if ($user->role == 1)
+            <x-text-input id="surname" name="surname" type="text" class="form-control" :value="old('surname', $user->surname)" disabled
+                autofocus autocomplete="surname" />
+            <x-input-error class="mt-2" :messages="$errors->get('surname')" />
+            @else
             <x-text-input id="surname" name="surname" type="text" class="form-control" :value="old('surname', $user->surname)" required
                 autofocus autocomplete="surname" />
             <x-input-error class="mt-2" :messages="$errors->get('surname')" />
+            @endif
         </div>
         <!-- Email -->
         <div class="mb-3 col-md-6">
@@ -49,11 +62,11 @@
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
         <div class="mt-2">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <x-primary-button>{{ __('Сохранить') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Saved.') }}</p>
+                    class="text-sm text-gray-600 dark:text-gray-400">{{ __('Сохранено.') }}</p>
             @endif
         </div>
     </div>
