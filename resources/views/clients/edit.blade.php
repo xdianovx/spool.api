@@ -19,7 +19,7 @@
                             @method('patch')
                             <div class="row">
 
-                                <div class="mb-3 col-md-6">
+                                {{-- <div class="mb-3 col-md-6">
                                     <label for="avatar_image" class="form-label">Аватар</label>
                                     @if (!empty($client->avatar_image))
                                         <div class="input-group">
@@ -34,7 +34,7 @@
                                     @error('avatar_image')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Имя</label>

@@ -49,19 +49,19 @@ class ClientController extends Controller
     {
         
         $data = $request->validated();
-        if ($request->hasFile('avatar_image')) {
-            // Имя и расширение файла
-            $filenameWithExt = $request->file('avatar_image')->getClientOriginalName();
-            // Только оригинальное имя файла
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $filename = str_replace(' ','_',$filename);
-            // Расширение
-            $extention = $request->file('avatar_image')->getClientOriginalExtension();
-            // Путь для сохранения
-            $fileNameToStore = "avatar_image/" . $filename . "_" . time() . "." . $extention;
-            // Сохраняем файл
-            $data['avatar_image'] = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
-        }
+        // if ($request->hasFile('avatar_image')) {
+        //     // Имя и расширение файла
+        //     $filenameWithExt = $request->file('avatar_image')->getClientOriginalName();
+        //     // Только оригинальное имя файла
+        //     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        //     $filename = str_replace(' ','_',$filename);
+        //     // Расширение
+        //     $extention = $request->file('avatar_image')->getClientOriginalExtension();
+        //     // Путь для сохранения
+        //     $fileNameToStore = "avatar_image/" . $filename . "_" . time() . "." . $extention;
+        //     // Сохраняем файл
+        //     $data['avatar_image'] = $request->file('avatar_image')->storeAs('public', $fileNameToStore);
+        // }
         $client = Client::whereId($client_id)->firstOrFail();
         $client->update($data);
         return redirect()->route('clients.index')->with('status', 'account-updated');
