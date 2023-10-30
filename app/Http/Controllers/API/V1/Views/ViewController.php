@@ -56,6 +56,7 @@ class ViewController extends Controller
         else:
 
             View::where('client_id',$client->id)->where('video_id',$validator->validated()['video_id'])->update([
+                'seconds_viewed' => $request->seconds_viewed,
                 'country_id' =>$client->country_id ?? 131,
             ],$validator->validated());
             return response()->json([
