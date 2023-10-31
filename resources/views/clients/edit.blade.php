@@ -14,12 +14,12 @@
 
 
 
-                        <form id="formAccountSettings" method="POST" action="{{ route('client.update', $client->id) }}">
+                        <form id="formAccountSettings" method="POST" action="{{ route('client.update', $client->id) }}"  enctype="multipart/form-data">
                             @csrf
                             @method('patch')
                             <div class="row">
 
-                                {{-- <div class="mb-3 col-md-6">
+                                <div class="mb-3 col-md-6">
                                     <label for="avatar_image" class="form-label">Аватар</label>
                                     @if (!empty($client->avatar_image))
                                         <div class="input-group">
@@ -27,6 +27,7 @@
                                         </div>
                                     @else
                                     @endif
+                                    
                                     <div class="input-group">
                                         <input type="file" class="form-control" id="avatar_image" name="avatar_image"
                                             value="{{ $client->avatar_image }}">
@@ -34,12 +35,12 @@
                                     @error('avatar_image')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                </div> --}}
+                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Имя</label>
                                     <input class="form-control" type="text" id="firstName" name="name"
-                                        value="{{ $client->name }}" autofocus autocomplete="name" required>
+                                        value="{{ $client->name }}" autofocus autocomplete="name" >
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -47,7 +48,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="lastName" class="form-label">Возраст</label>
                                     <input class="form-control" type="text" name="age" id="lastName"
-                                        value="{{ $client->age }}" autofocus autocomplete="age" required>
+                                        value="{{ $client->age }}" autofocus autocomplete="age" >
                                     @error('age')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -56,7 +57,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">E-mail</label>
                                     <input class="form-control" type="text" id="email" name="email"
-                                        value="{{ $client->email }}" autofocus autocomplete="email" required>
+                                        value="{{ $client->email }}" autofocus autocomplete="email" >
                                     @error('email')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -66,7 +67,7 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">Пол</label>
                                     <input class="form-control" type="text" id="email" name="gender"
-                                        value="{{ $client->gender }}" autofocus autocomplete="gender" required>
+                                        value="{{ $client->gender }}" autofocus autocomplete="gender" >
                                     @error('gender')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -89,7 +90,7 @@
                                     <label class="form-label" for="phoneNumber">Номер телефона</label>
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="phoneNumber" name="phone_number" class="form-control"
-                                            value="{{ $client->phone_number }}" autofocus autocomplete="phone_number" required>
+                                            value="{{ $client->phone_number }}" autofocus autocomplete="phone_number" >
                                         @error('phone_number')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror

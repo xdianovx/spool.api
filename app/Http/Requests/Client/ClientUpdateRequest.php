@@ -22,14 +22,14 @@ class ClientUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'avatar_image' => 'image|nullable|max:1999',
             'name' => 'nullable|string',
             'gender' => 'nullable|string',
             'age' => 'nullable|integer',
-            'email' => 'required|string|email|unique:clients,email,' . $this->client_id,
-            'client_id' => 'required|integer|exists:clients,id',
+            'email' => 'nullable|string|email|unique:clients,email,' . $this->client_id,
+            'client_id' => 'nullable|integer|exists:clients,id',
             'phone_number' => 'nullable|numeric',
             'country_id' =>'nullable|string',
-            'avatar_image' => 'nullable|image',
         ];
     }
 }
