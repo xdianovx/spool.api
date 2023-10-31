@@ -131,13 +131,13 @@
                                     <div class="form-check mt-2">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="false" id="defaultRadio1"
-                                            @if (old('display_slider') == 'false') checked="checked" @else @endif>
+                                           checked="checked">
                                         <label class="form-check-label" for="defaultRadio1"> Нет </label>
                                     </div>
                                     <div class="form-check mt-1">
                                         <input name="display_slider" class="form-check-input" type="radio"
                                             value="true" id="defaultRadio2"
-                                            @if (old('display_slider') == 'true') checked="checked" @else @endif>
+                                            @if (old('display_slider') == 'true')  @else @endif>
                                         <label class="form-check-label" for="defaultRadio2"> Да </label>
                                     </div>
                                     @error('display_slider')
