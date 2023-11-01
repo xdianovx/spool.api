@@ -41,8 +41,8 @@ class ViewController extends Controller
             ], 404);
         endif;
 
-        if (!View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])->exists()) :
-
+        // if (!View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])->exists()) :
+        if ($validator->validated()['start'] === true) :
             $client->views_store()->create([
                 'seconds_viewed' => $request->seconds_viewed,
                 'video_id' => $validator->validated()['video_id'],
@@ -56,21 +56,21 @@ class ViewController extends Controller
             ], 200);
 
         else :
-            if (Carbon::now()->startOfDay()->gte(View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])
-                ->orderBy('created_at', 'desc')->first()->created_at)) :
+            // if (Carbon::now()->startOfDay()->gte(View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])
+            //     ->orderBy('created_at', 'desc')->first()->created_at)) :
 
-                $client->views_store()->create([
-                    'seconds_viewed' => $request->seconds_viewed,
-                    'video_id' => $validator->validated()['video_id'],
-                    'country_id' => $client->country_id ?? 131,
-                ], $validator->validated());
+            //     $client->views_store()->create([
+            //         'seconds_viewed' => $request->seconds_viewed,
+            //         'video_id' => $validator->validated()['video_id'],
+            //         'country_id' => $client->country_id ?? 131,
+            //     ], $validator->validated());
 
-                Video::where('id', $validator->validated()['video_id'])->increment('views_count');
+            //     Video::where('id', $validator->validated()['video_id'])->increment('views_count');
 
-                return response()->json([
-                    'message' => 'created for the current day'
-                ], 200);
-            else :
+            //     return response()->json([
+            //         'message' => 'created for the current day'
+            //     ], 200);
+            // else :
 
                 View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])
                     ->orderBy('created_at', 'desc')->first()->update([
@@ -80,7 +80,7 @@ class ViewController extends Controller
                 return response()->json([
                     'message' => 'updated'
                 ], 200);
-            endif;
+            // endif;
         endif;
     }
 }
