@@ -27,7 +27,7 @@ class ViewController extends Controller
 
         $validator = Validator::make($request->all(), [
             'seconds_viewed' => 'required|integer',
-            'video_id' => 'required|integer'
+            'video_id' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -42,7 +42,7 @@ class ViewController extends Controller
         endif;
 
         // if (!View::where('client_id', $client->id)->where('video_id', $validator->validated()['video_id'])->exists()) :
-        if ($validator->validated()['start'] === true) :
+        if ($request->all()['start'] === true) :
             $client->views_store()->create([
                 'seconds_viewed' => $request->seconds_viewed,
                 'video_id' => $validator->validated()['video_id'],
