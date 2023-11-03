@@ -22,8 +22,7 @@ class CategoryUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|unique:categories,name,' . $this->category_id,
-            'category_id' => 'required|integer|exists:categories,id',
+            'name' => 'required|string',
             'slug' => 'nullable|string',
             'sort' => 'nullable|numeric',
             'image' => 'image|nullable|max:1999',

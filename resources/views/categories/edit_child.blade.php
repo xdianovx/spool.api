@@ -24,7 +24,6 @@
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
-                                    <input type="hidden" name="category_id" value="{{$category->id}}">
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">Слаг*</label>
