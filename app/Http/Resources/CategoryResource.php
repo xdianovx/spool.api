@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryResource extends JsonResource
 {
@@ -25,7 +26,7 @@ class CategoryResource extends JsonResource
             "sort"=> $this->sort,
             "slug"=> $this->slug,
             "parent_id"=>  $parent_id,
-            "image"=> $this->image,
+            "image"=> env('API_URL') . Storage::url($this->image),
             "created_at"=> $this->created_at,
             "updated_at"=> $this->updated_at
         ];
