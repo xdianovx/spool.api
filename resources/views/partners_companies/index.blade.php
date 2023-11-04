@@ -52,7 +52,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($partners_companies as $partners_company)
                                 <tr>
-                                    <td>{{ $partners_company->name }}</td>
+                                    <td><a href="{{ route('partners_company.edit', $partners_company->id) }}">{{ $partners_company->name }}</a></td>
                                     <td>{{ $partners_company->commission_percent }}%</td>
                                     <td>
                                         <div class="dropdown">

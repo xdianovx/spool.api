@@ -53,7 +53,7 @@
                             @forelse ($countries as $country)
                                 <tr>
                                     <td>{{ $country->flag }}</td>
-                                    <td>{{ $country->name }}</td>
+                                    <td><a href="{{ route('country.edit', $country->id) }}">{{ $country->name }}</a></td>
                                     <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

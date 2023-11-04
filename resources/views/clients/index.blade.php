@@ -60,7 +60,7 @@
                                     <td>
                                         <strong>{{ $client->id }}</strong>
                                     </td>
-                                    <td>{{ $client->name }}</td>
+                                    <td><a href="{{ route('client.edit', $client->id) }}">{{ $client->name }}</a></td>
                                     <td>
                                         {{ $client->email }}
                                     </td>

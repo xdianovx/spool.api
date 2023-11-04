@@ -59,7 +59,7 @@
                         <tbody class="table-border-bottom-0">
                             @forelse ($tickets as $ticket)
                                 <tr>
-                                    <td>{{ $ticket->video->name ?? 'Без видео' }}</td>
+                                    <td><a href="{{ route('ticket.edit', $ticket->id) }}">{{ $ticket->video->name ?? 'Без видео' }}</a></td>
                                     <td>{{ $ticket->price }}</td>
                                     <td>{{ $ticket->commission_percent }}%</td>
                                     <td>

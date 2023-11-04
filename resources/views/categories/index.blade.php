@@ -44,7 +44,7 @@
                         <tbody id="list" class="table-border-bottom-0">
                             @forelse ($categories as $category)
                                 <tr class="list-item cursor-move" data-sort-id="{{ $category->id }}">
-                                    <td>{{ $category->name }}</td>
+                                    <td><a href="{{ route('category.edit', $category->slug) }}">{{ $category->name }}</a></td>
                                     <td>{{ $category->slug }}</td>
                                     <td>
                                         <div class="dropdown">
