@@ -77,7 +77,7 @@ class VideoController extends Controller
         return response()->json($video);
     }
 
-    // получить подкатегории (сортируются по полю sort) и видео данной категории, фильтрация (сортировка видео по просмотрам) и пагинация (по 10 видео на странице)
+    // получить подкатегории (сортируются по полю sort) и видео данной категории, фильтрация (сортировка видео по просмотрам) и пагинация (по 20 видео на странице)
     public function getVideosAndCategoriesBySlag(Request $request, $category_slag = null,$cild_category_slag = null)
     {
         if(empty($category_slag)):
@@ -104,14 +104,14 @@ class VideoController extends Controller
         $category = Category::findOrFail($cat->id);
         $category_ids = $category->getDescendants($category);
         if (empty($request->all()) == false) :
+            $videos = VideoResource::collection(Video::where('ticket_availability', true)
+                ->whereIn('category_id', $category_ids)
+                ->orderBy('event_date', 'DESC')->paginate(20));
+        else :
             $views_sort = $request->all()['views'] ?? "ASC";
             $videos = VideoResource::collection(Video::where('ticket_availability', true)
                 ->whereIn('category_id', $category_ids)
-                ->orderBy('views_count', $views_sort)->paginate(10));
-        else :
-            $videos = VideoResource::collection(Video::where('ticket_availability', true)
-                ->whereIn('category_id', $category_ids)
-                ->orderBy('event_date', 'DESC')->paginate(10));
+                ->orderBy('views_count', $views_sort)->paginate(20));
         endif;
 
         return response()->json([

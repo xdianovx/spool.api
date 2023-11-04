@@ -90,16 +90,25 @@ class VideoController extends Controller
             $video->category->update([
                 'video_availability' => true
             ]);
+
+            if($video->category->parent()->exists()):
+                $video->category->parent->update([
+                    'video_availability' => true
+                ]);
+            endif;
         endif;
         return redirect()->route('video.edit', $video->id)->with('status', 'video-created');
     }
 
     public function update(VideoUpdateRequest $request, $video_id)
     {
+        $data = $request->validated();
 
         $video = Video::whereId($video_id)->firstOrFail();
-        $category = Category::where('id', $video->category_id)->first();
-        $data = $request->validated();
+        //$category = Category::where('id', $video->category_id)->first();
+
+        //print_r($categories);
+
         if ($request->hasFile('image')) {
             // Имя и расширение файла
             $filenameWithExt = $request->file('image')->getClientOriginalName();
@@ -129,12 +138,39 @@ class VideoController extends Controller
 
         $video->update($data);
 
-        if (is_null($category)) :
+        $categories = Category::all();
+        
+        foreach($categories as $category):
+            $videos_count = $category->videos->count();
+            if($category->children()->exists()):
+                foreach ($category->children as $child_category) :
+                    $videos_count = $videos_count + $child_category->videos->count();
+                endforeach;
+            endif;
+            
+            if($videos_count == 0 && $category->video_availability == true):
+                $category->update([
+                    'video_availability' => false
+                ]);
+            elseif($videos_count > 0 && $category->video_availability == false):
+                $category->update([
+                    'video_availability' => true
+                ]);
+            endif;
+        endforeach;
+
+        /*if (is_null($category)) :
         else :
             if ($category->children()->exists()) :
                 $videos_count = $category->videos->count();
                 foreach ($category->children as $cild) :
                     $videos_count = $videos_count + $cild->videos->count();
+
+		    if($cild->videos->count() == 0):
+		        $cild->update([
+                            'video_availability' => false
+                        ]);
+		    endif;
                 endforeach;
                 if ($videos_count == 0) :
                     $category->update([
@@ -162,7 +198,8 @@ class VideoController extends Controller
                     ]);
                 endif;
             endif;
-            if ($category->parent()->exists()) :
+            if (!$category->parent()->exists()) :
+		print_r('aaa');
                 if ($category->videos->count() == 0) :
                     $category->update([
                         'video_availability' => false
@@ -207,7 +244,7 @@ class VideoController extends Controller
                 ]);
             endif;
         endif;
-        if ($video->category->parent()->exists()) :
+        if (!$video->category->parent()->exists()) :
             if ($video->category->videos->count() == 0) :
                 $video->category->update([
                     'video_availability' => false
@@ -217,7 +254,7 @@ class VideoController extends Controller
                     'video_availability' => true
                 ]);
             endif;
-        endif;
+        endif;*/
 
         return redirect()->route('videos.index')->with('status', 'video-updated');
     }
