@@ -34,7 +34,22 @@ class VideoController extends Controller
         // $res = json_decode($client);
         // return response()->json($res);
         $partner_companies = Partners_company::all();
-        $categories = Category::all();
+        
+        $categories_all = Category::all();
+
+        $categories = [];
+        foreach($categories_all as $category):
+            $category_edited = $category;
+            if($category->parent()->exists()):
+                $category_edited['name'] = $category->parent()->first()->name . ' → ' . $category['name'];
+            endif;
+            $categories[] = $category_edited;
+        endforeach;
+
+        usort($categories, function($first,$second){
+            return strtolower($first->name) > strtolower($second->name);
+        });
+
         return view('videos.create', compact('partner_companies', 'categories'));
     }
 
@@ -50,7 +65,21 @@ class VideoController extends Controller
         // $res = json_decode($client);
         $user_tags = $video->tags()->where('user_id', Auth::user()->id)->paginate(1000);
         $partner_companies = Partners_company::all();
-        $categories = Category::all();
+        $categories_all = Category::all();
+
+        $categories = [];
+        foreach($categories_all as $category):
+            $category_edited = $category;
+            if($category->parent()->exists()):
+                $category_edited['name'] = $category->parent()->first()->name . ' → ' . $category['name'];
+            endif;
+            $categories[] = $category_edited;
+        endforeach;
+
+        usort($categories, function($first,$second){
+            return strtolower($first->name) > strtolower($second->name);
+        });
+
         return view('videos.edit', compact('video', 'partner_companies', 'categories', 'user_tags'));
     }
 
