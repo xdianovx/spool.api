@@ -103,11 +103,14 @@ class VideoController extends Controller
 
         $category = Category::findOrFail($cat->id);
         $category_ids = $category->getDescendants($category);
-        if (empty($request->all()) == false) :
+
+        if (!empty($request->all()) == false) :
+
             $videos = VideoResource::collection(Video::where('ticket_availability', true)
                 ->whereIn('category_id', $category_ids)
                 ->orderBy('event_date', 'DESC')->paginate(20));
         else :
+
             $views_sort = $request->all()['views'] ?? "ASC";
             $videos = VideoResource::collection(Video::where('ticket_availability', true)
                 ->whereIn('category_id', $category_ids)
