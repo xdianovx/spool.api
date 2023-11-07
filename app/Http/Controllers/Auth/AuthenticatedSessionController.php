@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
        
         $request->session()->regenerate();
         User::where('id', Auth::user()->id)->update([
-            'last_login_date'=>Carbon::now()
+            'last_login_date'=>Carbon::now('Europe/Moscow')->shiftTimezone('UTC')
         ]);
         return redirect()->intended(RouteServiceProvider::HOME);
     }

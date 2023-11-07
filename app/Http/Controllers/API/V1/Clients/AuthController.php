@@ -108,7 +108,7 @@ class AuthController extends Controller
         endif;
 
             Client::where('id', $client->id)->update([
-            'last_login_date'=>Carbon::now()
+            'last_login_date'=>Carbon::now('Europe/Moscow')->shiftTimezone('UTC')
             ]);
 
             return $this->createNewToken($token);

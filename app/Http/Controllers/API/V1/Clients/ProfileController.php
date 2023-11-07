@@ -236,7 +236,7 @@ class ProfileController extends Controller
 
         try {
             Client::where('id', auth('api')->user('api')->id)->update([
-                'last_login_date'=>Carbon::now()
+                'last_login_date'=>Carbon::now('Europe/Moscow')->shiftTimezone('UTC')
                 ]);
             return response()->json([
                 'message' => 'date updated',

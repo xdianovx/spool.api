@@ -13,6 +13,7 @@ class ClientController extends Controller
 {
     public function index()
     {
+
         $clients = Client::orderBy('id', 'DESC')->paginate(10);
         return view('clients.index', compact('clients'));
     }
@@ -32,7 +33,7 @@ class ClientController extends Controller
             return redirect()->route('clients.index')->with('status', 'account-unbanned');
         }
         if(empty($client->blocked_at)){
-            $data = ['blocked_at'=>Carbon::now()];
+            $data = ['blocked_at'=>Carbon::now('Europe/Moscow')->shiftTimezone('UTC')];
             $client->update($data);
             return redirect()->route('clients.index')->with('status', 'account-banned');
         }
