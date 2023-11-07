@@ -28,10 +28,10 @@ class ViewController extends Controller
         $statsArr = [];
         $stats = View::select(DB::raw('MAX(created_at) AS date'), DB::raw('COUNT(id) AS count'))
             ->where('video_id', $video->id)
+            ->orderBy('created_at', 'desc')
             ->groupBy(
                 DB::raw("DATE_TRUNC('HOUR', created_at)"),
             )
-            ->orderBy('created_at', 'desc')
             ->get();
 
         foreach ($stats as $value) {
