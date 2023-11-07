@@ -34,7 +34,7 @@ class ViewController extends Controller
 
         foreach ($stats as $value) {
 
-            $statsArr[] =  [$value->date, $value->count];
+            $statsArr[] =  [strtotime($value->date), $value->count];
         }
 
         return $statsArr;
