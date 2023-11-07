@@ -9,6 +9,7 @@ use App\Models\ClientTicket;
 use App\Models\Video;
 use App\Models\View;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +33,7 @@ class ViewController extends Controller
             )->get();
 
         foreach ($stats as $value) {
-            $statsArr[] =  [$value->date, $value->count];
+            $statsArr[] =  [DateTime::createFromFormat('d-m-Y', $value->date), $value->count];
         }
 
         return $statsArr;
