@@ -33,9 +33,8 @@ class ViewController extends Controller
             )->get();
 
         foreach ($stats as $value) {
-            $formatDate = DateTime::createFromFormat('d/m/Y', $value->date);
-            $formatDate->format('d-m-Y');
-            $statsArr[] =  [$formatDate, $value->count];
+
+            $statsArr[] =  [$value->date, $value->count];
         }
 
         return $statsArr;
