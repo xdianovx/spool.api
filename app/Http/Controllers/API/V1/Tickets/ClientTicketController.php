@@ -52,7 +52,7 @@ class ClientTicketController extends Controller
             "RebillId" => $req->rebill_id,
             'Amount' => $req->amount,
             'Currency' => $req->currency,
-            'Description' => "user_id=" . $req->user_id . ";" . "ticket_id=" .  $req->ticket_id,
+            'Description' => $req->description,
             "ExtraData" => [
                 "user_id" => $req->user_id,
                 "ticket_id" => $req->ticket_id
