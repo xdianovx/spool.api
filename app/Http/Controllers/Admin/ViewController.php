@@ -25,12 +25,12 @@ class ViewController extends Controller
     public function getVideoViews(Video $video)
     {
         $statsArr = [];
-        $stats = View::select(DB::raw('MAX(created_at) AS date'),DB::raw('COUNT(id) AS count'))
+        $stats = View::select(DB::raw('MAX(created_at) AS date'), DB::raw('COUNT(id) AS count'))
             ->where('video_id', $video->id)
             ->groupBy(
-                DB::raw("DATE_TRUNC('HOUR', created_at)"),
+                DB::raw("DATE_TRUNC('DAY', created_at)"),
             )->get();
-            
+
         foreach ($stats as $value) {
             $statsArr[] =  [$value->date, $value->count];
         }
@@ -39,7 +39,7 @@ class ViewController extends Controller
     }
 
     public function showView(Video $video)
-    {  
+    {
 
         $sum_tickets = 0;
         $sum_without_commission = 0;
