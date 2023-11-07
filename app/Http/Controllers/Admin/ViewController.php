@@ -30,7 +30,9 @@ class ViewController extends Controller
             ->where('video_id', $video->id)
             ->groupBy(
                 DB::raw("DATE_TRUNC('HOUR', created_at)"),
-            )->get();
+            )
+            ->orderBy('createdAt', 'desc')
+            ->get();
 
         foreach ($stats as $value) {
 
