@@ -31,7 +31,7 @@ class ViewController extends Controller
             ->groupBy(
                 DB::raw("DATE_TRUNC('HOUR', created_at)"),
             )
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'asc')
             ->get();
 
         foreach ($stats as $value) {
