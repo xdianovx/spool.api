@@ -53,10 +53,10 @@ class ClientTicketController extends Controller
             'Amount' => $req->amount,
             'Currency' => $req->currency,
             'Description' => "user_id=" . $req->user_id . ";" . "ticket_id=" .  $req->ticket_id,
-            // "ExtraData" => [
-            //     "user_id" => $req->user_id,
-            //     "ticket_id" => $req->ticket_id
-            // ]
+            "ExtraData" => [
+                "user_id" => $req->user_id,
+                "ticket_id" => $req->ticket_id
+            ]
         ];
         $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
         $data = $method . PHP_EOL . $url  . PHP_EOL . env('PAY_SITE_ID') . PHP_EOL . $req_id . PHP_EOL . $bodyToJson;
