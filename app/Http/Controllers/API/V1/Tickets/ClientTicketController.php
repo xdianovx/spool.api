@@ -58,6 +58,7 @@ class ClientTicketController extends Controller
                 "ticket_id" => $req->ticket_id
             ]
         ];
+        return responce()->json($body);
         $bodyToJson = json_encode($body, JSON_PRETTY_PRINT);
         $data = $method . PHP_EOL . $url  . PHP_EOL . env('PAY_SITE_ID') . PHP_EOL . $req_id . PHP_EOL . $bodyToJson;
         $signature = hash_hmac('sha256', $data, env('PAY_SECRET'), false);
