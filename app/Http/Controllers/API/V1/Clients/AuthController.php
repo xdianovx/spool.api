@@ -43,7 +43,14 @@ class AuthController extends Controller
             if ($validator->messages()->first('email', ':message') == "Такое значение поля email уже существует.") :
                 $client = Client::where('email', $request->email)->firstOrFail();
                     $client_id = $client->id;
-                    $password = $this->password_generate();
+
+                    // костыль для пользователя spool@apple.com
+                    if($client_id == 21) {
+                        $password = 'fmgek-uxqnw-yslio';
+                    } else {
+                        $password = $this->password_generate();
+                    }
+
                     $password_hashe = Hash::make($password);
                     ClientsTemporaryPassword::where('clients_temporary_password_id', $client_id)->update(['password' => $password_hashe]);
                     Client::where('id', $client_id)->update(['password' => $password_hashe]);
