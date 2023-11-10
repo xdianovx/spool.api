@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API\V1\Clients;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CountryResource;
+use App\Http\Resources\ClientTicketResource;
 use App\Models\Client;
+use App\Models\ClientTicket;
 use App\Models\ClientCard;
+use App\Models\View;
 use App\Models\Country;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Verified;
@@ -215,6 +218,29 @@ class ProfileController extends Controller
         $client = Client::where('id', auth('api')->user('api')->id)->first();
         return response()->json($client->cards);
     }
+
+    public function profileRemove(Request $request)
+    {
+        $client = Client::where('id', auth('api')->user('api')->id)->first();
+
+        // удаляем привязанные карты
+        foreach($client->cards as $card) {
+            $card->delete();
+        }
+
+        // находим и меняем во всех купленных билетах пользователя client_id на NULL
+        $client_tickets = ClientTicket::where('client_id', $client->id)->update(array('client_id' => null));
+
+        // находим и меняем во всех просмотрах пользователя client_id на NULL
+        $client_views = View::where('client_id', $client->id)->update(array('client_id' => null, 'country_id' => 131));
+
+        $client->delete();
+
+        return response()->json([
+            'message' => 'client removed'
+        ], 200);
+    }
+
     public function destroy($card_id)
     {
         try {

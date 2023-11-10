@@ -59,6 +59,9 @@ Route::group([
 
         Route::get('profile/cards', [ProfileController::class, 'profileCards']);
         Route::delete('profile/cards/{card_id}', [ProfileController::class, 'destroy']);
+
+        Route::delete('profile/remove', [ProfileController::class, 'profileRemove']);
+
         //countries
         Route::get('countries', [CountryController::class, 'getCountries']);
         //categories
