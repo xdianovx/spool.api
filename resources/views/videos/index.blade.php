@@ -79,10 +79,10 @@
                                                     href="{{ route('video.edit', $video->id) }}"><i
                                                         class="bx bx-edit-alt me-1"></i> Редактировать</a>
 
-                                                <button type="submit" class="dropdown-item text-danger"
+                                                <!--<button type="submit" class="dropdown-item text-danger"
                                                     data-bs-toggle="modal" data-bs-target="#modalScrollable{{$video->id}}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
-                                                    Удалить</button>
+                                                    Удалить</button>-->
                                             </div>
                                         </div>
                                     </td>

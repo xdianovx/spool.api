@@ -77,11 +77,11 @@
                                                 <button type="submit" class="dropdown-item" data-bs-toggle="modal"
                                                     data-bs-target="#modalScrollableCommission{{ $ticket->id }}">
                                                     <i class='bx bxs-offer' ></i> Изменить комиссию</button>
-                                                <button type="submit" class="dropdown-item text-danger"
+                                                <!--<button type="submit" class="dropdown-item text-danger"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalScrollable{{ $ticket->id }}"><i
                                                         class="bx bx-trash me-1 text-danger" role="button"></i>
-                                                    Удалить</button>
+                                                    Удалить</button>-->
                                             </div>
                                         </div>
                                     </td>
