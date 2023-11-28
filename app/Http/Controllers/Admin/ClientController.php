@@ -42,8 +42,10 @@ class ClientController extends Controller
 
     public function edit(Client $client)
     { 
+
         $countries = Country::all();
-        return view('clients.edit', compact('client','countries'));
+        $country_is_null = empty($client->country_id);
+        return view('clients.edit', compact('client','countries','country_is_null'));
     }
 
     public function update(ClientUpdateRequest $request, $client_id)

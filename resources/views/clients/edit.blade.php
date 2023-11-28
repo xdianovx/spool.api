@@ -60,14 +60,20 @@
                                         value="{{ $client->email }}" autofocus autocomplete="email" >
                                     @error('email')
                                         <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    @enderror 
                                     <input type="hidden" name="client_id" value="{{$client->id}}">
                                 </div>
 
                                 <div class="mb-3 col-md-6">
                                     <label for="email" class="form-label">Пол</label>
-                                    <input class="form-control" type="text" id="email" name="gender"
-                                        value="{{ $client->gender }}" autofocus autocomplete="gender" >
+                                        <select id="language" class="select2 form-select" name="gender">
+                                            <option value="male"
+                                            @if ($client->gender == 'male') {{ 'selected' }} @endif>
+                                            Мужской</option>
+                                            <option value="female"
+                                            @if ($client->gender == 'female') {{ 'selected' }} @endif>
+                                            Женский</option>
+                                        </select>
                                     @error('gender')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -75,10 +81,14 @@
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Страна</label>
+
                                     <select id="language" class="select2 form-select" name="country_id">
-                                        @foreach ($countries as $id => $country)
-                                        <option value="{{ $id }}"
-                                            {{ $id == $client->country_id ? 'selected' : '' }}>
+                                        <option value=""
+                                        @if ($client->country_id == '') {{ 'selected' }} @endif>
+                                        Не выбрана</option>
+                                        @foreach ($countries as  $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ $country->id == $client->country_id ? 'selected' : '' }}>
                                             {{ $country->name }}</option>
                                         @endforeach
                                     </select>
